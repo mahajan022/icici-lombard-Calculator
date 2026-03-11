@@ -131,8 +131,8 @@ table.rt tr.sel td:first-child{color:var(--teal2)}
   <div class="card-body">
     <div class="grid4">
       <div class="field"><label>Client Name</label><input type="text" id="clientName" placeholder="Company name"></div>
-      <div class="field"><label>Policy Start Date</label><input type="date" id="policyStartDate" onchange="onDateChange()"></div>
-      <div class="field"><label>Policy End Date</label><input type="date" id="policyEndDate" readonly style="background:#f8fafc;color:#64748b"><div class="hint">Auto: 1 year − 1 day</div></div>
+      <div class="field"><label>Policy Start Date</label><input type="date" id="policyStartDate"></div>
+      <div class="field"><label>Policy End Date</label><input type="date" id="policyEndDate"></div>
       <div class="field"><label>Brokerage (%)</label><input type="number" id="brokerage" value="15" min="0" max="25" step="0.5"><div class="hint">Grossed up on net premium</div></div>
     </div>
     <div class="grid4" style="margin-top:12px">
@@ -253,9 +253,9 @@ table.rt tr.sel td:first-child{color:var(--teal2)}
         <select id="matLimit">
           <option value="nd35cs35">ND ₹35K / CS ₹35K (−5%)</option>
           <option value="nd35cs50">ND ₹35K / CS ₹50K (−3%)</option>
-          <option value="nd50cs50" selected>ND ₹50K / CS ₹50K (Base)</option>
+          <option value="nd50cs50" selected>ND ₹50K / CS ₹50K (Base — default)</option>
           <option value="nd50cs75">ND ₹50K / CS ₹75K (+5%)</option>
-          <option value="nd75cs75">ND ₹75K / CS ₹75K (Base)</option>
+          <option value="nd75cs75">ND ₹75K / CS ₹75K (No change noted)</option>
           <option value="nd1lcs1l">ND ₹1L / CS ₹1L (+12%)</option>
         </select>
       </div>
@@ -333,12 +333,12 @@ table.rt tr.sel td:first-child{color:var(--teal2)}
         <label>Co-pay</label>
         <select id="copay">
           <option value="none">Not Applicable (Base)</option>
-          <option value="10all">10% All Members (−7%)</option>
-          <option value="20all">20% All Members (−15%)</option>
-          <option value="10escp">10% ESCP (−7%)</option>
-          <option value="20escp">20% ESCP (−14%)</option>
-          <option value="10par">10% Parents Only (−3.5%)</option>
-          <option value="20par">20% Parents Only (−7%)</option>
+          <option value="10all">10% — E only / ESC / ESCP (−7%)</option>
+          <option value="20all">20% — E only / ESC / ESCP (−15%)</option>
+          <option value="10escp_only">10% — ESCP plan only (−7%)</option>
+          <option value="20escp_only">20% — ESCP plan only (−14%)</option>
+          <option value="10par">10% — Parents only in ESCP (−3.5%)</option>
+          <option value="20par">20% — Parents only in ESCP (−7%)</option>
         </select>
       </div>
     </div>
@@ -396,10 +396,12 @@ table.rt tr.sel td:first-child{color:var(--teal2)}
       </div>
       <div class="field">
         <label>Reinstatement of SI</label>
-        <div class="tog">
-          <input type="radio" name="reinstate" id="riY" value="Y"><label for="riY">Yes (+5%)</label>
-          <input type="radio" name="reinstate" id="riN" value="N" checked><label for="riN">No</label>
-        </div>
+        <select id="reinstate">
+          <option value="none">Not Covered (Base)</option>
+          <option value="diff">Diff. Ailment — once by org (+5%)</option>
+          <option value="same">Same Ailment — twice by org (no loading)</option>
+        </select>
+        <div class="hint">Diff. ailment = +5%. Same ailment = informational, no loading</div>
       </div>
       <div class="field">
         <label>Additional Loading/Discount (%)</label>
@@ -503,14 +505,6 @@ const RATES = {
   800000: [5579, 6675, 7355, 11390, 19701, 26824, 31615, 37322, 43003],
 };
 
-function onDateChange() {
-  const sd = document.getElementById('policyStartDate').value;
-  if (!sd) return;
-  const s = new Date(sd), e = new Date(s);
-  e.setFullYear(e.getFullYear() + 1); e.setDate(e.getDate() - 1);
-  document.getElementById('policyEndDate').value = e.toISOString().split('T')[0];
-}
-
 function onBufferChange() {
   const buf = parseFloat(document.getElementById('bufferSI').value) || 0;
   document.getElementById('bufferTypeRow').style.display = buf > 0 ? 'block' : 'none';
@@ -605,7 +599,7 @@ function calculate() {
   const lasikY = document.querySelector('input[name=lasik]:checked').value === 'Y';
   const ayushY = document.querySelector('input[name=ayush]:checked').value === 'Y';
   const hdcY = document.querySelector('input[name=hdc]:checked').value === 'Y';
-  const riY = document.querySelector('input[name=reinstate]:checked').value === 'Y';
+  const riV = document.getElementById('reinstate').value;
   const bufferSI = gvf('bufferSI');
   const bufType = document.querySelector('input[name=bufType]:checked')?.value || 'all';
   const addLoadPct = gvf('addLoad');
@@ -677,8 +671,8 @@ function calculate() {
   if (dslMap[dslV]) items.push({label:'Disease Sub-Limits', sub:dslLbl[dslV], pct:dslMap[dslV]});
 
   // Co-pay
-  const cpMap = {'none':0,'10all':-0.07,'20all':-0.15,'10escp':-0.07,'20escp':-0.14,'10par':-0.035,'20par':-0.07};
-  const cpLbl = {'none':'None','10all':'10% All (−7%)','20all':'20% All (−15%)','10escp':'10% ESCP (−7%)','20escp':'20% ESCP (−14%)','10par':'10% Parents (−3.5%)','20par':'20% Parents (−7%)'};
+  const cpMap = {'none':0,'10all':-0.07,'20all':-0.15,'10escp_only':-0.07,'20escp_only':-0.14,'10par':-0.035,'20par':-0.07};
+  const cpLbl = {'none':'None','10all':'10% E/ESC/ESCP (−7%)','20all':'20% E/ESC/ESCP (−15%)','10escp_only':'10% ESCP only (−7%)','20escp_only':'20% ESCP only (−14%)','10par':'10% Parents ESCP (−3.5%)','20par':'20% Parents ESCP (−7%)'};
   if (cpMap[copayV]) items.push({label:'Co-pay', sub:cpLbl[copayV], pct:cpMap[copayV]});
 
   // Pre/Post Hosp
@@ -702,7 +696,8 @@ function calculate() {
   if (hdcY) items.push({label:'Hospital Daily Cash ₹1K/day', sub:'+1%', pct:0.01});
 
   // Reinstatement
-  if (riY) items.push({label:'Reinstatement of SI', sub:'+5%', pct:0.05});
+  if (riV === 'diff') items.push({label:'Reinstatement — Diff. Ailment (once/org)', sub:'+5%', pct:0.05});
+  // riV === 'same' → no loading, informational only
 
   // Additional Loading
   if (addLoadPct !== 0) items.push({label:'Additional Loading/Discount', sub:`${addLoadPct>0?'+':''}${addLoadPct}%`, pct:addLoadPct/100});
@@ -790,6 +785,7 @@ function calculate() {
     ['PED', pedN?'Waiting Period (−20%)':'Day 1 (Base)'],
     ['Room Rent', rrLbl[rrV]], ['DSL', dslLbl[dslV]], ['Co-pay', cpLbl[copayV]],
     ['Corporate Buffer', bufferAmt>0?`₹${bufferSI.toLocaleString('en-IN')} (${bufType==='all'?'All Illness':'CI Only'})`:'None'],
+    ['Reinstatement', riV==='diff'?'Diff. Ailment (+5%)':riV==='same'?'Same Ailment (info)':'Not Covered'],
     ['Brokerage', brkPct+'%'],
     ['Total Adj %', `${(totalPct*100).toFixed(1)}% on base`],
   ];
