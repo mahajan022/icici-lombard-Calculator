@@ -3,82 +3,90 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ICICI Lombard GHI Calculator</title>
+<title>Healthysure Facility Calculator</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;color:#1a1a2e;font-size:13px}
-:root{--red:#c8281f;--redd:#a82018;--redl:#fff0f0;--grn:#166534;--grnl:#f0fdf4;--amb:#92400e;--ambl:#fffbeb;--bdr:#e2e8f0;--bg:#f8fafc;--ink:#1e293b;--sub:#475569;--muted:#94a3b8}
-nav{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)}
-.logo{background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:3px;letter-spacing:.5px}
-.nav-title{color:#cbd5e1;font-size:13px;margin-left:12px;font-weight:500}
-.nav-badge{background:#1e3a5f;color:#93c5fd;font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;letter-spacing:.3px}
-.wrap{max-width:1120px;margin:0 auto;padding:20px 14px}
-.section-label{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1.2px;text-transform:uppercase;margin:20px 0 8px}
-.card{background:#fff;border:1px solid var(--bdr);border-radius:10px;margin-bottom:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.card-head{background:var(--bg);border-bottom:1px solid var(--bdr);padding:9px 16px;display:flex;align-items:center;gap:8px}
-.ch-dot{width:7px;height:7px;border-radius:50%;background:var(--red);flex-shrink:0}
+:root{
+  --teal:#0d9488;--teal2:#0f766e;--teal3:#134e4a;--teall:#f0fdfa;
+  --ink:#0f172a;--sub:#334155;--muted:#64748b;--bdr:#e2e8f0;--bg:#f8fafc;
+  --red:#dc2626;--grn:#15803d;--amb:#b45309;--ambl:#fffbeb;
+  --card:#ffffff;
+}
+body{font-family:'IBM Plex Sans',sans-serif;background:#f1f5f9;color:var(--ink);font-size:13px;min-height:100vh}
+nav{background:linear-gradient(135deg,var(--teal3),#1e3a5f);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+.logo-wrap{display:flex;align-items:center;gap:12px}
+.logo{background:var(--teal);color:#fff;font-size:11px;font-weight:700;padding:5px 12px;border-radius:4px;letter-spacing:.6px;font-family:'IBM Plex Mono',monospace}
+.nav-title{color:#cbd5e1;font-size:13px;font-weight:500}
+.nav-badge{background:rgba(13,148,136,.25);color:#5eead4;font-size:10px;font-weight:600;padding:4px 12px;border-radius:20px;border:1px solid rgba(94,234,212,.2);letter-spacing:.4px}
+.wrap{max-width:1140px;margin:0 auto;padding:24px 16px}
+.section-label{font-size:9.5px;font-weight:700;color:var(--muted);letter-spacing:1.4px;text-transform:uppercase;margin:24px 0 10px;display:flex;align-items:center;gap:8px}
+.section-label::before{content:'';display:block;width:3px;height:14px;background:var(--teal);border-radius:2px}
+.card{background:var(--card);border:1px solid var(--bdr);border-radius:12px;margin-bottom:14px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.card-head{background:var(--bg);border-bottom:1px solid var(--bdr);padding:10px 18px;display:flex;align-items:center;gap:8px}
+.ch-dot{width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0}
 .ch-title{font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px}
-.card-body{padding:16px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.field{display:flex;flex-direction:column;gap:4px}
-.field label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
-input[type=text],input[type=number],select{border:1.5px solid var(--bdr);border-radius:6px;padding:8px 10px;font-size:13px;color:var(--ink);background:#fff;outline:none;width:100%;font-family:inherit;transition:border-color .15s}
-input:focus,select:focus{border-color:var(--red)}
+.card-body{padding:18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:9.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+input[type=text],input[type=number],input[type=date],select{border:1.5px solid var(--bdr);border-radius:7px;padding:8px 11px;font-size:13px;color:var(--ink);background:#fff;outline:none;width:100%;font-family:'IBM Plex Sans',inherit;transition:border-color .15s}
+input:focus,select:focus{border-color:var(--teal)}
 select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2394a3b8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;-webkit-appearance:none;padding-right:28px}
-.hint{font-size:10.5px;color:var(--muted);margin-top:2px}
-.tog{display:flex;border:1.5px solid var(--bdr);border-radius:6px;overflow:hidden}
+.hint{font-size:10px;color:var(--muted);margin-top:2px;line-height:1.4}
+.tog{display:flex;border:1.5px solid var(--bdr);border-radius:7px;overflow:hidden}
 .tog input[type=radio]{display:none}
 .tog label{flex:1;text-align:center;padding:7px 5px;font-size:11.5px;font-weight:600;color:var(--sub);cursor:pointer;transition:all .12s;line-height:1.3}
 .tog label:not(:last-child){border-right:1px solid var(--bdr)}
-.tog input:checked+label{background:var(--ink);color:#fff}
+.tog input:checked+label{background:var(--teal3);color:#fff}
 
 /* DEMOGRAPHY */
 .demog-scroll{overflow-x:auto}
 table.dg{border-collapse:collapse;font-size:12px;white-space:nowrap;width:100%}
 table.dg th{padding:8px 8px;font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;background:var(--bg);border-bottom:2px solid var(--bdr);text-align:center}
-table.dg th:first-child{text-align:left;min-width:110px}
+table.dg th:first-child{text-align:left;min-width:100px}
 table.dg td{border-bottom:1px solid #f1f5f9;padding:2px 3px;text-align:center;background:#fff}
-table.dg .si-cell{text-align:left;padding:5px 10px;font-size:12px;font-weight:600;color:var(--sub);background:var(--bg);font-family:'Courier New',monospace}
+table.dg .si-cell{text-align:left;padding:5px 10px;font-size:12px;font-weight:600;color:var(--sub);background:var(--bg);font-family:'IBM Plex Mono',monospace}
 table.dg input[type=number]{border:1.5px solid transparent;width:52px;padding:5px 2px;text-align:center;font-size:13px;border-radius:4px;background:transparent;outline:none;font-family:inherit}
-table.dg input[type=number]:focus{border-color:var(--red);background:#fff}
-table.dg .tc{background:var(--bg)!important;font-weight:700;font-family:'Courier New',monospace;font-size:12px;color:var(--ink)!important;padding:5px 8px}
-.dg tr.tot-row td{background:#fff7ed;font-weight:700;color:var(--red);font-family:'Courier New',monospace;font-size:12px;border-top:2px solid #fed7aa}
-.dg tr.sel-row .si-cell{color:var(--red)!important;font-weight:700}
-.dg tr.sel-row td{background:#fff7ed!important}
+table.dg input[type=number]:focus{border-color:var(--teal);background:#fff}
+table.dg .tc{background:var(--bg)!important;font-weight:700;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink)!important;padding:5px 8px}
+.dg tr.tot-row td{background:#f0fdfa;font-weight:700;color:var(--teal2);font-family:'IBM Plex Mono',monospace;font-size:12px;border-top:2px solid #99f6e4}
+.dg tr.sel-row .si-cell{color:var(--teal)!important;font-weight:700}
+.dg tr.sel-row td{background:#f0fdfa!important}
 
 .actions{display:flex;gap:10px;margin:16px 0}
-.btn{border:none;border-radius:7px;padding:12px 28px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s}
-.btn-calc{background:var(--red);color:#fff;box-shadow:0 3px 10px rgba(200,40,31,.3)}
-.btn-calc:hover{background:var(--redd);transform:translateY(-1px)}
+.btn{border:none;border-radius:8px;padding:12px 28px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;letter-spacing:.2px}
+.btn-calc{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#fff;box-shadow:0 3px 12px rgba(13,148,136,.35)}
+.btn-calc:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(13,148,136,.4)}
 .btn-reset{background:#fff;color:var(--sub);border:1.5px solid var(--bdr)}
 .btn-reset:hover{border-color:#888}
 
 /* RESULTS */
 #results{display:none}
-.result-banner{display:grid;grid-template-columns:1fr 1px 1fr 1px 1fr 1px 1fr;background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:10px;padding:22px 24px;margin-bottom:14px;box-shadow:0 4px 15px rgba(0,0,0,.2)}
-.rb-div{background:#334155;align-self:stretch}
-.rb-item{padding:0 18px}
+.result-banner{display:grid;grid-template-columns:1fr 1px 1fr 1px 1fr 1px 1fr;background:linear-gradient(135deg,var(--teal3),#0f2d4a);border-radius:12px;padding:24px 28px;margin-bottom:14px;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.rb-div{background:rgba(255,255,255,.1);align-self:stretch}
+.rb-item{padding:0 20px}
 .rb-item:first-child{padding-left:0}
-.rb-lbl{font-size:9px;font-weight:700;color:#64748b;letter-spacing:.7px;text-transform:uppercase;margin-bottom:5px}
-.rb-val{font-size:26px;font-weight:700;color:#fff;font-family:'Courier New',monospace;line-height:1}
-.rb-val.hi{color:#f87171}
-.rb-sub{font-size:11px;color:#475569;margin-top:4px}
-.two-col{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;margin-bottom:12px}
+.rb-lbl{font-size:9px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.7px;text-transform:uppercase;margin-bottom:5px}
+.rb-val{font-size:26px;font-weight:700;color:#fff;font-family:'IBM Plex Mono',monospace;line-height:1}
+.rb-val.hi{color:#5eead4}
+.rb-sub{font-size:11px;color:rgba(255,255,255,.35);margin-top:4px}
+.two-col{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-bottom:14px}
 table.bup{width:100%;border-collapse:collapse;font-size:13px}
 table.bup td{padding:8px 14px;border-bottom:1px solid #f8fafc;color:var(--sub)}
-table.bup td:last-child{text-align:right;font-family:'Courier New',monospace;font-size:12.5px;font-weight:600;color:var(--ink)}
+table.bup td:last-child{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;color:var(--ink)}
 table.bup .disc td:last-child{color:var(--grn)}
 table.bup .load td:last-child{color:var(--red)}
 table.bup .sub td{background:var(--bg);font-weight:700;color:var(--ink);font-size:12.5px}
 table.bup .sep td{padding:1px;background:#f1f5f9;border:none}
-table.bup .grand td{background:#1a1a2e;color:#fff;font-size:14px;font-weight:700}
-table.bup .grand td:last-child{color:#f87171;font-size:15px}
+table.bup .grand td{background:var(--teal3);color:#fff;font-size:14px;font-weight:700}
+table.bup .grand td:last-child{color:#5eead4;font-size:15px}
 table.bup .gst-row td{background:var(--ambl);color:var(--amb)}
 table.bup .gst-row td:last-child{color:var(--amb)}
 .cond-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.ci{background:var(--bg);border:1px solid var(--bdr);border-radius:5px;padding:7px 10px}
+.ci{background:var(--bg);border:1px solid var(--bdr);border-radius:6px;padding:8px 11px}
 .cn{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px}
 .cv{font-size:12px;font-weight:600;color:var(--ink)}
 .cv.ok{color:var(--grn)}.cv.na{color:var(--muted)}.cv.ld{color:var(--red)}
@@ -87,51 +95,34 @@ table.bt th{padding:8px 12px;font-size:9px;font-weight:700;color:var(--muted);te
 table.bt th:first-child{text-align:left}
 table.bt td{padding:8px 12px;border-bottom:1px solid #f1f5f9;text-align:center;color:var(--sub)}
 table.bt td:first-child{text-align:left;font-weight:600;color:var(--ink)}
-table.bt .mono{font-family:'Courier New',monospace}
-table.bt .tot td{background:var(--redl);font-weight:700;color:var(--red);border-top:2px solid #fca5a5}
+table.bt .tot td{background:var(--teall);font-weight:700;color:var(--teal2);border-top:2px solid #99f6e4}
 table.rt{width:100%;border-collapse:collapse;font-size:11.5px}
 table.rt th{padding:7px 8px;font-size:8.5px;font-weight:700;color:var(--muted);text-transform:uppercase;background:var(--bg);border-bottom:2px solid var(--bdr);text-align:center;white-space:nowrap}
-table.rt th:first-child{text-align:left;min-width:110px}
-table.rt td{padding:6px 8px;border-bottom:1px solid #f1f5f9;text-align:center;font-family:'Courier New',monospace;font-size:11px;color:var(--muted)}
+table.rt th:first-child{text-align:left;min-width:100px}
+table.rt td{padding:6px 8px;border-bottom:1px solid #f1f5f9;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted)}
 table.rt td:first-child{font-family:inherit;color:var(--ink);font-weight:600;font-size:12px;text-align:left}
-table.rt tr.sel td{background:var(--redl);color:var(--red);font-weight:700}
-table.rt tr.sel td:first-child{color:var(--red)}
-.notice{font-size:11px;color:var(--muted);line-height:1.7;padding:12px 16px;background:var(--bg);border:1px solid var(--bdr);border-radius:6px;margin-top:12px}
-.warn{background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:9px 13px;font-size:12px;color:#92400e;margin-bottom:10px}
-.city-note{font-size:11px;color:var(--muted);margin-top:3px;font-style:italic}
+table.rt tr.sel td{background:var(--teall);color:var(--teal2);font-weight:700}
+table.rt tr.sel td:first-child{color:var(--teal2)}
+.warn{background:#fffbeb;border:1px solid #fde68a;border-radius:7px;padding:10px 14px;font-size:12px;color:#92400e;margin-bottom:12px}
+.warn-red{background:#fef2f2;border:1px solid #fecaca;border-radius:7px;padding:10px 14px;font-size:12px;color:#991b1b;margin-bottom:12px}
+.notice{font-size:11px;color:var(--muted);line-height:1.7;padding:12px 16px;background:var(--bg);border:1px solid var(--bdr);border-radius:7px;margin-top:12px}
+.divider{height:1px;background:var(--bdr);margin:14px 0}
 </style>
 </head>
 <body>
 <nav>
-  <div style="display:flex;align-items:center">
-    <span class="logo">ICICI LOMBARD</span>
-    <span class="nav-title">GHI Premium Calculator · OTC Rates</span>
+  <div class="logo-wrap">
+    <span class="logo">HEALTHYSURE</span>
+    <span class="nav-title">Facility Premium Calculator · ICICI Lombard GHI</span>
   </div>
-  <span class="nav-badge">Sept 2025 · Exact Excel Formula Match</span>
+  <span class="nav-badge">Facility Rates · Max 500 Lives · Fresh / Rollover Only</span>
 </nav>
 
 <div class="wrap">
 
-<!-- EXCEL UPLOAD CARD -->
-<div class="card" style="border:2px dashed #c8281f;background:#fff8f8">
-  <div class="card-head" style="background:#fff0f0">
-    <div class="ch-dot" style="background:#c8281f"></div>
-    <div class="ch-title" style="color:#c8281f">📂 Upload GHI Input Excel — Auto-Fill All Fields</div>
-  </div>
-  <div class="card-body">
-    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
-      <div>
-        <input type="file" id="xlUpload" accept=".xlsx,.xls" style="display:none" onchange="parseExcel(this)">
-        <button class="btn btn-calc" style="font-size:13px;padding:10px 20px" onclick="document.getElementById('xlUpload').click()">
-          📂 Upload GHI Input Excel (.xlsx)
-        </button>
-      </div>
-      <div id="xlStatus" style="font-size:12px;color:#475569">
-        Upload your <strong>Offline_GHI_OTC_Sept2025.xlsx</strong> — all fields will auto-fill from the <strong>GHI Input</strong> sheet.
-      </div>
-    </div>
-    <div id="xlPreview" style="display:none;margin-top:12px;padding:10px;background:#f0fdf4;border-radius:6px;font-size:12px;color:#166534;border:1px solid #bbf7d0"></div>
-  </div>
+<!-- ELIGIBILITY NOTICE -->
+<div class="warn-red" style="margin-top:4px">
+  ⚠️ <strong>Facility Criteria:</strong> Fresh Business & Market Rollover with ICR &lt; 150% only · Max 500 lives · Min 10 employees / 25 lives · Cannot be used for ICICI own renewals (until April 2026)
 </div>
 
 <div class="section-label">Client & Policy Details</div>
@@ -140,81 +131,77 @@ table.rt tr.sel td:first-child{color:var(--red)}
   <div class="card-body">
     <div class="grid4">
       <div class="field"><label>Client Name</label><input type="text" id="clientName" placeholder="Company name"></div>
+      <div class="field"><label>Policy Start Date</label><input type="date" id="policyStartDate" onchange="onDateChange()"></div>
+      <div class="field"><label>Policy End Date</label><input type="date" id="policyEndDate" readonly style="background:#f8fafc;color:#64748b"><div class="hint">Auto: 1 year − 1 day</div></div>
+      <div class="field"><label>Brokerage (%)</label><input type="number" id="brokerage" value="15" min="0" max="25" step="0.5"><div class="hint">Grossed up on net premium</div></div>
+    </div>
+    <div class="grid4" style="margin-top:12px">
       <div class="field">
-        <label>Corporate Office City</label>
-        <input type="text" id="cityInput" list="cityDL" placeholder="Type to search city…" oninput="onCityInput()" autocomplete="off">
-        <datalist id="cityDL"></datalist>
-        <div class="city-note" id="cityNote">Enter city to see category &amp; loading</div>
-      </div>
-      <div class="field">
-        <label>Policy Nature</label>
-        <select id="policyNature">
-          <option value="fresh">Fresh Quote</option>
-          <option value="renewal">Lombard Renewal</option>
+        <label>Policy Type</label>
+        <select id="policyType">
+          <option value="fresh">Fresh Business (−10% discount)</option>
           <option value="rollover">Market Rollover</option>
         </select>
       </div>
       <div class="field">
-        <label>Brokerage (%)</label>
-        <input type="number" id="brokerage" value="7.5" min="0" max="20" step="0.5">
-        <div class="hint">Grossed up (standard 7.5%)</div>
+        <label>ICR (Claim Ratio %)</label>
+        <input type="number" id="icr" value="0" min="0" max="300" step="1" oninput="onICRChange()">
+        <div class="hint" id="icrNote">0% = Fresh business</div>
       </div>
-    </div>
-    <div class="grid4" style="margin-top:10px">
-      <div class="field"><label>Policy Start Date</label><input type="date" id="policyStartDate" onchange="onDateChange()"></div>
-      <div class="field"><label>Policy End Date</label><input type="date" id="policyEndDate" readonly style="background:#f8fafc;color:#64748b"><div class="hint">Auto: 1 year − 1 day from start</div></div>
-      <div class="field"><label>IM ID</label><input type="text" id="imId" placeholder="IM-XXXXXXX"></div>
-      <div class="field"><label>Industry Type</label><input type="text" id="industryType" placeholder="e.g. Engineering"></div>
+      <div class="field"><label>Previous Insurer</label><input type="text" id="prevInsurer" placeholder="e.g. Star Health / NA"></div>
+      <div class="field"><label>Industry / Vertical</label><input type="text" id="industry" placeholder="e.g. IT, Manufacturing"></div>
     </div>
   </div>
 </div>
 
 <div class="section-label">Policy Structure</div>
 <div class="card">
-  <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Sum Insured, Floater &amp; Family</div></div>
+  <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Sum Insured, Floater & Family</div></div>
   <div class="card-body">
     <div class="grid4">
       <div class="field">
         <label>Sum Insured per Family</label>
         <select id="si" onchange="onSIChange()">
-          <option value="50000">₹50,000</option>
           <option value="100000">₹1,00,000</option>
-          <option value="150000">₹1,50,000</option>
           <option value="200000">₹2,00,000</option>
-          <option value="250000">₹2,50,000</option>
           <option value="300000">₹3,00,000</option>
-          <option value="350000">₹3,50,000</option>
           <option value="400000">₹4,00,000</option>
-          <option value="450000">₹4,50,000</option>
           <option value="500000" selected>₹5,00,000</option>
           <option value="600000">₹6,00,000</option>
           <option value="700000">₹7,00,000</option>
           <option value="800000">₹8,00,000</option>
-          <option value="900000">₹9,00,000</option>
-          <option value="1000000">₹10,00,000</option>
         </select>
       </div>
       <div class="field">
-        <label>Floater / Individual</label>
+        <label>Floater / Non-Floater</label>
         <div class="tog">
-          <input type="radio" name="floater" id="fY" value="Y" checked><label for="fY">Floater (−10%)</label>
-          <input type="radio" name="floater" id="fN" value="N"><label for="fN">Individual</label>
+          <input type="radio" name="floater" id="fY" value="Y" checked><label for="fY">Floater (Base)</label>
+          <input type="radio" name="floater" id="fN" value="N"><label for="fN">Non-Floater (+15%)</label>
         </div>
       </div>
       <div class="field">
         <label>Family Definition</label>
         <select id="famDef">
-          <option value="ESK">Employee + Spouse + Kids</option>
-          <option value="ESKP">Emp + Spouse + Kids + Parents</option>
-          <option value="ES">Employee + Spouse</option>
+          <option value="ESC">Employee + Spouse + Children</option>
+          <option value="ESCP">Emp + Spouse + Child + Parents/PIL</option>
           <option value="E">Employee Only</option>
+          <option value="ES">Employee + Spouse</option>
         </select>
       </div>
       <div class="field">
-        <label>Add / Delete of Lives</label>
-        <div class="tog">
-          <input type="radio" name="addel" id="adP" value="pro" checked><label for="adP">Pro-Rata (+5%)</label>
-          <input type="radio" name="addel" id="adS" value="sp"><label for="adS">Short Period</label>
+        <label>Corporate Buffer SI (₹)</label>
+        <input type="number" id="bufferSI" value="0" min="0" step="100000" oninput="onBufferChange()">
+        <div class="hint">0 = No buffer</div>
+      </div>
+    </div>
+    <div id="bufferTypeRow" style="display:none;margin-top:12px">
+      <div class="grid4">
+        <div class="field">
+          <label>Corporate Buffer Type</label>
+          <div class="tog">
+            <input type="radio" name="bufType" id="btAll" value="all" checked><label for="btAll">All Illness (+15% of Buffer SI)</label>
+            <input type="radio" name="bufType" id="btCI" value="ci"><label for="btCI">CI Only (+8% of Buffer SI)</label>
+          </div>
         </div>
       </div>
     </div>
@@ -222,78 +209,28 @@ table.rt tr.sel td:first-child{color:var(--red)}
 </div>
 
 <div class="card">
-  <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Room Rent, Co-pay &amp; Disease Sub-Limits</div></div>
+  <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Waiting Periods</div></div>
   <div class="card-body">
     <div class="grid3">
       <div class="field">
-        <label>Room Rent Cap</label>
-        <select id="roomRent">
-          <option value="no_limit">No Limit (+17.5%)</option>
-          <option value="2pct">2% SI / 4% ICU (+12.5%)</option>
-          <option value="1pct">1% SI / 2% ICU (0% — base)</option>
-        </select>
-        <div class="hint">Base rate = 1% SI. No Limit = +17.5% loading</div>
-      </div>
-      <div class="field">
-        <label>Co-Payment</label>
-        <select id="copay">
-          <option value="Nil">Nil Co-pay (+10% loading)</option>
-          <option value="10">10% Co-pay (−10%)</option>
-          <option value="12.5">12.5% Co-pay (−12.5%)</option>
-          <option value="15">15% Co-pay (−15%)</option>
-          <option value="17.5">17.5% Co-pay (−17.5%)</option>
-          <option value="20">20% Co-pay (−20%)</option>
-          <option value="25">25% Co-pay (−25%)</option>
-          <option value="30">30% Co-pay (−30%)</option>
-          <option value="40">40% Co-pay (−40%)</option>
-          <option value="50">50% Co-pay (−50%)</option>
-        </select>
-        <div class="hint">Nil copay = +10% loading (Excel Row 24)</div>
-      </div>
-      <div class="field">
-        <label>Disease Sub-Limits (DSL)</label>
-        <select id="dsl">
-          <option value="No Limit">No Limit (+17.5%)</option>
-          <option value="Default">Default Sub-Limits (0%)</option>
-          <option value="Higher Limit">Higher Limit (+7.5%)</option>
-          <option value="Lower Limit">Lower Limit (−5%)</option>
-        </select>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Waiting Periods &amp; PED</div></div>
-  <div class="card-body">
-    <div class="grid4">
-      <div class="field">
         <label>Pre-Existing Disease (PED)</label>
         <div class="tog">
-          <input type="radio" name="ped" id="pedY" value="Y" checked><label for="pedY">Covered (+20%)</label>
-          <input type="radio" name="ped" id="pedN" value="N"><label for="pedN">Not Covered</label>
+          <input type="radio" name="ped" id="pedY" value="Y" checked><label for="pedY">Day 1 (Base)</label>
+          <input type="radio" name="ped" id="pedN" value="N"><label for="pedN">Waiting Period (−20%)</label>
         </div>
-      </div>
-      <div class="field">
-        <label>1st Year Exclusion Waiver</label>
-        <div class="tog">
-          <input type="radio" name="excl1" id="e1Y" value="Y" checked><label for="e1Y">Waived</label>
-          <input type="radio" name="excl1" id="e1N" value="N"><label for="e1N">Applicable</label>
-        </div>
-        <div class="hint">Only affects if PED covered</div>
       </div>
       <div class="field">
         <label>30-Day Waiting Period</label>
         <div class="tog">
-          <input type="radio" name="w30" id="w30Y" value="Y" checked><label for="w30Y">Waived</label>
-          <input type="radio" name="w30" id="w30N" value="N"><label for="w30N">Applicable</label>
+          <input type="radio" name="w30" id="w30Y" value="Y" checked><label for="w30Y">Waived (Base)</label>
+          <input type="radio" name="w30" id="w30N" value="N"><label for="w30N">Applicable (−5%)</label>
         </div>
       </div>
       <div class="field">
-        <label>PPN Discount</label>
+        <label>1 / 2 Year Waiting Period</label>
         <div class="tog">
-          <input type="radio" name="ppn" id="ppnY" value="Y"><label for="ppnY">Yes (−10%)</label>
-          <input type="radio" name="ppn" id="ppnN" value="N" checked><label for="ppnN">No</label>
+          <input type="radio" name="w12" id="w12Y" value="Y" checked><label for="w12Y">Waived (Base)</label>
+          <input type="radio" name="w12" id="w12N" value="N"><label for="w12N">Applicable (−15%)</label>
         </div>
       </div>
     </div>
@@ -301,74 +238,70 @@ table.rt tr.sel td:first-child{color:var(--red)}
 </div>
 
 <div class="card">
-  <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Maternity &amp; Related Benefits</div></div>
+  <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Maternity & Related Benefits</div></div>
   <div class="card-body">
     <div class="grid4">
       <div class="field">
         <label>Maternity Cover</label>
         <div class="tog">
-          <input type="radio" name="mat" id="matY" value="Y" checked><label for="matY">Covered</label>
-          <input type="radio" name="mat" id="matN" value="N"><label for="matN">Not Covered</label>
-        </div>
-      </div>
-      <div class="field">
-        <label>Maternity from Day 1</label>
-        <div class="tog">
-          <input type="radio" name="matD1" id="md1Y" value="Y" checked><label for="md1Y">Day 1</label>
-          <input type="radio" name="matD1" id="md1N" value="N"><label for="md1N">9-Month Wait</label>
+          <input type="radio" name="mat" id="matY" value="Y" checked><label for="matY">Included (Base)</label>
+          <input type="radio" name="mat" id="matN" value="N"><label for="matN">Deleted (−15%)</label>
         </div>
       </div>
       <div class="field">
         <label>Maternity Limit</label>
         <select id="matLimit">
-          <option value="Metro25k">Metro ₹25K–35K / Non-Metro ₹20K–30K</option>
-          <option value="Metro35k40k">Metro ₹35K–40K / Non-Metro ₹30K–35K</option>
-          <option value="Metro35k50k">Metro ₹35K–50K / Non-Metro ₹35K–50K</option>
-          <option value="Metro50k40k">Metro ₹50K–50K / Non-Metro ₹40K–40K</option>
-          <option value="Metro50k50k" selected>Metro ₹50K–50K / Non-Metro ₹50K–50K (Default)</option>
-          <option value="Metro50k75k">Metro ₹50K–75K / Non-Metro ₹50K–75K</option>
-          <option value="Metro60k">Metro ₹60K–60K / Non-Metro ₹60K–60K</option>
-          <option value="Metro75k">Metro ₹75K–75K / Non-Metro ₹75K–75K</option>
-          <option value="Metro75k1L">Metro ₹75K–1L / Non-Metro ₹75K–1L</option>
-          <option value="Metro1L">Metro ₹1L–1L / Non-Metro ₹1L–1L</option>
+          <option value="nd35cs35">ND ₹35K / CS ₹35K (−5%)</option>
+          <option value="nd35cs50">ND ₹35K / CS ₹50K (−3%)</option>
+          <option value="nd50cs50" selected>ND ₹50K / CS ₹50K (Base)</option>
+          <option value="nd50cs75">ND ₹50K / CS ₹75K (+5%)</option>
+          <option value="nd75cs75">ND ₹75K / CS ₹75K (Base)</option>
+          <option value="nd1lcs1l">ND ₹1L / CS ₹1L (+12%)</option>
         </select>
       </div>
+      <div class="field">
+        <label>9-Month Maternity Waiting</label>
+        <div class="tog">
+          <input type="radio" name="mat9m" id="m9Y" value="Y" checked><label for="m9Y">Waived (Base)</label>
+          <input type="radio" name="mat9m" id="m9N" value="N"><label for="m9N">Applicable (−5%)</label>
+        </div>
+      </div>
+      <div class="field">
+        <label>Life-Threatening Mat. Case</label>
+        <div class="tog">
+          <input type="radio" name="matLT" id="ltY" value="Y" checked><label for="ltY">Covered (Base)</label>
+          <input type="radio" name="matLT" id="ltN" value="N"><label for="ltN">Excluded (−1%)</label>
+        </div>
+      </div>
     </div>
-    <div class="grid4" style="margin-top:12px">
+    <div class="divider"></div>
+    <div class="grid4">
       <div class="field">
         <label>Baby Day 1 Cover</label>
         <div class="tog">
-          <input type="radio" name="baby" id="byY" value="Y" checked><label for="byY">Covered (+8%)</label>
-          <input type="radio" name="baby" id="byN" value="N"><label for="byN">Not Covered</label>
+          <input type="radio" name="baby" id="bY" value="Y" checked><label for="bY">Covered (Base)</label>
+          <input type="radio" name="baby" id="bN" value="N"><label for="bN">Deleted (−0.5%)</label>
         </div>
       </div>
       <div class="field">
-        <label>Pre/Post Natal</label>
+        <label>Pre/Post Natal ₹10K</label>
         <div class="tog">
-          <input type="radio" name="ppnat" id="ppY" value="Y" checked><label for="ppY">Yes (+2%)</label>
-          <input type="radio" name="ppnat" id="ppN" value="N"><label for="ppN">No</label>
+          <input type="radio" name="ppnat" id="ppY" value="Y"><label for="ppY">Covered (+2%)</label>
+          <input type="radio" name="ppnat" id="ppN" value="N" checked><label for="ppN">Base</label>
         </div>
       </div>
       <div class="field">
-        <label>Ambulance Cover</label>
-        <select id="ambulance">
-          <option value="1000">₹1,000</option>
-          <option value="1500">₹1,500</option>
-          <option value="2000" selected>₹2,000 (Standard)</option>
-          <option value="2500">₹2,500</option>
-          <option value="3000">₹3,000</option>
-          <option value="3500">₹3,500</option>
-          <option value="4000">₹4,000</option>
-          <option value="4500">₹4,500</option>
-          <option value="5000">₹5,000</option>
-        </select>
-        <div class="hint">Formula: Lives × 0.02 × (Cover − 1000)</div>
+        <label>Newborn Vaccination ₹5K</label>
+        <div class="tog">
+          <input type="radio" name="nbvax" id="nvY" value="Y"><label for="nvY">Covered (+3%)</label>
+          <input type="radio" name="nbvax" id="nvN" value="N" checked><label for="nvN">Base</label>
+        </div>
       </div>
       <div class="field">
-        <label>R&amp;C / Claim Intimation Waiver</label>
+        <label>Well Baby ₹10K</label>
         <div class="tog">
-          <input type="radio" name="rnc" id="rncY" value="Y" checked><label for="rncY">Yes (+8%)</label>
-          <input type="radio" name="rnc" id="rncN" value="N"><label for="rncN">No</label>
+          <input type="radio" name="wellbaby" id="wbY" value="Y"><label for="wbY">Covered (+2%)</label>
+          <input type="radio" name="wellbaby" id="wbN" value="N" checked><label for="wbN">Base</label>
         </div>
       </div>
     </div>
@@ -376,66 +309,102 @@ table.rt tr.sel td:first-child{color:var(--red)}
 </div>
 
 <div class="card">
-  <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Additional Adjustments</div></div>
+  <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Room Rent, DSL & Co-pay</div></div>
+  <div class="card-body">
+    <div class="grid3">
+      <div class="field">
+        <label>Room Rent Cap</label>
+        <select id="roomRent">
+          <option value="none">No Capping (Base)</option>
+          <option value="1pct">1% SI / 2% ICU (−8%)</option>
+          <option value="2pct">2% SI / 4% ICU (−6%)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Disease Sub-Limits (DSL)</label>
+        <select id="dsl">
+          <option value="none">Not Applicable (Base)</option>
+          <option value="default">Default Sub-Limits (−5%)</option>
+          <option value="higher">Higher Sub-Limits (−4%)</option>
+          <option value="lower">Lower Sub-Limits (−6%)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Co-pay</label>
+        <select id="copay">
+          <option value="none">Not Applicable (Base)</option>
+          <option value="10all">10% All Members (−7%)</option>
+          <option value="20all">20% All Members (−15%)</option>
+          <option value="10escp">10% ESCP (−7%)</option>
+          <option value="20escp">20% ESCP (−14%)</option>
+          <option value="10par">10% Parents Only (−3.5%)</option>
+          <option value="20par">20% Parents Only (−7%)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Additional Benefits & Loadings</div></div>
   <div class="card-body">
     <div class="grid4">
       <div class="field">
-        <label>Additional Loading / Discount (%)</label>
-        <input type="number" id="addLoad" value="-50" min="-100" max="200" step="0.5">
-        <div class="hint">Negative = discount. e.g. −50 = 50% off</div>
-      </div>
-      <div class="field">
-        <label>Physical Health Card</label>
+        <label>Pre/Post Hospitalization</label>
         <div class="tog">
-          <input type="radio" name="phc" id="phcN" value="N" checked><label for="phcN">No</label>
-          <input type="radio" name="phc" id="phcY" value="Y"><label for="phcY">Yes (+₹10/life)</label>
+          <input type="radio" name="prepost" id="pp30Y" value="Y"><label for="pp30Y">60+90 Days (+1.5%)</label>
+          <input type="radio" name="prepost" id="pp30N" value="N" checked><label for="pp30N">30+60 Days (Base)</label>
         </div>
       </div>
       <div class="field">
-        <label>Corporate Floater Buffer</label>
-        <div class="tog">
-          <input type="radio" name="cf" id="cfN" value="N" checked><label for="cfN">No</label>
-          <input type="radio" name="cf" id="cfY" value="Y"><label for="cfY">Yes</label>
-        </div>
-      </div>
-      <div class="field">
-        <label>Maternity Claim Discount (Renewal ICR)</label>
-        <select id="matClaimICR">
-          <option value="0">Fresh / ICR 0–110% → 0%</option>
-          <option value="-0.03">Renewal ICR 110–150% → −3%</option>
-          <option value="-0.05">Renewal ICR 150–200% → −5%</option>
+        <label>Road Ambulance</label>
+        <select id="ambulance">
+          <option value="none">Standard (Base)</option>
+          <option value="1pct">1% SI per event (+2%)</option>
+          <option value="cardiac">Cardiac 2% SI (+3%)</option>
         </select>
-        <div class="hint">Only for renewals with maternity claim history</div>
+      </div>
+      <div class="field">
+        <label>Modern Age Treatment</label>
+        <div class="tog">
+          <input type="radio" name="modern" id="modY" value="Y"><label for="modY">100% SI (+4%)</label>
+          <input type="radio" name="modern" id="modN" value="N" checked><label for="modN">50% SI (Base)</label>
+        </div>
+      </div>
+      <div class="field">
+        <label>Lasik Surgery (±5D)</label>
+        <div class="tog">
+          <input type="radio" name="lasik" id="lsY" value="Y"><label for="lsY">Covered (+1%)</label>
+          <input type="radio" name="lasik" id="lsN" value="N" checked><label for="lsN">±6.5D (Base)</label>
+        </div>
       </div>
     </div>
-
     <div class="grid4" style="margin-top:12px">
       <div class="field">
-        <label>OPD Per Family (₹)</label>
-        <input type="number" id="opdFam" value="0" min="0" step="500">
-        <div class="hint">Informational only — not added to premium (separate OPD policy)</div>
-      </div>
-      <div class="field">
-        <label>Health Check-ups</label>
+        <label>AYUSH 100% SI</label>
         <div class="tog">
-          <input type="radio" name="hcu" id="hcuN" value="N" checked><label for="hcuN">No</label>
-          <input type="radio" name="hcu" id="hcuY" value="Y"><label for="hcuY">Yes</label>
-        </div>
-        <div class="hint">Informational — shown in policy summary</div>
-      </div>
-      <div class="field">
-        <label>Wellness &amp; Preventive Care</label>
-        <div class="tog">
-          <input type="radio" name="wellness" id="wlN" value="N" checked><label for="wlN">NA</label>
-          <input type="radio" name="wellness" id="wlY" value="Y"><label for="wlY">Included</label>
+          <input type="radio" name="ayush" id="ayY" value="Y"><label for="ayY">Yes (+1%)</label>
+          <input type="radio" name="ayush" id="ayN" value="N" checked><label for="ayN">50% SI (Base)</label>
         </div>
       </div>
       <div class="field">
-        <label>Tele Health</label>
+        <label>Hospital Daily Cash ₹1K/day</label>
         <div class="tog">
-          <input type="radio" name="teleH" id="tlN" value="N" checked><label for="tlN">No</label>
-          <input type="radio" name="teleH" id="tlY" value="Y"><label for="tlY">Yes</label>
+          <input type="radio" name="hdc" id="hdY" value="Y"><label for="hdY">Yes (+1%)</label>
+          <input type="radio" name="hdc" id="hdN" value="N" checked><label for="hdN">No</label>
         </div>
+      </div>
+      <div class="field">
+        <label>Reinstatement of SI</label>
+        <div class="tog">
+          <input type="radio" name="reinstate" id="riY" value="Y"><label for="riY">Yes (+5%)</label>
+          <input type="radio" name="reinstate" id="riN" value="N" checked><label for="riN">No</label>
+        </div>
+      </div>
+      <div class="field">
+        <label>Additional Loading/Discount (%)</label>
+        <input type="number" id="addLoad" value="0" min="-100" max="200" step="0.5">
+        <div class="hint">Negative = discount. e.g. −10 = 10% off</div>
       </div>
     </div>
   </div>
@@ -443,9 +412,9 @@ table.rt tr.sel td:first-child{color:var(--red)}
 
 <div class="section-label">Demography (Lives by Sum Insured × Age Band)</div>
 <div class="card">
-  <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Enter lives per age band for selected SI — matches GHI Input sheet layout</div></div>
+  <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Enter lives per age band for selected SI</div></div>
   <div class="card-body">
-    <div class="warn">⚡ Enter lives only in the <strong>selected SI row</strong> (highlighted in orange). Employee Count is used for per-employee cost calculation.</div>
+    <div class="warn">⚡ Enter lives in the <strong>selected SI row</strong> (highlighted in teal). Employee Count = for per-employee cost. <strong>Min 25 lives / Max 500 lives.</strong></div>
     <div class="demog-scroll"><table class="dg" id="demogTbl"></table></div>
   </div>
 </div>
@@ -483,615 +452,99 @@ table.rt tr.sel td:first-child{color:var(--red)}
     </div>
   </div>
 
+  <div id="uwWarn" style="display:none"></div>
+
   <div class="two-col">
     <div class="card">
-      <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Premium Build-Up (Exact Excel Logic — All % on After-City Base)</div></div>
+      <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Premium Build-Up</div></div>
       <div class="card-body" style="padding:0"><table class="bup" id="bupTbl"></table></div>
     </div>
     <div>
-      <div class="card" style="margin-bottom:12px">
+      <div class="card" style="margin-bottom:14px">
         <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Policy Conditions Summary</div></div>
         <div class="card-body"><div class="cond-grid" id="condGrid"></div></div>
-      </div>
-      <div class="card">
-        <div class="card-head"><div class="ch-dot"></div><div class="ch-title">City Risk Info</div></div>
-        <div class="card-body" id="cityInfo"></div>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Age Band Premium Breakdown</div></div>
+    <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Age Band Breakdown</div></div>
     <div class="card-body" style="padding:0;overflow-x:auto"><table class="bt" id="bandTbl"></table></div>
   </div>
 
   <div class="card">
-    <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Rack Rate Card (Per Life / Year, Base Rates) — Selected SI Row Highlighted</div></div>
+    <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Facility Rate Card (Per Life / Year, Excl. GST) — Selected SI Highlighted</div></div>
     <div class="card-body" style="padding:0;overflow-x:auto"><table class="rt" id="rateTbl"></table></div>
   </div>
 
-<div class="section-label" style="margin-top:28px">➕ Mid-Term Addition / Deletion Calculator</div>
-<div class="card" style="border:2px solid #1e3a5f">
-  <div class="card-head" style="background:#1e293b">
-    <div class="ch-dot" style="background:#3b82f6"></div>
-    <div class="ch-title" style="color:#93c5fd">Add/Del Premium Calculator — Pro-Rata on Add/Del Rates</div>
-  </div>
-  <div class="card-body">
-    <div class="grid4" style="margin-bottom:12px">
-      <div class="field">
-        <label>Sum Insured</label>
-        <select id="adSI">
-          <option value="50000">₹50,000</option>
-          <option value="100000">₹1,00,000</option>
-          <option value="150000">₹1,50,000</option>
-          <option value="200000">₹2,00,000</option>
-          <option value="250000">₹2,50,000</option>
-          <option value="300000">₹3,00,000</option>
-          <option value="350000">₹3,50,000</option>
-          <option value="400000">₹4,00,000</option>
-          <option value="450000">₹4,50,000</option>
-          <option value="500000" selected>₹5,00,000</option>
-          <option value="600000">₹6,00,000</option>
-          <option value="700000">₹7,00,000</option>
-          <option value="800000">₹8,00,000</option>
-          <option value="900000">₹9,00,000</option>
-          <option value="1000000">₹10,00,000</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Addition Date</label>
-        <input type="date" id="adAddDate" onchange="adCalcDays()" oninput="adCalcDays()">
-      </div>
-      <div class="field">
-        <label>Policy End Date</label>
-        <input type="date" id="adEndDate" onchange="adCalcDays()" oninput="adCalcDays()">
-        <div class="hint" id="adDaysNote">Enter dates to see remaining days</div>
-      </div>
-      <div class="field">
-        <label>Brokerage (%)</label>
-        <input type="number" id="adBrk" value="7.5" min="0" max="20" step="0.5">
-      </div>
-    </div>
-
-    <!-- Lives input table -->
-    <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Enter Lives Being Added (by Age Band)</div>
-    <div style="overflow-x:auto;margin-bottom:16px">
-      <table class="bt" id="adLivesTable" style="min-width:700px">
-        <thead>
-          <tr>
-            <th style="text-align:left;padding:8px 10px;background:#f8fafc;font-size:10px;color:#64748b;font-weight:700">RELATIONSHIP</th>
-            <th style="padding:8px 6px;background:#f8fafc;font-size:10px;color:#64748b;font-weight:700;text-align:center">3M–18</th>
-            <th style="padding:8px 6px;background:#f8fafc;font-size:10px;color:#64748b;font-weight:700;text-align:center">19–35</th>
-            <th style="padding:8px 6px;background:#f8fafc;font-size:10px;color:#64748b;font-weight:700;text-align:center">36–45</th>
-            <th style="padding:8px 6px;background:#f8fafc;font-size:10px;color:#64748b;font-weight:700;text-align:center">46–55</th>
-            <th style="padding:8px 6px;background:#f8fafc;font-size:10px;color:#64748b;font-weight:700;text-align:center">56–60</th>
-            <th style="padding:8px 6px;background:#f8fafc;font-size:10px;color:#64748b;font-weight:700;text-align:center">61–65</th>
-            <th style="padding:8px 6px;background:#f8fafc;font-size:10px;color:#64748b;font-weight:700;text-align:center">66–70</th>
-            <th style="padding:8px 6px;background:#f8fafc;font-size:10px;color:#64748b;font-weight:700;text-align:center">71–75</th>
-            <th style="padding:8px 6px;background:#f8fafc;font-size:10px;color:#64748b;font-weight:700;text-align:center">76–80</th>
-            <th style="padding:8px 6px;background:#f8fafc;font-size:10px;color:#64748b;font-weight:700;text-align:center">TOTAL</th>
-          </tr>
-        </thead>
-        <tbody id="adLivesTbody"></tbody>
-      </table>
-    </div>
-
-    <button class="btn btn-calc" onclick="calcAddDel()" style="font-size:13px;padding:10px 24px">▶ Calculate Add/Del Premium</button>
-
-    <!-- Result -->
-    <div id="adResult" style="display:none;margin-top:16px"></div>
-  </div>
-</div>
-
-
   <div class="notice">
-    <strong>Formula (exact Excel match):</strong> Base = Σ(lives × rack_rate) · Scale = base/total_lives×50 · City Cat Disc = VLOOKUP(city, cat_table) · col12_AC = scaled_base × (1+cat_disc) · All % loadings applied on col12_AC simultaneously (not cumulative) · Ambulance = lives × 0.02 × (cover−1000) · Brokerage grossed up = risk / (1−brk%) · GST = net × 18%. Verified: Bangalore 27 lives ₹5L SI → Gross ₹3,09,763 ✓
+    <strong>Formula:</strong> Base = Σ(lives × facility_rate) · All % adjustments applied on base simultaneously · Corporate Buffer = flat add-on · ICR discount applied on final · Brokerage grossed up = net/(1−brk%) · GST = net × 18% · <em>Rates from Healthysure Facility Rate Sheet (Excl. GST)</em>
   </div>
 </div>
+
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
-// ══════════════════════════════════════════════════
-// EXCEL AUTO-FILL
-// ══════════════════════════════════════════════════
-function parseExcel(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const status = document.getElementById('xlStatus');
-  const preview = document.getElementById('xlPreview');
-  status.innerHTML = '⏳ Reading file...';
+// ══════════════════════════════════════════
+// DATA — Healthysure Facility Rates (Excl GST)
+// ══════════════════════════════════════════
+const SI_LIST = [100000,200000,300000,400000,500000,600000,700000,800000];
+const SI_LABELS = ['₹1,00,000','₹2,00,000','₹3,00,000','₹4,00,000','₹5,00,000','₹6,00,000','₹7,00,000','₹8,00,000'];
+const BANDS = ['0–18 yrs','19–35 yrs','36–45 yrs','46–55 yrs','56–60 yrs','61–65 yrs','66–70 yrs','71–75 yrs','76–80 yrs'];
 
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const wb = XLSX.read(e.target.result, {type:'binary', cellDates:true});
-
-      // Try to find GHI Input sheet
-      const sheetName = wb.SheetNames.find(s => s.toLowerCase().includes('ghi input') || s.toLowerCase().includes('input'));
-      if (!sheetName) {
-        status.innerHTML = '❌ <strong>GHI Input</strong> sheet not found. Sheets: ' + wb.SheetNames.join(', ');
-        return;
-      }
-      const ws = wb.Sheets[sheetName];
-      const data = XLSX.utils.sheet_to_json(ws, {header:1, defval:null, raw:true});
-
-      // Parse all values from the sheet
-      // Based on GHI Input layout — key fields are in specific rows/columns
-      let parsed = {};
-      let lives = {}; // { si: { bandIdx: count } }
-
-      // Scan all cells for known labels
-      for (let r = 0; r < data.length; r++) {
-        const row = data[r];
-        for (let c = 0; c < row.length; c++) {
-          const cell = (row[c] || '').toString().trim();
-
-          // Client Name
-          if (cell === 'Client Name' && row[c+1]) parsed.clientName = row[c+1];
-          // IM ID
-          if (cell === 'IM ID' && row[c+1]) parsed.imId = row[c+1].toString().trim();
-          // Industry Type
-          if (cell === 'Industry Type' && row[c+1]) parsed.industryType = row[c+1].toString().trim();
-          // Policy Start Date
-          if ((cell === 'Policy Start Date' || cell.includes('Policy Start')) && row[c+1]) {
-            try {
-              const raw = row[c+1];
-              let d;
-              if (raw instanceof Date) d = raw;
-              else if (typeof raw === 'number') { // Excel serial date
-                d = new Date(Math.round((raw - 25569) * 86400 * 1000));
-              } else d = new Date(raw);
-              if (!isNaN(d)) parsed.policyStartDate = d.toISOString().split('T')[0];
-            } catch(e) {}
-          }
-          // Corporate Office Location (city)
-          if (cell === 'Corporate Office Location' && row[c+1]) parsed.city = row[c+1].toString().toUpperCase().trim();
-          // Employees
-          if (cell === 'Employees' && row[c+1] != null) parsed.employees = parseInt(row[c+1]) || 0;
-          // Spouse
-          if (cell === 'Spouse' && row[c+1] != null && !parsed.spouse) parsed.spouse = parseInt(row[c+1]) || 0;
-          // Kid
-          if (cell === 'Kid' && row[c+1] != null) parsed.kids = parseInt(row[c+1]) || 0;
-          // Total Lives
-          if (cell === 'Total Lives' && row[c+1] != null && !parsed.totalLives) parsed.totalLives = parseInt(row[c+1]) || 0;
-          // Family Definition
-          if (cell === 'Family Definition' && row[c+1]) parsed.famDef = row[c+1].toString().trim();
-          // Policy Nature
-          if (cell === 'Is this a first time policy for the client? (Mandatory)' && row[c+1]) parsed.policyNature = row[c+1].toString().trim();
-          // Brokerage — raw value is fraction e.g. 0.075 → convert to %
-          if (cell === 'Brokerage' && row[c+1] != null) {
-            const bv = parseFloat(row[c+1]);
-            // If value < 1, it's a fraction (0.075), convert to % (7.5)
-            parsed.brokerage = bv < 1 ? bv * 100 : bv;
-          }
-          // PED
-          if (cell === 'Pre Existing Disease Coverage' && row[c+1]) parsed.ped = row[c+1].toString().trim() === 'Y';
-          // Floater
-          if (cell === 'Floater' && row[c+1]) parsed.floater = row[c+1].toString().trim() === 'Y';
-          // Room Rent
-          if (cell === 'Room Rent Cap' && row[c+1]) parsed.roomRent = row[c+1].toString().trim();
-          // Disease Sub Limit
-          if (cell === 'Disease Sub Limit' && row[c+1]) parsed.dsl = row[c+1].toString().trim();
-          // Co-Pay
-          if (cell === 'Co-Pay' && row[c+1]) parsed.copay = row[c+1].toString().trim();
-          // Maternity Cover
-          if (cell === 'Maternity Cover' && row[c+1]) parsed.maternity = row[c+1].toString().trim() === 'Y';
-          // Maternity From day 1
-          if (cell === 'Maternity From day 1' && row[c+1]) parsed.matDay1 = row[c+1].toString().trim();
-          // Maternity Limit
-          if (cell === 'Maternity Limit' && row[c+1]) parsed.matLimit = row[c+1].toString().trim();
-          // Baby day 1
-          if (cell === 'Baby day 1' && row[c+1]) parsed.baby = row[c+1].toString().trim() !== 'N';
-          // Pre-Post Natal
-          if (cell === 'Pre-Post Natal Coverage' && row[c+1]) parsed.ppnat = row[c+1].toString().trim().toLowerCase().includes('within');
-          // Add-Del
-          if (cell === 'Add-Del of Lives' && row[c+1]) parsed.addDel = row[c+1].toString().trim().toLowerCase().includes('pro');
-          // PPN
-          if (cell === 'PPN' && row[c+1]) parsed.ppn = row[c+1].toString().trim() === 'Y';
-          // R&C
-          if ((cell === 'R&C and Claim Intimation & Network clause waiver') && row[c+1]) parsed.rnc = row[c+1].toString().trim() === 'Y';
-          // Additional Loading — raw value is fraction e.g. -0.5 → convert to % (-50)
-          if (cell === 'Additional Loading' && row[c+1] != null) {
-            const av = parseFloat(row[c+1]);
-            parsed.addLoad = av < 1 && av > -1 ? av * 100 : av;
-          }
-          // Physical Health Card
-          if (cell === 'Physical Health Card' && row[c+1]) parsed.phc = row[c+1].toString().trim() === 'Y';
-          // Ambulance Cover
-          if (cell === 'Ambulance Cover' && row[c+1] != null) parsed.ambulance = parseInt(row[c+1]) || 2000;
-          // Health Check-ups
-          if (cell === 'Health Check-ups' && row[c+1]) parsed.hcu = row[c+1].toString().trim() === 'Y';
-          // Wellness
-          if (cell === 'Wellness & Preventive care' && row[c+1]) parsed.wellness = row[c+1].toString().trim() !== 'NA' && row[c+1].toString().trim() !== 'N';
-          // Tele Health
-          if (cell === 'Tele Health' && row[c+1]) parsed.teleH = row[c+1].toString().trim() === 'Y';
-          // Service in J&K
-          if (cell === 'Service in J&K' && row[c+1]) parsed.jk = row[c+1].toString().trim() === 'Y';
-        }
-      }
-
-      // Parse demography table — find SI rows with lives data
-      // SI list to look for
-      const SI_LIST = [50000,100000,150000,200000,250000,300000,350000,400000,450000,500000,600000,700000,800000,900000,1000000];
-      let demogStartRow = -1;
-      for (let r = 0; r < data.length; r++) {
-        const row = data[r];
-        if (row && row.some && row.some(c => c && c.toString().trim() === 'Age Band')) {
-          demogStartRow = r;
-          break;
-        }
-      }
-
-      if (demogStartRow >= 0) {
-        // Find columns for age bands
-        const hdrRow = data[demogStartRow];
-        // Age band columns start after SI column (col index 1 usually)
-        // Read next rows for SI data
-        for (let r = demogStartRow + 1; r < data.length && r < demogStartRow + 30; r++) {
-          const row = data[r];
-          if (!row) continue;
-          const siVal = parseInt(row[1]);
-          if (!SI_LIST.includes(siVal)) continue;
-          // Bands: cols 2–10 (9 bands)
-          const bandLives = [];
-          for (let b = 2; b <= 10; b++) {
-            bandLives.push(parseInt(row[b]) || 0);
-          }
-          if (bandLives.some(v => v > 0)) {
-            lives[siVal] = bandLives;
-            // Employee count is col 12
-            parsed.empCount = parsed.empCount || (parseInt(row[12]) || 0);
-          }
-        }
-      }
-
-      // Now fill the form
-      fillForm(parsed, lives);
-
-      // Show preview
-      const filled = Object.keys(parsed).length;
-      const liveSIs = Object.keys(lives);
-      preview.style.display = 'block';
-      preview.innerHTML = `✅ <strong>Auto-filled successfully!</strong> · ${filled} fields detected · Lives found for SI: ${liveSIs.length > 0 ? liveSIs.map(s=>'₹'+parseInt(s).toLocaleString('en-IN')).join(', ') : 'None (fill manually)'}
-        <br><strong>City:</strong> ${parsed.city||'—'} · <strong>Employees:</strong> ${parsed.employees||'—'} · <strong>Total Lives:</strong> ${parsed.totalLives||'—'} · <strong>Brokerage:</strong> ${parsed.brokerage ? parsed.brokerage.toFixed(1)+'%' : '—'}`;
-      status.innerHTML = `✅ <strong>${file.name}</strong> loaded · Sheet: <em>${sheetName}</em>`;
-
-    } catch(err) {
-      status.innerHTML = '❌ Error reading file: ' + err.message;
-      console.error(err);
-    }
-  };
-  reader.readAsBinaryString(file);
-}
+const RATES = {
+  100000: [1418, 2313, 2549, 3760, 5852, 7305, 8766, 10345, 11923],
+  200000: [1590, 2760, 3048, 4721, 7692, 10044, 11814, 13945, 16068],
+  300000: [2142, 3389, 3739, 5779, 9424, 12313, 14480, 17093, 19696],
+  400000: [3008, 4013, 4422, 6844, 11160, 14539, 17121, 20210, 23287],
+  500000: [3874, 4636, 5108, 7910, 12313, 16765, 19759, 23326, 26877],
+  600000: [4184, 5006, 5516, 8543, 14776, 20118, 23711, 27992, 32252],
+  700000: [4881, 5841, 6436, 9966, 17239, 23471, 27663, 32657, 37628],
+  800000: [5579, 6675, 7355, 11390, 19701, 26824, 31615, 37322, 43003],
+};
 
 function onDateChange() {
   const sd = document.getElementById('policyStartDate').value;
   if (!sd) return;
-  const start = new Date(sd);
-  const end = new Date(start);
-  end.setFullYear(end.getFullYear() + 1);
-  end.setDate(end.getDate() - 1);
-  document.getElementById('policyEndDate').value = end.toISOString().split('T')[0];
+  const s = new Date(sd), e = new Date(s);
+  e.setFullYear(e.getFullYear() + 1); e.setDate(e.getDate() - 1);
+  document.getElementById('policyEndDate').value = e.toISOString().split('T')[0];
 }
 
-function fillForm(p, lives) {
-  // Client Name
-  if (p.clientName) { const cn = document.getElementById('clientName'); if(cn) cn.value = p.clientName; }
-  // IM ID
-  if (p.imId) { const im = document.getElementById('imId'); if(im) im.value = p.imId; }
-  // Industry Type
-  if (p.industryType) { const it = document.getElementById('industryType'); if(it) it.value = p.industryType; }
-  // Policy Start Date
-  if (p.policyStartDate) {
-    const ps = document.getElementById('policyStartDate');
-    if (ps) { ps.value = p.policyStartDate; onDateChange(); }
-  }
-  // City
-  if (p.city) {
-    const ci = document.getElementById('cityInput');
-    if (ci) { ci.value = p.city; onCityInput(); }
-  }
-  // Brokerage
-  if (p.brokerage != null) {
-    const br = document.getElementById('brokerage');
-    if (br) br.value = Math.min(7.5, p.brokerage).toFixed(1);
-  }
-  // Policy Nature (Fresh/Renewal)
-  if (p.policyNature) {
-    const pn = document.getElementById('policyNature');
-    if (pn) {
-      if (p.policyNature === 'Y') pn.value = 'fresh';
-      else pn.value = 'renewal';
-    }
-  }
-  // Family Definition
-  if (p.famDef) {
-    const fd = document.getElementById('famDef');
-    if (fd) {
-      const fMap = {
-        'Employee Spouse Kid': 'ESK', 'Employee, Spouse, Kid': 'ESK',
-        'Employee Spouse Kid Parent': 'ESKP', 'Employee Spouse Kid Parents': 'ESKP',
-        'Employee Spouse': 'ES', 'Employee Only': 'E'
-      };
-      const key = Object.keys(fMap).find(k => p.famDef.includes(k.split(' ')[0]) && p.famDef.includes(k.split(' ')[1]||''));
-      if (fMap[key]) fd.value = fMap[key];
-      else if (p.famDef.includes('Parent')) fd.value = 'ESKP';
-      else if (p.famDef.includes('Spouse') && p.famDef.includes('Kid')) fd.value = 'ESK';
-      else if (p.famDef.includes('Spouse')) fd.value = 'ES';
-      else if (p.famDef.includes('Employee')) fd.value = 'E';
-    }
-  }
-  // Floater
-  if (p.floater != null) {
-    const fY = document.getElementById('fY'), fN = document.getElementById('fN');
-    if (p.floater && fY) fY.checked = true;
-    else if (!p.floater && fN) fN.checked = true;
-  }
-  // PED
-  if (p.ped != null) {
-    const pedY = document.querySelector('input[name=ped][value=Y]');
-    const pedN = document.querySelector('input[name=ped][value=N]');
-    if (p.ped && pedY) pedY.checked = true;
-    else if (!p.ped && pedN) pedN.checked = true;
-  }
-  // Room Rent
-  if (p.roomRent) {
-    const rr = document.getElementById('roomRent');
-    if (rr) {
-      if (p.roomRent === 'No Limit') rr.value = 'no_limit';
-      else if (p.roomRent.includes('2%')) rr.value = '2pct';
-      else if (p.roomRent.includes('1%')) rr.value = '1pct';
-      else rr.value = 'no_limit';
-    }
-  }
-  // Disease Sub Limit
-  if (p.dsl) {
-    const dsl = document.getElementById('dsl');
-    if (dsl) {
-      if (p.dsl === 'No Limit') dsl.value = 'No Limit';
-      else if (p.dsl.toLowerCase().includes('higher')) dsl.value = 'Higher Limit';
-      else if (p.dsl.toLowerCase().includes('lower')) dsl.value = 'Lower Limit';
-      else dsl.value = 'Default';
-    }
-  }
-  // Co-Pay
-  if (p.copay) {
-    const cp = document.getElementById('copay');
-    if (cp) {
-      if (p.copay === 'Nil') cp.value = 'Nil';
-      else cp.value = p.copay.replace('%','').trim();
-    }
-  }
-  // Maternity
-  if (p.maternity != null) {
-    const mY = document.querySelector('input[name=mat][value=Y]');
-    const mN = document.querySelector('input[name=mat][value=N]');
-    if (p.maternity && mY) mY.checked = true;
-    else if (!p.maternity && mN) mN.checked = true;
-  }
-  // Maternity Day 1
-  if (p.matDay1) {
-    const md1Y = document.querySelector('input[name=matD1][value=Y]');
-    const md1N = document.querySelector('input[name=matD1][value=N]');
-    if (p.matDay1 === 'Y' && md1Y) md1Y.checked = true;
-    else if (p.matDay1 !== 'Y' && md1N) md1N.checked = true;
-  }
-  // Maternity Limit
-  if (p.matLimit) {
-    const ml = document.getElementById('matLimit');
-    if (ml) {
-      // Try to match label
-      const opts = Array.from(ml.options);
-      const match = opts.find(o => o.text.replace(/\s+/g,'').toLowerCase().includes(
-        p.matLimit.replace(/\s+/g,'').toLowerCase().slice(0,10)
-      ));
-      if (match) ml.value = match.value;
-      else if (p.matLimit.includes('50000-50000')) ml.value = 'Metro50k50k';
-      else if (p.matLimit.includes('25000') || p.matLimit.includes('25K')) ml.value = 'Metro25k';
-      else if (p.matLimit.includes('35000-40000')) ml.value = 'Metro35k40k';
-      else if (p.matLimit.includes('35000-50000')) ml.value = 'Metro35k50k';
-      else if (p.matLimit.includes('50000-75000')) ml.value = 'Metro50k75k';
-      else if (p.matLimit.includes('75000-75000')) ml.value = 'Metro75k';
-      else if (p.matLimit.includes('100000')) ml.value = 'Metro1L';
-    }
-  }
-  // Baby Day 1
-  if (p.baby != null) {
-    const bY = document.querySelector('input[name=baby][value=Y]');
-    const bN = document.querySelector('input[name=baby][value=N]');
-    if (p.baby && bY) bY.checked = true;
-    else if (!p.baby && bN) bN.checked = true;
-  }
-  // Pre/Post Natal
-  if (p.ppnat != null) {
-    const ppY = document.querySelector('input[name=ppnat][value=Y]');
-    const ppN = document.querySelector('input[name=ppnat][value=N]');
-    if (p.ppnat && ppY) ppY.checked = true;
-    else if (!p.ppnat && ppN) ppN.checked = true;
-  }
-  // Add-Del
-  if (p.addDel != null) {
-    const adP = document.querySelector('input[name=addel][value=pro]');
-    const adS = document.querySelector('input[name=addel][value=short]');
-    if (p.addDel && adP) adP.checked = true;
-    else if (!p.addDel && adS) adS.checked = true;
-  }
-  // R&C
-  if (p.rnc != null) {
-    const rY = document.querySelector('input[name=rnc][value=Y]');
-    const rN = document.querySelector('input[name=rnc][value=N]');
-    if (p.rnc && rY) rY.checked = true;
-    else if (!p.rnc && rN) rN.checked = true;
-  }
-  // PPN
-  if (p.ppn != null) {
-    const ppnY = document.querySelector('input[name=ppn][value=Y]');
-    const ppnN = document.querySelector('input[name=ppn][value=N]');
-    if (p.ppn && ppnY) ppnY.checked = true;
-    else if (!p.ppn && ppnN) ppnN.checked = true;
-  }
-  // Additional Loading
-  if (p.addLoad != null) {
-    const al = document.getElementById('addLoad');
-    if (al) al.value = p.addLoad.toFixed(1);
-  }
-  // Physical Health Card
-  if (p.phc != null) {
-    const phcY = document.querySelector('input[name=phc][value=Y]');
-    const phcN = document.querySelector('input[name=phc][value=N]');
-    if (p.phc && phcY) phcY.checked = true;
-    else if (!p.phc && phcN) phcN.checked = true;
-  }
-  // Ambulance
-  if (p.ambulance) {
-    const amb = document.getElementById('ambulance');
-    if (amb) amb.value = p.ambulance.toString();
-  }
-  // Health Check-ups
-  if (p.hcu != null) {
-    const hY = document.querySelector('input[name=hcu][value=Y]');
-    const hN = document.querySelector('input[name=hcu][value=N]');
-    if (p.hcu && hY) hY.checked = true;
-    else if (!p.hcu && hN) hN.checked = true;
-  }
-  // Wellness
-  if (p.wellness != null) {
-    const wY = document.querySelector('input[name=wellness][value=Y]');
-    const wN = document.querySelector('input[name=wellness][value=N]');
-    if (p.wellness && wY) wY.checked = true;
-    else if (!p.wellness && wN) wN.checked = true;
-  }
-  // Tele Health
-  if (p.teleH != null) {
-    const tY = document.querySelector('input[name=teleH][value=Y]');
-    const tN = document.querySelector('input[name=teleH][value=N]');
-    if (p.teleH && tY) tY.checked = true;
-    else if (!p.teleH && tN) tN.checked = true;
-  }
-
-  // Fill demography — find the SI with lives data, set it as selected SI
-  const siKeys = Object.keys(lives).map(Number).filter(s => lives[s] && lives[s].some(v=>v>0));
-  if (siKeys.length > 0) {
-    // Select the first SI found
-    const si = siKeys[0];
-    const siSel = document.getElementById('si');
-    if (siSel) { siSel.value = si.toString(); onSIChange(); }
-
-    // Wait for demog table to rebuild then fill
-    setTimeout(() => {
-      siKeys.forEach(si => {
-        const bandLives = lives[si];
-        bandLives.forEach((count, idx) => {
-          if (count > 0) {
-            const inp = document.getElementById(`d_${si}_${idx}`);
-            if (inp) inp.value = count;
-          }
-        });
-        // Employee count
-        if (p.empCount) {
-          const ec = document.getElementById(`ec_${si}`);
-          if (ec) ec.value = p.empCount;
-        }
-      });
-      // Trigger totals update
-      updateTotals();
-    }, 200);
-  }
-}
-// ══════════════════════════════════════════════════
-// DATA
-// ══════════════════════════════════════════════════
-const SI_LIST=[50000,100000,150000,200000,250000,300000,350000,400000,450000,500000,600000,700000,800000,900000,1000000];
-const BANDS=['3M–18 yrs','19–35 yrs','36–45 yrs','46–55 yrs','56–60 yrs','61–65 yrs','66–70 yrs','71–75 yrs','76–80 yrs'];
-
-const RACK={
-  50000: [663.51,828.17,966.69,1346.39,2091.40,2616.95,3135.85,3701.25,4264.99],
-  100000:[721.63,1176.88,1296.99,1913.03,2977.28,3717.03,4460.10,5263.78,6066.64],
-  150000:[780.52,1316.44,1452.36,2200.76,3514.45,4501.88,5340.27,6303.14,7263.48],
-  200000:[808.80,1404.38,1550.77,2402.19,3913.80,5110.19,6011.01,7095.32,8175.47],
-  250000:[968.24,1595.55,1761.11,2724.76,4441.33,5801.38,6823.11,8054.01,9280.26],
-  300000:[1089.70,1724.15,1902.38,2940.48,4794.69,6265.07,7367.64,8696.87,10021.12],
-  350000:[1336.27,1920.67,2117.77,3275.57,5341.11,6967.92,8200.10,9679.55,11153.50],
-  400000:[1530.43,2041.86,2250.12,3482.21,5678.08,7397.53,8710.98,10282.65,11848.50],
-  450000:[1785.81,2244.24,2472.96,3828.41,6091.00,8123.03,9569.88,11297.05,13017.01],
-  500000:[1971.15,2358.60,2598.82,4024.49,6265.07,8529.99,10053.50,11868.42,13675.05],
-  600000:[2128.84,2547.29,2806.73,4346.44,7518.08,10235.99,12064.20,14242.11,16410.06],
-  700000:[2483.65,2971.84,3274.51,5070.85,8771.09,11941.98,14074.90,16615.79,19145.07],
-  800000:[2838.46,3396.39,3742.30,5795.26,10024.11,13647.98,16085.60,18989.48,21880.08],
-  900000:[3193.27,3820.94,4210.09,6519.67,11277.12,15353.98,18096.30,21363.16,24615.09],
-  1000000:[3548.07,4245.48,4677.88,7244.07,12530.13,17059.98,20106.99,23736.85,27350.10]
-};
-
-// City Category (for category disc on basic premium)
-const CAT_DISC={'Cat A+':0.20,'Cat A1':0.10,'Cat A':0.05,'Cat B1':0,'Cat B2':-0.05,'Cat B':-0.10,'Cat C':-0.15,'Cat D':-0.20,'Cat E':-0.25,'Others':0.05};
-const CITY_CAT={AGARTALA:'Cat E',AGRA:'Cat D',AHMEDABAD:'Cat C',AHMEDNAGAR:'Cat C',AJMER:'Cat C',AKOLA:'Cat D',ALIGARH:'Cat D',ALLAHABAD:'Cat D',ALLEPPEY:'Cat E',ALWAR:'Cat E',AMBALA:'Cat D',AMRAVATI:'Cat E',AMRITSAR:'Cat D',ANAKAPALLE:'Cat D',ANAND:'Cat E',ANANTAPUR:'Cat D',ANGUL:'Cat E',ANKLESHWAR:'Cat E',ASANSOL:'Cat D',AURANGABAD:'Cat C',BADDI:'Cat E',BALASORE:'Cat E',BANASKANTHA:'Cat E',BANGALORE:'Cat B',BANKURA:'Cat E',BARAMATI:'Cat C',BARBIL:'Cat D',BAREILLY:'Cat D',BARMER:'Cat E',BARODA:'Cat C',BEED:'Cat E',BEHRAMPORE:'Cat E',BELGAUM:'Cat C',BELLARY:'Cat E',BERHAMPUR:'Cat E',BHARUCH:'Cat E',BHATINDA:'Cat E',BHAVNAGAR:'Cat E',BHILWARA:'Cat E',BHOPAL:'Cat C',BHUBANESWAR:'Cat C',BHUJ:'Cat E',BIJAPUR:'Cat E',BIJNOR:'Cat E',BIKANER:'Cat E',BILASPUR:'Cat E',BOKARO:'Cat E',BURDWAN:'Cat E',CALICUT:'Cat D',CHANDIGARH:'Cat B',CHANDRAPUR:'Cat E',CHANGANACHERRY:'Cat E',CHENNAI:'Cat B',CHHINDWARA:'Cat E',CHIPLUN:'Cat E',CHITTORGARH:'Cat E',COCHIN:'Cat C',COIMBATORE:'Cat B',COOCHBEHAR:'Cat E',CUDDAPAH:'Cat E',CUTTACK:'Cat D','DAKSHIN KANNAD':'Cat D',DARJEELING:'Cat E',DAVANAGERE:'Cat D',DEHRADUN:'Cat C',DELHI:'Cat B1',DHANBAD:'Cat D',DHARWAD:'Cat D',DHULE:'Cat E',DIBRUGARH:'Cat E',DURG:'Cat E',DURGAPUR:'Cat D','EAST GODAVARI':'Cat D','EAST KHASI HILLS':'Cat E','EAST SIKKIM':'Cat E',ERNAKULAM:'Cat C',ERODE:'Cat D',ETAWAH:'Cat E',FAIZABAD:'Cat E',FATEHPUR:'Cat E',GANDHIDHAM:'Cat E',GANDHINAGAR:'Cat C',GANGTOK:'Cat E',GANJAM:'Cat E',GAYA:'Cat E',GHAZIABAD:'Cat C',GODHARA:'Cat E',GONDAL:'Cat E',GORAKHPUR:'Cat D',GULBARGA:'Cat D',GUNA:'Cat E',GUNTUR:'Cat C',GURGAON:'Cat B1',GUWAHATI:'Cat C',HALDWANI:'Cat E',HARIDWAR:'Cat D',HASSAN:'Cat E',HAZARIBAGH:'Cat E',HIMMATNAGAR:'Cat E',HISAR:'Cat D',HOSHIARPUR:'Cat D',HOSPET:'Cat E',HOSUR:'Cat E',HUBLI:'Cat D',HYDERABAD:'Cat A+',INDORE:'Cat B',JABALPUR:'Cat C',JAIPUR:'Cat B',JALANDHAR:'Cat D',JALGAON:'Cat D',JALORE:'Cat E',JAMMU:'Cat D',JAMNAGAR:'Cat C',JAMSHEDPUR:'Cat C',JAUNPUR:'Cat E',JEYPORE:'Cat E',JHANSI:'Cat D',JHARSUGUDA:'Cat D',JODHPUR:'Cat C',JORHAT:'Cat E',JUNAGADH:'Cat E',KAKINADA:'Cat D',KAMRUP:'Cat E',KANNUR:'Cat E',KANPUR:'Cat C',KARAD:'Cat E',KARIMNAGAR:'Cat D',KARNAL:'Cat D',KATNI:'Cat E',KEONJHAR:'Cat E',KHAMMAM:'Cat E',KHANDWA:'Cat E',KHANNA:'Cat E',KHARAGPUR:'Cat D',KHARGONE:'Cat E',KHORDA:'Cat D',KOLHAPUR:'Cat C',KOLKATA:'Cat B',KOLLAM:'Cat E',KOTA:'Cat C',KOTPUTLI:'Cat E',KOTTAYAM:'Cat C',KRISHNA:'Cat D',KRISHNANAGAR:'Cat E',KURNOOL:'Cat D',KUTCH:'Cat E',LAKHIMPUR:'Cat E',LATUR:'Cat E',LUCKNOW:'Cat B',LUDHIANA:'Cat B1',MADURAI:'Cat C',MAHBUBNAGAR:'Cat E',MAHESANA:'Cat E',MALAPPURAM:'Cat E',MALDAH:'Cat E',MANDI:'Cat E',MANGALORE:'Cat C',MATHURA:'Cat E',MEDINIPUR:'Cat E',MEERUT:'Cat C',MEHSANA:'Cat E',MOGA:'Cat E',MORADABAD:'Cat D',MORBI:'Cat E',MUMBAI:'Cat A',MURSHIDABAD:'Cat E',MUVATTUPUZHA:'Cat E',MUZAFFARNAGAR:'Cat E',MUZAFFARPUR:'Cat E',MYSORE:'Cat C',NADIAD:'Cat E',NAGAUR:'Cat E',NAGERCOIL:'Cat D',NAGPUR:'Cat B',NAINITAL:'Cat E',NALGONDA:'Cat D',NAMAKKAL:'Cat D',NANDED:'Cat E',NASHIK:'Cat B',NAVSARI:'Cat E',NCR:'Cat B1',NELLORE:'Cat D',NIZAMABAD:'Cat D',NOIDA:'Cat C',ONGOLE:'Cat E',OTHERS:'Others',PALAKKAD:'Cat E',PALANPUR:'Cat E',PANAJI:'Cat D',PANIPAT:'Cat D',PARBHANI:'Cat E',PATHANAMTHITTA:'Cat E',PATHANKOT:'Cat E',PATIALA:'Cat D',PATNA:'Cat C',PHAGWARA:'Cat E',PONDICHERRY:'Cat D',PORBANDAR:'Cat E',PRAKASAM:'Cat E',PUNE:'Cat A1',PURNIA:'Cat E',PURULIA:'Cat E','RAE BARELI':'Cat E',RAICHUR:'Cat E',RAIPUR:'Cat C',RAJAMUNDRY:'Cat D',RAJKOT:'Cat C',RANCHI:'Cat C',RATLAM:'Cat E',REWA:'Cat E',REWARI:'Cat E',ROHTAK:'Cat D',ROPAR:'Cat E',ROURKELA:'Cat C',RUDRAPUR:'Cat E',SAHARANPUR:'Cat E',SALEM:'Cat C',SAMBALPUR:'Cat D',SANGLI:'Cat C',SANGRUR:'Cat E',SATARA:'Cat E',SATNA:'Cat D',SHAHDOL:'Cat E',SHAHJAHANPUR:'Cat E',SHILLONG:'Cat D',SHIMOGA:'Cat D',SHRIRAMPUR:'Cat E',SIKAR:'Cat E',SILIGURI:'Cat C',SINGHBHUM:'Cat D',SIURI:'Cat E',SOLAN:'Cat E',SOLAPUR:'Cat C',SRIGANGANAGAR:'Cat E',SRINAGAR:'Cat D',SULTANPUR:'Cat E',SUMERPUR:'Cat E',SUNDARGARH:'Cat E',SURAT:'Cat B',TALCHER:'Cat E',THRISSUR:'Cat C',TIRUNELVELI:'Cat D',TIRUPATI:'Cat D',TIRUPPUR:'Cat D',TRICHY:'Cat C',TRIVANDRUM:'Cat B',TUMKUR:'Cat D',TUTICORIN:'Cat D',UDAIPUR:'Cat C',UJJAIN:'Cat D',VALSAD:'Cat E',VAPI:'Cat E',VARANASI:'Cat C',VELLORE:'Cat C',VIJAYWADA:'Cat C',VISHAKHAPATNAM:'Cat B',WARANGAL:'Cat D',YAMUNANAGAR:'Cat D',YAVATMAL:'Cat E'};
-
-// City Risk Loading [0-100, 101-200, 201-300, 301-400, 401-500]
-const CITY_RISK={AGARTALA:[.1975,.5975,.5975,.7375,.7125],AGRA:[.1475,.5475,.5725,.7125,.6875],AHMEDABAD:[.1625,.5625,.5875,.7275,.7025],AHMEDNAGAR:[.1975,.5975,.5975,.7375,.7125],AJMER:[.2225,.6225,.6225,.7625,.7375],AKOLA:[.1975,.5975,.5975,.7375,.7125],ALIGARH:[.2225,.6225,.6225,.7625,.7375],ALLAHABAD:[.2225,.6225,.6225,.7625,.7375],ALLEPPEY:[.2225,.6225,.6225,.7625,.7375],ALWAR:[.2225,.6225,.6225,.7625,.7375],AMBALA:[.1975,.5975,.5975,.7375,.7125],AMRAVATI:[.1975,.5975,.5975,.7375,.7125],AMRITSAR:[.1475,.5475,.5725,.7125,.6875],ANAKAPALLE:[.2225,.6225,.6225,.7625,.7375],ANAND:[.1975,.5975,.5975,.7375,.7125],ANANTAPUR:[.1975,.5975,.5975,.7375,.7125],ANGUL:[.1975,.5975,.5975,.7375,.7125],ANKLESHWAR:[.2225,.6225,.6225,.7625,.7375],ASANSOL:[.2225,.6225,.6225,.7625,.7375],AURANGABAD:[.1225,.5225,.5475,.6875,.6625],BADDI:[.2225,.6225,.6225,.7625,.7375],BALASORE:[.2225,.6225,.6225,.7625,.7375],BANASKANTHA:[.1975,.5975,.5975,.7375,.7125],BANGALORE:[.2825,.6225,.6475,.8375,.8125],BANKURA:[.2225,.6225,.6225,.7625,.7375],BARAMATI:[.2225,.6225,.6225,.7625,.7375],BARBIL:[.2225,.6225,.6225,.7625,.7375],BAREILLY:[.1975,.5975,.5975,.7375,.7125],BARMER:[.2225,.6225,.6225,.7625,.7375],BARODA:[.3225,.7225,.7225,.9125,.8875],BEED:[.2225,.6225,.6225,.7625,.7375],BEHRAMPORE:[.2225,.6225,.6225,.7625,.7375],BELGAUM:[.1475,.5475,.5725,.7125,.6875],BELLARY:[.2225,.6225,.6225,.7625,.7375],BERHAMPUR:[.2225,.6225,.6225,.7625,.7375],BHARUCH:[.1975,.5975,.5975,.7375,.7125],BHATINDA:[.1975,.5975,.5975,.7375,.7125],BHAVNAGAR:[.1475,.5475,.5725,.7125,.6875],BHILWARA:[.2225,.6225,.6225,.7625,.7375],BHOPAL:[.2225,.5975,.5975,.7625,.7375],BHUBANESWAR:[.2225,.6225,.6225,.7625,.7375],BHUJ:[.1475,.5475,.5725,.7125,.6875],BIJAPUR:[.2225,.6225,.6225,.7625,.7375],BIJNOR:[.2225,.6225,.6225,.7625,.7375],BIKANER:[.2225,.6225,.6225,.7625,.7375],BILASPUR:[.1975,.5975,.5975,.7375,.7125],BOKARO:[.1975,.5975,.5975,.7375,.7125],BURDWAN:[.2225,.6225,.6225,.7625,.7375],CALICUT:[.1475,.5475,.5725,.7125,.6875],CHANDIGARH:[.3075,.4875,.4875,.6275,.6025],CHANDRAPUR:[.2225,.6225,.6225,.7625,.7375],CHANGANACHERRY:[.2225,.6225,.6225,.7625,.7375],CHENNAI:[.1725,.7025,.5725,.7125,.6875],CHHINDWARA:[.2225,.6225,.6225,.7625,.7375],CHIPLUN:[.2225,.6225,.6225,.7625,.7375],CHITTORGARH:[.1975,.5975,.5975,.7375,.7125],COCHIN:[.3225,.7225,.7725,.9125,.8875],COIMBATORE:[.6775,.8725,1.1425,1.0575,1.0325],COOCHBEHAR:[.2225,.6225,.6225,.7625,.7375],CUDDAPAH:[.2225,.6225,.6225,.7625,.7375],CUTTACK:[.2225,.6225,.6225,.7625,.7375],'DAKSHIN KANNAD':[.4625,.7725,.6675,.8075,.7825],DARJEELING:[.2225,.6225,.6225,.7625,.7375],DAVANAGERE:[.3425,.7425,.7425,.8825,.8575],DEHRADUN:[.1475,.5475,.5725,.7125,.6875],DELHI:[.0625,.5275,.4625,.6025,.5775],DHANBAD:[.1475,.5475,.5725,.7125,.6875],DHARWAD:[.3175,.7175,.7175,.8575,.8325],DHULE:[.2225,.6225,.6225,.7625,.7375],DIBRUGARH:[.2225,.6225,.6225,.7625,.7375],DURG:[.2225,.6225,.6225,.7625,.7375],DURGAPUR:[.2225,.6225,.6225,.7625,.7375],'EAST GODAVARI':[.215,.615,.64,.78,.755],'EAST KHASI HILLS':[.1975,.5975,.5975,.7375,.7125],'EAST SIKKIM':[.1975,.5975,.5975,.7375,.7125],ERNAKULAM:[.6625,.9725,.8925,1.0325,1.0075],ERODE:[.1475,.5475,.5725,.7125,.6875],ETAWAH:[.2225,.6225,.6225,.7625,.7375],FAIZABAD:[.2225,.6225,.6225,.7625,.7375],FATEHPUR:[.2225,.6225,.6225,.7625,.7375],GANDHIDHAM:[.2225,.6225,.6225,.7625,.7375],GANDHINAGAR:[.2475,.6475,.6725,.8125,.7875],GANGTOK:[.2225,.6225,.6225,.7625,.7375],GANJAM:[.1975,.5975,.5975,.7375,.7125],GAYA:[.2225,.6225,.6225,.7625,.7375],GHAZIABAD:[.1475,.5475,.5475,.6875,.6625],GODHARA:[.2225,.6225,.6225,.7625,.7375],GONDAL:[.2225,.6225,.6225,.7625,.7375],GORAKHPUR:[.2225,.6225,.6225,.7625,.7375],GULBARGA:[.2225,.6225,.6225,.7625,.7375],GUNA:[.2225,.6225,.6225,.7625,.7375],GUNTUR:[.3175,.7175,.7175,.8575,.8325],GURGAON:[.0625,.5275,.4625,.6025,.5775],GUWAHATI:[.2225,.6225,.6225,.7625,.7375],HALDWANI:[.2225,.6225,.6225,.7625,.7375],HARIDWAR:[.1975,.5975,.5975,.7375,.7125],HASSAN:[.2225,.6225,.6225,.7625,.7375],HAZARIBAGH:[.1975,.5975,.5975,.7375,.7125],HIMMATNAGAR:[.2225,.6225,.6225,.7625,.7375],HISAR:[.1475,.5475,.5725,.7125,.6875],HOSHIARPUR:[.1475,.5475,.5725,.7125,.6875],HOSPET:[.2225,.6225,.6225,.7625,.7375],HOSUR:[.2225,.6225,.6225,.7625,.7375],HUBLI:[.2225,.6225,.6225,.7625,.7375],HYDERABAD:[.5275,.8425,.8675,.7575,.7325],INDORE:[.2225,.6225,.7725,.9375,.9125],JABALPUR:[.1475,.5475,.5725,.7125,.6875],JAIPUR:[.2875,.6875,.7375,.8775,.8525],JALANDHAR:[.1975,.5975,.5975,.7375,.7125],JALGAON:[.1975,.5975,.5975,.7375,.7125],JALORE:[.2225,.6225,.6225,.7625,.7375],JAMMU:[.1475,.5475,.5725,.7125,.6875],JAMNAGAR:[.1475,.5475,.5725,.7125,.6875],JAMSHEDPUR:[.2225,.6225,.6225,.7625,.7375],JAUNPUR:[.2225,.6225,.6225,.7625,.7375],JEYPORE:[.2225,.6225,.6225,.7625,.7375],JHANSI:[.1475,.5475,.5725,.7125,.6875],JHARSUGUDA:[.1475,.5475,.5725,.7125,.6875],JODHPUR:[.1975,.5975,.5975,.7375,.7125],JORHAT:[.2225,.6225,.6225,.7625,.7375],JUNAGADH:[.2225,.6225,.6225,.7625,.7375],KAKINADA:[.2225,.6225,.6225,.7625,.7375],KAMRUP:[.1725,.5725,.5975,.7375,.7125],KANNUR:[.1975,.5975,.5975,.7375,.7125],KANPUR:[.1975,.5975,.5975,.7375,.7125],KARAD:[.2225,.6225,.6225,.7625,.7375],KARIMNAGAR:[.265,.665,.665,.805,.78],KARNAL:[.1475,.5475,.5725,.7125,.6875],KATNI:[.2225,.6225,.6225,.7625,.7375],KEONJHAR:[.1975,.5975,.5975,.7375,.7125],KHAMMAM:[.2225,.6225,.6225,.7625,.7375],KHANDWA:[.2225,.6225,.6225,.7625,.7375],KHANNA:[.2225,.6225,.6225,.7625,.7375],KHARAGPUR:[.2225,.6225,.6225,.7625,.7375],KHARGONE:[.1975,.5975,.5975,.7375,.7125],KHORDA:[.1725,.5725,.5725,.7125,.6875],KOLHAPUR:[.1475,.5475,.5725,.7125,.6875],KOLKATA:[.2975,.6975,.8225,.8375,.8125],KOLLAM:[.2225,.6225,.6225,.7625,.7375],KOTA:[.2225,.6225,.6225,.7625,.7375],KOTPUTLI:[.2225,.6225,.6225,.7625,.7375],KOTTAYAM:[.3175,.7175,.7175,.8575,.8325],KRISHNA:[.5375,.7175,.7175,.8575,.8325],KRISHNANAGAR:[.2225,.6225,.6225,.7625,.7375],KURNOOL:[.2225,.6225,.6225,.7625,.7375],KUTCH:[.2225,.6225,.6225,.7625,.7375],LAKHIMPUR:[.2225,.6225,.6225,.7625,.7375],LATUR:[.1975,.5975,.5975,.7375,.7125],LUCKNOW:[.1375,.5125,.5125,.6775,.6525],LUDHIANA:[.0375,.4375,.4625,.6025,.5775],MADURAI:[.1975,.5975,.5975,.7375,.7125],MAHBUBNAGAR:[.2225,.6225,.6225,.7625,.7375],MAHESANA:[.1975,.5975,.5975,.7375,.7125],MALAPPURAM:[.1975,.5975,.5975,.7375,.7125],MALDAH:[.2225,.6225,.6225,.7625,.7375],MANDI:[.1975,.5975,.5975,.7375,.7125],MANGALORE:[.2225,.6225,.6225,.7625,.7375],MATHURA:[.2225,.6225,.6225,.7625,.7375],MEDINIPUR:[.1975,.5975,.5975,.7375,.7125],MEERUT:[.1475,.5475,.5725,.7125,.6875],MEHSANA:[.2225,.6225,.6225,.7625,.7375],MOGA:[.1975,.5975,.5975,.7375,.7125],MORADABAD:[.1975,.5975,.5975,.7375,.7125],MORBI:[.2225,.6225,.6225,.7625,.7375],MUMBAI:[.13,.62,.555,.745,.72],MURSHIDABAD:[.1975,.5975,.5975,.7375,.7125],MUVATTUPUZHA:[.2225,.6225,.6225,.7625,.7375],MUZAFFARNAGAR:[.2225,.6225,.6225,.7625,.7375],MUZAFFARPUR:[.2225,.6225,.6225,.7625,.7375],MYSORE:[.3175,.7175,.7175,.8575,.8325],NADIAD:[.2225,.6225,.6225,.7625,.7375],NAGAUR:[.2225,.6225,.6225,.7625,.7375],NAGERCOIL:[.2225,.6225,.6225,.7625,.7375],NAGPUR:[.3925,.5725,.6975,.7125,.6875],NAINITAL:[.1975,.5975,.5975,.7375,.7125],NALGONDA:[.265,.665,.665,.805,.78],NAMAKKAL:[.29,.69,.69,.83,.805],NANDED:[.1975,.5975,.5975,.7375,.7125],NASHIK:[.3725,.7725,.8225,.9625,.9375],NAVSARI:[.2225,.6225,.6225,.7625,.7375],NCR:[.0625,.5275,.4625,.6025,.5775],NELLORE:[.29,.69,.69,.83,.805],NIZAMABAD:[.2225,.6225,.6225,.7625,.7375],NOIDA:[.1475,.6125,.5475,.6875,.6625],ONGOLE:[.2225,.6225,.6225,.7625,.7375],OTHERS:[.2225,.6225,.6225,.7625,.7375],PALAKKAD:[.1975,.5975,.5975,.7375,.7125],PALANPUR:[.2225,.6225,.6225,.7625,.7375],PANAJI:[.1475,.5475,.5725,.7125,.6875],PANIPAT:[.2225,.6225,.6225,.7625,.7375],PARBHANI:[.2225,.6225,.6225,.7625,.7375],PATHANAMTHITTA:[.2225,.6225,.6225,.7625,.7375],PATHANKOT:[.2225,.6225,.6225,.7625,.7375],PATIALA:[.1475,.5475,.5725,.7125,.6875],PATNA:[.1475,.5475,.5725,.7125,.6875],PHAGWARA:[.2225,.6225,.6225,.7625,.7375],PONDICHERRY:[.1475,.5475,.5725,.7125,.6875],PORBANDAR:[.2225,.6225,.6225,.7625,.7375],PRAKASAM:[.1975,.5975,.5975,.7375,.7125],PUNE:[.1125,.5625,.6125,.7775,.7525],PURNIA:[.2225,.6225,.6225,.7625,.7375],PURULIA:[.2225,.6225,.6225,.7625,.7375],'RAE BARELI':[.2225,.6225,.6225,.7625,.7375],RAICHUR:[.2225,.6225,.6225,.7625,.7375],RAIPUR:[.5925,.7725,.8225,.9625,.9375],RAJAMUNDRY:[.2225,.6225,.6225,.7625,.7375],RAJKOT:[.1975,.5975,.5975,.7375,.7125],RANCHI:[.1975,.5975,.5975,.7375,.7125],RATLAM:[.2225,.6225,.6225,.7625,.7375],REWA:[.2225,.6225,.6225,.7625,.7375],REWARI:[.2225,.6225,.6225,.7625,.7375],ROHTAK:[.1975,.5975,.5975,.7375,.7125],ROPAR:[.2225,.6225,.6225,.7625,.7375],ROURKELA:[.2225,.6225,.6225,.7625,.7375],RUDRAPUR:[.2225,.6225,.6225,.7625,.7375],SAHARANPUR:[.2225,.6225,.6225,.7625,.7375],SALEM:[.3175,.7175,.7175,.8575,.8325],SAMBALPUR:[.2225,.6225,.6225,.7625,.7375],SANGLI:[.1475,.5475,.5725,.7125,.6875],SANGRUR:[.1975,.5975,.5975,.7375,.7125],SATARA:[.2225,.6225,.6225,.7625,.7375],SATNA:[.1475,.5475,.5725,.7125,.6875],SHAHDOL:[.2225,.6225,.6225,.7625,.7375],SHAHJAHANPUR:[.2225,.6225,.6225,.7625,.7375],SHILLONG:[.2225,.6225,.6225,.7625,.7375],SHIMOGA:[.3175,.7175,.7175,.8575,.8325],SHRIRAMPUR:[.2225,.6225,.6225,.7625,.7375],SIKAR:[.2225,.6225,.6225,.7625,.7375],SILIGURI:[.1975,.5975,.5975,.7375,.7125],SINGHBHUM:[.1475,.5475,.5725,.7125,.6875],SIURI:[.2225,.6225,.6225,.7625,.7375],SOLAN:[.1975,.5975,.5975,.7375,.7125],SOLAPUR:[.1475,.5475,.5725,.7125,.6875],SRIGANGANAGAR:[.2225,.6225,.6225,.7625,.7375],SRINAGAR:[.1475,.5475,.5725,.7125,.6875],SULTANPUR:[.2225,.6225,.6225,.7625,.7375],SUMERPUR:[.2225,.6225,.6225,.7625,.7375],SUNDARGARH:[.1975,.5975,.5975,.7375,.7125],SURAT:[.3725,.7725,.8225,.9625,.9375],TALCHER:[.2225,.6225,.6225,.7625,.7375],THRISSUR:[.2675,.6675,.6925,.8325,.8075],TIRUNELVELI:[.1475,.5475,.5725,.7125,.6875],TIRUPATI:[.2225,.6225,.6225,.7625,.7375],TIRUPPUR:[.2225,.6225,.6225,.7625,.7375],TRICHY:[.1975,.5975,.5975,.7375,.7125],TRIVANDRUM:[.2975,.7225,.7975,.9375,.9125],TUMKUR:[.3425,.7425,.7425,.8825,.8575],TUTICORIN:[.2225,.6225,.6225,.7625,.7375],UDAIPUR:[.1975,.5975,.5975,.7375,.7125],UJJAIN:[.2225,.6225,.6225,.7625,.7375],VALSAD:[.2225,.6225,.6225,.7625,.7375],VAPI:[.2225,.6225,.6225,.7625,.7375],VARANASI:[.1475,.5475,.5725,.7125,.6875],VELLORE:[.3175,.7175,.7175,.8575,.8325],VIJAYWADA:[.2225,.6225,.6225,.7625,.7375],VISHAKHAPATNAM:[.5425,.7225,.7225,.8625,.8375],WARANGAL:[.2225,.6225,.6225,.7625,.7375],YAMUNANAGAR:[.2225,.6225,.6225,.7625,.7375],YAVATMAL:[.1225,.5225,.5475,.6875,.6625]};
-
-// Maternity loading lookup (exact from Row 31 formula)
-function getMatLoading(day1, limitKey) {
-  const d = day1==='Y';
-  const m = {
-    'Metro25k':       d?0.15:0.075,
-    'Metro35k40k':    d?0.20:0.10,
-    'Metro35k50k':    d?0.28:0.125,
-    'Metro50k40k':    d?0.28:0.15,
-    'Metro50k50k':    d?0.28:0.18,
-    'Metro50k75k':    d?0.40:0.23,
-    'Metro60k':       d?0.40:0.2485,
-    'Metro75k':       d?0.40:0.28,
-    'Metro75k1L':     d?0.48:0.34,
-    'Metro1L':        d?0.48:0.38,
-  };
-  return m[limitKey]||0.28;
+function onBufferChange() {
+  const buf = parseFloat(document.getElementById('bufferSI').value) || 0;
+  document.getElementById('bufferTypeRow').style.display = buf > 0 ? 'block' : 'none';
 }
 
-const MAT_LABELS = {
-  'Metro25k':'Metro ₹25K–35K / Non-Metro ₹20K–30K','Metro35k40k':'Metro ₹35K–40K / Non-Metro ₹30K–35K',
-  'Metro35k50k':'Metro ₹35K–50K / Non-Metro ₹35K–50K','Metro50k40k':'Metro ₹50K–50K / Non-Metro ₹40K–40K',
-  'Metro50k50k':'Metro ₹50K–50K / Non-Metro ₹50K–50K','Metro50k75k':'Metro ₹50K–75K / Non-Metro ₹50K–75K',
-  'Metro60k':'Metro ₹60K–60K / Non-Metro ₹60K–60K','Metro75k':'Metro ₹75K–75K / Non-Metro ₹75K–75K',
-  'Metro75k1L':'Metro ₹75K–1L / Non-Metro ₹75K–1L','Metro1L':'Metro ₹1L–1L / Non-Metro ₹1L–1L'
-};
-
-// Populate city datalist
-const dl = document.getElementById('cityDL');
-Object.keys(CITY_RISK).sort().forEach(c=>{const o=document.createElement('option');o.value=c;dl.appendChild(o);});
-
-function onCityInput(){
-  const city = document.getElementById('cityInput').value.toUpperCase().trim();
-  const cat = CITY_CAT[city]||'Not found';
-  const disc = CAT_DISC[cat];
-  const risk = CITY_RISK[city];
-  const note = document.getElementById('cityNote');
-  if(risk){
-    const sign = disc>=0?'+':'';
-    note.innerHTML = `<strong>${cat}</strong> (${sign}${(disc*100).toFixed(0)}% cat disc) · Risk loading: ${(risk[0]*100).toFixed(2)}% / ${(risk[1]*100).toFixed(2)}% / ${(risk[2]*100).toFixed(2)}% (0-100/101-200/201-300 lives)`;
-    note.style.color='#166534';
-  } else if(city.length>2){
-    note.textContent='City not found — using OTHERS defaults';
-    note.style.color='#92400e';
-  }
+function onICRChange() {
+  const icr = parseFloat(document.getElementById('icr').value) || 0;
+  const note = document.getElementById('icrNote');
+  const pt = document.getElementById('policyType').value;
+  if (icr === 0) { note.textContent = '0% = Fresh business'; note.style.color = '#166534'; return; }
+  if (icr < 50) { note.innerHTML = '<span style="color:#166534">ICR &lt; 50% → −15% discount</span>'; }
+  else if (icr < 70) { note.innerHTML = '<span style="color:#166534">ICR 50–70% → −10% discount</span>'; }
+  else if (icr <= 115) { note.innerHTML = '<span style="color:#64748b">ICR 70–115% → Burning basis (0%)</span>'; }
+  else if (icr <= 140) { note.innerHTML = '<span style="color:#dc2626">⚠️ ICR 115–140% → Refer UW</span>'; }
+  else if (icr <= 175) { note.innerHTML = '<span style="color:#dc2626">⚠️ ICR 140–175% → Refer UW</span>'; }
+  else { note.innerHTML = '<span style="color:#dc2626">❌ ICR &gt; 175% → Refer UW (not applicable)</span>'; }
 }
 
-function getCityRisk(city, lives){
-  const r = CITY_RISK[city]||CITY_RISK['OTHERS'];
-  const i = lives<=100?0:lives<=200?1:lives<=300?2:lives<=400?3:4;
-  return r[i];
+function getICRDiscount(icr) {
+  if (icr < 50) return -0.15;
+  if (icr < 70) return -0.10;
+  return 0; // 70–115 = burning (0), 115+ = refer UW but allow calculate
 }
 
-// ══════════════════════════════════════════════════
-// DEMOGRAPHY TABLE
-// ══════════════════════════════════════════════════
-function buildDemog(){
+// ══════════════════════════════════════════
+// DEMOGRAPHY
+// ══════════════════════════════════════════
+function buildDemog() {
   const si = parseInt(document.getElementById('si').value);
   let h = `<thead><tr><th>Sum Insured</th>${BANDS.map(b=>`<th>${b}</th>`).join('')}<th>Total</th><th>Emp Count</th></tr></thead><tbody>`;
-  SI_LIST.forEach(s => {
-    const sel = s===si;
+  SI_LIST.forEach((s,idx) => {
+    const sel = s === si;
     h += `<tr id="row_${s}" class="${sel?'sel-row':''}">`;
-    h += `<td class="si-cell">₹${s.toLocaleString('en-IN')}</td>`;
+    h += `<td class="si-cell">${SI_LABELS[idx]}</td>`;
     BANDS.forEach((_,i) => h += `<td><input type="number" min="0" id="d_${s}_${i}" oninput="updateTotals()" placeholder="0"></td>`);
     h += `<td class="tc" id="rt_${s}">0</td>`;
     h += `<td><input type="number" min="0" id="ec_${s}" oninput="updateTotals()" placeholder="0"></td>`;
@@ -1104,7 +557,7 @@ function buildDemog(){
 }
 
 function gv(id){const e=document.getElementById(id);return e?(parseInt(e.value)||0):0;}
-function gv2(id){const e=document.getElementById(id);return e?(parseFloat(e.value)||0):0;}
+function gvf(id){const e=document.getElementById(id);return e?(parseFloat(e.value)||0):0;}
 
 function updateTotals(){
   BANDS.forEach((_,i)=>{let t=0;SI_LIST.forEach(s=>t+=gv(`d_${s}_${i}`));const el=document.getElementById(`bt_${i}`);if(el)el.textContent=t||'0';});
@@ -1119,180 +572,196 @@ function onSIChange(){
   SI_LIST.forEach(s=>{const r=document.getElementById(`row_${s}`);if(r)r.className=s===si?'sel-row':'';});
 }
 
-// ══════════════════════════════════════════════════
-// MAIN CALCULATE — exact Excel formula
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
+// MAIN CALCULATE
+// ══════════════════════════════════════════
 const fmt = n => '₹'+Math.round(Math.abs(n)).toLocaleString('en-IN');
 const fmtS = n => (n>=0?'+':'')+Math.round(n).toLocaleString('en-IN');
 
-function calculate(){
-  const si     = parseInt(document.getElementById('si').value);
-  const rates  = RACK[si];
-  const city   = (document.getElementById('cityInput').value||'').trim().toUpperCase()||'OTHERS';
-  const floatY = document.querySelector('input[name=floater]:checked').value==='Y';
-  const pedY   = document.querySelector('input[name=ped]:checked').value==='Y';
-  const e1Y    = document.querySelector('input[name=excl1]:checked').value==='Y';
-  const ppnY   = document.querySelector('input[name=ppn]:checked').value==='Y';
-  const addelP = document.querySelector('input[name=addel]:checked').value==='pro';
-  const copayV = document.getElementById('copay').value;
-  const rrV    = document.getElementById('roomRent').value;
-  const dslV   = document.getElementById('dsl').value;
-  const matY   = document.querySelector('input[name=mat]:checked').value==='Y';
-  const matD1  = document.querySelector('input[name=matD1]:checked').value;
+function calculate() {
+  const si = parseInt(document.getElementById('si').value);
+  const rates = RATES[si];
+  const brkPct = gvf('brokerage');
+  const icr = gvf('icr');
+  const policyType = document.getElementById('policyType').value;
+  const floatN = document.querySelector('input[name=floater]:checked').value === 'N';
+  const pedN = document.querySelector('input[name=ped]:checked').value === 'N';
+  const w30N = document.querySelector('input[name=w30]:checked').value === 'N';
+  const w12N = document.querySelector('input[name=w12]:checked').value === 'N';
+  const matN = document.querySelector('input[name=mat]:checked').value === 'N';
+  const mat9mN = document.querySelector('input[name=mat9m]:checked').value === 'N';
+  const matLTN = document.querySelector('input[name=matLT]:checked').value === 'N';
   const matLim = document.getElementById('matLimit').value;
-  const babyY  = document.querySelector('input[name=baby]:checked').value==='Y';
-  const ppnatY = document.querySelector('input[name=ppnat]:checked').value==='Y';
-  const rncY   = document.querySelector('input[name=rnc]:checked').value==='Y';
-  const ambCov = parseInt(document.getElementById('ambulance').value)||2000;
-  const addLP  = parseFloat(document.getElementById('addLoad').value)||0;
-  const brkPct = parseFloat(document.getElementById('brokerage').value)||7.5;
-  const phcY   = document.querySelector('input[name=phc]:checked').value==='Y';
-  const matClaimICR = parseFloat(document.getElementById('matClaimICR').value)||0;
-  const hcuY   = document.querySelector('input[name=hcu]:checked').value==='Y';
-  const wellnessY = document.querySelector('input[name=wellness]:checked').value==='Y';
-  const teleHY = document.querySelector('input[name=teleH]:checked').value==='Y';
+  const babyN = document.querySelector('input[name=baby]:checked').value === 'N';
+  const ppnatY = document.querySelector('input[name=ppnat]:checked').value === 'Y';
+  const nbvaxY = document.querySelector('input[name=nbvax]:checked').value === 'Y';
+  const wbY = document.querySelector('input[name=wellbaby]:checked').value === 'Y';
+  const rrV = document.getElementById('roomRent').value;
+  const dslV = document.getElementById('dsl').value;
+  const copayV = document.getElementById('copay').value;
+  const ppY = document.querySelector('input[name=prepost]:checked').value === 'Y';
+  const ambV = document.getElementById('ambulance').value;
+  const modY = document.querySelector('input[name=modern]:checked').value === 'Y';
+  const lasikY = document.querySelector('input[name=lasik]:checked').value === 'Y';
+  const ayushY = document.querySelector('input[name=ayush]:checked').value === 'Y';
+  const hdcY = document.querySelector('input[name=hdc]:checked').value === 'Y';
+  const riY = document.querySelector('input[name=reinstate]:checked').value === 'Y';
+  const bufferSI = gvf('bufferSI');
+  const bufType = document.querySelector('input[name=bufType]:checked')?.value || 'all';
+  const addLoadPct = gvf('addLoad');
 
-  // Demography for selected SI
-  const bandL = BANDS.map((_,i)=>gv(`d_${si}_${i}`));
-  const totalL = bandL.reduce((a,b)=>a+b,0);
-  const emps   = gv(`ec_${si}`);
+  // Demography
+  const bandL = BANDS.map((_,i) => gv(`d_${si}_${i}`));
+  const totalL = bandL.reduce((a,b) => a+b, 0);
+  const emps = gv(`ec_${si}`);
 
-  if(!totalL){alert('Please enter lives in the demography table for the selected SI row first.');return;}
+  if (!totalL) { alert('Please enter lives in the demography table.'); return; }
+  if (totalL < 25) { if(!confirm(`Total lives (${totalL}) is below minimum 25. Continue anyway?`)) return; }
+  if (totalL > 500) { alert('Maximum 500 lives allowed under facility.'); return; }
 
-  // ── STEP 1: Base (col8 equivalent) ──
-  const bandPrem = bandL.map((l,i)=>rates[i]*l);
-  const base = bandPrem.reduce((a,b)=>a+b,0);
+  // UW warning check
+  const uwWarn = document.getElementById('uwWarn');
+  if (icr > 115) {
+    uwWarn.style.display = 'block';
+    uwWarn.innerHTML = `<div class="warn-red">⚠️ <strong>Refer to Underwriter:</strong> ICR of ${icr}% exceeds 115%. This case must be referred to UW before quoting. Premium shown is indicative only.</div>`;
+  } else { uwWarn.style.display = 'none'; }
 
-  // ── STEP 2: Scale to col12 (= base/total_lives × 50) ──
-  const scale = 50/totalL;
-  const col12basic = base * scale;
+  // STEP 1: Base premium = Σ(lives × rate)
+  const bandPrem = bandL.map((l,i) => rates[i] * l);
+  const base = bandPrem.reduce((a,b) => a+b, 0);
 
-  // ── STEP 3: City Category Discount on col12 ──
-  const cityCat = CITY_CAT[city]||'Others';
-  const catD    = CAT_DISC[cityCat]||0.05;
-  const col12ac = col12basic * (1 + catD);   // col12_AC = after city disc
-
-  // ── STEP 4: All % adjustments on col12_AC ──
+  // STEP 2: Build adjustment items (all % on base)
   const items = [];
 
-  // Floater (Row 21): dep/self ratio based — simplified: floater = -10%
-  const floatP = floatY ? -0.10 : 0;
-  items.push({label:'Floater / Individual', sub:floatY?'Floater (−10%)':'Individual (0%)', pct:floatP});
+  // Non-floater
+  if (floatN) items.push({label:'Non-Floater Loading', sub:'+15%', pct:0.15});
 
-  // City Risk Loading (Row 22 = VLOOKUP — POSITIVE loading)
-  const cityRisk = getCityRisk(city, totalL);
-  items.push({label:`City Risk Loading`, sub:`${city} · ${totalL} lives (${(cityRisk*100).toFixed(2)}%)`, pct:cityRisk});
+  // PED waiting
+  if (pedN) items.push({label:'PED Waiting Period Applied', sub:'−20%', pct:-0.20});
 
-  // Maternity Claim Discount (Row 23) — ICR-based for renewals
-  const matClP = matClaimICR;
-  if(matClP!==0) items.push({label:'Maternity Claim Discount', sub:`Renewal ICR-based (${(matClP*100).toFixed(0)}%)`, pct:matClP});
+  // 30-day waiting
+  if (w30N) items.push({label:'30-Day Waiting Period Applied', sub:'−5%', pct:-0.05});
 
-  // Co-payment (Row 24) — Nil = +10%, others negative
-  const copayMap={'Nil':0.10,'10':-0.10,'12.5':-0.125,'15':-0.15,'17.5':-0.175,'20':-0.20,'25':-0.25,'30':-0.30,'40':-0.40,'50':-0.50};
-  const copayP = copayMap[copayV]||0;
-  items.push({label:'Co-payment', sub:`${copayV==='Nil'?'Nil (+10% loading)':copayV+'% co-pay'}`, pct:copayP});
+  // 1/2 year waiting
+  if (w12N) items.push({label:'1/2 Year Waiting Period Applied', sub:'−15%', pct:-0.15});
 
-  // Room Rent Loading (Row 29) — No Limit=+17.5%, 2%SI=+12.5%, 1%SI=0%
-  const rrMap={'no_limit':0.175,'2pct':0.125,'1pct':0};
-  const rrP = rrMap[rrV]||0;
-  items.push({label:'Room Rent', sub:rrV==='no_limit'?'No Limit (+17.5%)':rrV==='2pct'?'2% SI (+12.5%)':'1% SI (0%, base)', pct:rrP});
+  // Maternity
+  if (matN) {
+    items.push({label:'Maternity Cover Deleted', sub:'−15%', pct:-0.15});
+  } else {
+    // Maternity limit adjustment
+    const matLimMap = {
+      'nd35cs35': -0.05, 'nd35cs50': -0.03, 'nd50cs50': 0,
+      'nd50cs75': 0.05, 'nd75cs75': 0, 'nd1lcs1l': 0.12
+    };
+    const matLimPct = matLimMap[matLim] || 0;
+    if (matLimPct !== 0) items.push({label:`Maternity Limit Adjustment`, sub:`${matLim} (${matLimPct>0?'+':''}${(matLimPct*100).toFixed(0)}%)`, pct:matLimPct});
 
-  // PED Loading (Row 30) — +20% if PED covered (1yr excl irrelevant for fresh)
-  const pedP = pedY ? 0.20 : 0;
-  if(pedP) items.push({label:'PED Coverage Loading', sub:'PED covered from Day 1 (+20%)', pct:pedP});
+    if (mat9mN) items.push({label:'9-Month Mat. Waiting Applied', sub:'−5%', pct:-0.05});
+    if (matLTN) items.push({label:'Life-Threatening Mat. Excluded', sub:'−1%', pct:-0.01});
+    if (babyN) items.push({label:'Baby Day 1 Deleted', sub:'−0.5%', pct:-0.005});
+    if (ppnatY) items.push({label:'Pre/Post Natal ₹10K', sub:'+2%', pct:0.02});
+    if (nbvaxY) items.push({label:'Newborn Vaccination ₹5K', sub:'+3%', pct:0.03});
+    if (wbY) items.push({label:'Well Baby ₹10K', sub:'+2%', pct:0.02});
+  }
 
-  // Maternity Loading (Row 31)
-  const matP = matY ? getMatLoading(matD1, matLim) : 0;
-  if(matP) items.push({label:'Maternity Loading', sub:`${MAT_LABELS[matLim]||matLim} · ${matD1==='Y'?'Day 1':'9M Wait'} (${(matP*100).toFixed(2)}%)`, pct:matP});
+  // Room Rent
+  const rrMap = {'none':0,'1pct':-0.08,'2pct':-0.06};
+  const rrPct = rrMap[rrV]||0;
+  const rrLbl = {'none':'No Capping (Base)','1pct':'1%/2% SI Cap (−8%)','2pct':'2%/4% SI Cap (−6%)'};
+  if (rrPct) items.push({label:'Room Rent Cap', sub:rrLbl[rrV], pct:rrPct});
 
-  // Baby Day 1 (Row 32 = 8%)
-  const babyP = babyY && matY ? 0.08 : 0;
-  if(babyP) items.push({label:'Baby Day 1 Cover', sub:'+8%', pct:babyP});
+  // DSL
+  const dslMap = {'none':0,'default':-0.05,'higher':-0.04,'lower':-0.06};
+  const dslLbl = {'none':'None','default':'Default (−5%)','higher':'Higher Limit (−4%)','lower':'Lower Limit (−6%)'};
+  if (dslMap[dslV]) items.push({label:'Disease Sub-Limits', sub:dslLbl[dslV], pct:dslMap[dslV]});
 
-  // Pre/Post Natal (Row 33 = 2%)
-  const ppnatP = ppnatY && matY ? 0.02 : 0;
-  if(ppnatP) items.push({label:'Pre / Post Natal', sub:'+2%', pct:ppnatP});
+  // Co-pay
+  const cpMap = {'none':0,'10all':-0.07,'20all':-0.15,'10escp':-0.07,'20escp':-0.14,'10par':-0.035,'20par':-0.07};
+  const cpLbl = {'none':'None','10all':'10% All (−7%)','20all':'20% All (−15%)','10escp':'10% ESCP (−7%)','20escp':'20% ESCP (−14%)','10par':'10% Parents (−3.5%)','20par':'20% Parents (−7%)'};
+  if (cpMap[copayV]) items.push({label:'Co-pay', sub:cpLbl[copayV], pct:cpMap[copayV]});
 
-  // DSL (Row 34)
-  const dslMap={'No Limit':0.175,'Default':0,'Higher Limit':0.075,'Lower Limit':-0.05};
-  const dslP = dslMap[dslV]||0;
-  items.push({label:'Disease Sub-Limits', sub:`${dslV} (${dslP>=0?'+':''}${(dslP*100).toFixed(1)}%)`, pct:dslP});
+  // Pre/Post Hosp
+  if (ppY) items.push({label:'Pre/Post Hosp 60+90 Days', sub:'+1.5%', pct:0.015});
 
-  // Add-Del (Row 35)
-  const addelP2 = addelP ? 0.05 : 0;
-  if(addelP2) items.push({label:'Add / Delete Lives (Pro-Rata)', sub:'+5%', pct:addelP2});
+  // Ambulance
+  const ambMap = {'none':0,'1pct':0.02,'cardiac':0.03};
+  const ambLbl = {'none':'Standard','1pct':'1% SI (+2%)','cardiac':'Cardiac 2% SI (+3%)'};
+  if (ambMap[ambV]) items.push({label:'Road Ambulance', sub:ambLbl[ambV], pct:ambMap[ambV]});
 
-  // R&C (Row 36)
-  const rncP = rncY ? 0.08 : 0;
-  if(rncP) items.push({label:'R&C / Claim Intimation Waiver', sub:'+8%', pct:rncP});
+  // Modern Age
+  if (modY) items.push({label:'Modern Age Treatment 100% SI', sub:'+4%', pct:0.04});
 
-  // PPN (Row 50)
-  const ppnP = ppnY ? -0.10 : 0;
-  if(ppnP) items.push({label:'PPN Discount', sub:'Preferred Provider Network (−10%)', pct:ppnP});
+  // Lasik
+  if (lasikY) items.push({label:'Lasik Surgery ±5D', sub:'+1%', pct:0.01});
 
-  // Additional Loading / Discount (Row 41)
-  const addP = addLP/100;
-  if(addP!==0) items.push({label:'Additional Loading/Discount', sub:`Manual input (${addLP>=0?'+':''}${addLP}%)`, pct:addP});
+  // AYUSH
+  if (ayushY) items.push({label:'AYUSH 100% SI', sub:'+1%', pct:0.01});
 
-  // Sum all % adjustments
-  const totalPct = items.reduce((a,it)=>a+it.pct,0);
-  const adjAmt   = col12ac * totalPct;
-  const riskPreAmb = col12ac + adjAmt;
+  // Hospital Daily Cash
+  if (hdcY) items.push({label:'Hospital Daily Cash ₹1K/day', sub:'+1%', pct:0.01});
 
-  // Ambulance (Row 37) — flat: lives × 0.02 × (cover - 1000)
-  const ambAmt = totalL * 0.02 * (ambCov - 1000);
+  // Reinstatement
+  if (riY) items.push({label:'Reinstatement of SI', sub:'+5%', pct:0.05});
 
-  // Physical Health Card
-  const phcAmt = phcY ? totalL * 10 : 0;
+  // Additional Loading
+  if (addLoadPct !== 0) items.push({label:'Additional Loading/Discount', sub:`${addLoadPct>0?'+':''}${addLoadPct}%`, pct:addLoadPct/100});
 
-  const riskPremium = riskPreAmb + ambAmt + phcAmt;
+  // Subtotal after all adjustments
+  const totalPct = items.reduce((a,it) => a + it.pct, 0);
+  const adjustedBase = base * (1 + totalPct);
 
-  // Brokerage — grossed up (Row 49)
-  const brkFrac = brkPct/100;
-  const netPrem = riskPremium / (1 - brkFrac);
-  const brkAmt  = netPrem - riskPremium;
+  // Corporate Buffer — flat add-on on top
+  let bufferAmt = 0;
+  if (bufferSI > 0) {
+    bufferAmt = bufType === 'all' ? bufferSI * 0.15 : bufferSI * 0.08;
+  }
 
-  // PPN applied after brokerage if selected
-  const ppnAmt = 0; // already in pct above
+  // Fresh Business Discount — −10% on adjusted base (not on buffer)
+  const freshDisc = policyType === 'fresh' ? -0.10 : 0;
+  const freshDiscAmt = adjustedBase * freshDisc;
 
-  // GST
-  const gstAmt  = netPrem * 0.18;
+  // ICR Discount on adjusted base (not on buffer)
+  const icrDisc = icr > 0 && icr <= 115 ? getICRDiscount(icr) : 0;
+  const icrDiscAmt = adjustedBase * icrDisc;
+
+  const riskPremium = adjustedBase + freshDiscAmt + icrDiscAmt + bufferAmt;
+
+  // Brokerage grossed up
+  const brkFrac = brkPct / 100;
+  const netPrem = brkFrac < 1 ? riskPremium / (1 - brkFrac) : riskPremium;
+  const brkAmt = netPrem - riskPremium;
+
+  // GST 18%
+  const gstAmt = netPrem * 0.18;
   const grossPrem = netPrem + gstAmt;
 
   // ── DISPLAY ──
-  document.getElementById('rGross').textContent  = fmt(grossPrem);
+  document.getElementById('rGross').textContent = fmt(grossPrem);
   document.getElementById('rGrossS').textContent = `Risk: ${fmt(riskPremium)} · Brk: ${fmt(brkAmt)}`;
-  document.getElementById('rNet').textContent    = fmt(netPrem);
-  document.getElementById('rGST').textContent    = fmt(gstAmt);
-  document.getElementById('rEmp').textContent    = emps>0 ? fmt(grossPrem/emps) : '—';
-  document.getElementById('rLife').textContent   = fmt(grossPrem/totalL);
+  document.getElementById('rNet').textContent = fmt(netPrem);
+  document.getElementById('rGST').textContent = fmt(gstAmt);
+  document.getElementById('rEmp').textContent = emps > 0 ? fmt(grossPrem/emps) : '—';
+  document.getElementById('rLife').textContent = fmt(grossPrem/totalL);
 
   // Build-up table
-  const catDiscSign = catD>=0?'+':'';
-  let bh = `
-    <tr><td>Base Premium (Σ lives × rack rates)</td><td>${fmt(base)}</td></tr>
-    <tr class="sep"><td colspan="2"></td></tr>
-    <tr><td>× Scale Factor (50 / ${totalL} lives)</td><td>× ${scale.toFixed(4)}</td></tr>
-    <tr class="sub"><td>Scaled Base (col12)</td><td>${fmt(col12basic)}</td></tr>
-    <tr class="sep"><td colspan="2"></td></tr>
-    <tr class="${catD>=0?'load':'disc'}"><td>City Category — ${cityCat} (${catDiscSign}${(catD*100).toFixed(0)}%)</td><td>${fmtS(col12basic*catD)}</td></tr>
-    <tr class="sub"><td>Base After City Disc (col12_AC) — All % below on this</td><td>${fmt(col12ac)}</td></tr>
+  let bh = `<tr><td>Base Premium (Σ lives × facility rates)</td><td>${fmt(base)}</td></tr>
     <tr class="sep"><td colspan="2"></td></tr>`;
 
-  items.forEach(it=>{
-    if(it.pct===0) return;
-    const cls = it.pct>0?'load':'disc';
-    const sign = it.pct>0?'+':'';
-    bh += `<tr class="${cls}"><td>${it.label} <span style="color:var(--muted);font-size:11px">${it.sub}</span></td><td>${sign}${fmt(col12ac*it.pct)}</td></tr>`;
+  items.forEach(it => {
+    if (it.pct === 0) return;
+    bh += `<tr class="${it.pct>0?'load':'disc'}"><td>${it.label} <span style="color:var(--muted);font-size:11px">${it.sub}</span></td><td>${it.pct>0?'+':''}${fmt(base*it.pct)}</td></tr>`;
   });
 
-  bh += `
-    <tr class="sep"><td colspan="2"></td></tr>
-    <tr class="sub"><td>Risk Premium (before ambulance)</td><td>${fmt(riskPreAmb)}</td></tr>`;
-  if(ambAmt) bh += `<tr><td>Ambulance Service (${totalL} × 0.02 × ${ambCov-1000})</td><td>+${fmt(ambAmt)}</td></tr>`;
-  if(phcAmt) bh += `<tr><td>Physical Health Card (${totalL} × ₹10)</td><td>+${fmt(phcAmt)}</td></tr>`;
-  bh += `
-    <tr class="sub"><td>Risk Premium</td><td>${fmt(riskPremium)}</td></tr>
+  bh += `<tr class="sep"><td colspan="2"></td></tr>
+    <tr class="sub"><td>Adjusted Base Premium</td><td>${fmt(adjustedBase)}</td></tr>
+    <tr class="sep"><td colspan="2"></td></tr>`;
+
+  if (freshDisc !== 0) bh += `<tr class="disc"><td>Fresh Business Discount <span style="color:var(--muted);font-size:11px">−10%</span></td><td>${fmtS(freshDiscAmt)}</td></tr>`;
+  if (icrDisc !== 0) bh += `<tr class="disc"><td>ICR Discount <span style="color:var(--muted);font-size:11px">ICR ${icr}% (${(icrDisc*100).toFixed(0)}%)</span></td><td>${fmtS(icrDiscAmt)}</td></tr>`;
+  if (bufferAmt > 0) bh += `<tr class="load"><td>Corporate Buffer <span style="color:var(--muted);font-size:11px">${bufType==='all'?'All Illness 15%':'CI Only 8%'} × ₹${bufferSI.toLocaleString('en-IN')}</span></td><td>+${fmt(bufferAmt)}</td></tr>`;
+
+  bh += `<tr class="sub"><td>Risk Premium</td><td>${fmt(riskPremium)}</td></tr>
     <tr class="sep"><td colspan="2"></td></tr>
     <tr><td>Brokerage (${brkPct}% grossed up)</td><td>+${fmt(brkAmt)}</td></tr>
     <tr class="sub"><td>Net Premium (excl. GST)</td><td>${fmt(netPrem)}</td></tr>
@@ -1301,278 +770,70 @@ function calculate(){
     <tr class="grand"><td>GROSS PREMIUM (incl. GST)</td><td>${fmt(grossPrem)}</td></tr>`;
   document.getElementById('bupTbl').innerHTML = bh;
 
-  // Conditions
-  // Format dates for display
-  const startDateVal = document.getElementById('policyStartDate').value;
-  const endDateVal   = document.getElementById('policyEndDate').value;
-  const fmtDate = (d) => { if(!d) return '—'; const [y,m,dy]=d.split('-'); const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return `${dy}-${months[parseInt(m)-1]}-${y}`; };
-  const clientNameVal  = document.getElementById('clientName').value || '—';
-  const imIdVal        = document.getElementById('imId').value || '—';
-  const industryTypeVal= document.getElementById('industryType').value || '—';
+  // Conditions Summary
+  const sd = document.getElementById('policyStartDate').value;
+  const ed = document.getElementById('policyEndDate').value;
+  const fmtDate = d => { if(!d)return '—'; const [y,m,dy]=d.split('-'); return `${dy}-${'JanFebMarAprMayJunJulAugSepOctNovDec'.slice((parseInt(m)-1)*3,(parseInt(m)-1)*3+3)}-${y}`; };
+  const matLimLabels = {'nd35cs35':'ND₹35K/CS₹35K','nd35cs50':'ND₹35K/CS₹50K','nd50cs50':'ND₹50K/CS₹50K (Base)','nd50cs75':'ND₹50K/CS₹75K','nd75cs75':'ND₹75K/CS₹75K','nd1lcs1l':'ND₹1L/CS₹1L'};
 
   const condData = [
-    ['Client Name', clientNameVal], ['IM ID', imIdVal],
-    ['Industry Type', industryTypeVal],
-    ['Policy Start Date', fmtDate(startDateVal)], ['Policy End Date', fmtDate(endDateVal)],
-    ['City',city],['City Category',cityCat],['Sum Insured',`₹${si.toLocaleString('en-IN')}`],
-    ['Floater',floatY?'Yes':'No'],['Family Definition',document.getElementById('famDef').selectedOptions[0].text],
-    ['Room Rent',document.getElementById('roomRent').selectedOptions[0].text.split('(')[0].trim()],
-    ['Co-payment',copayV==='Nil'?'Nil':copayV+'%'],['Disease Sub-Limits',dslV],
-    ['PED',pedY?'Covered from Day 1':'Not Covered'],['Maternity',matY?`Yes · ${matD1==='Y'?'Day 1':'9M Wait'}`:'Not Covered'],
-    ['Maternity Limit',matY?MAT_LABELS[matLim].split('/')[0].trim():'N/A'],['Baby Day 1',babyY?'Covered':'Not Covered'],
-    ['Mat Claim Disc',matClaimICR===0?'None':matClaimICR===-0.03?'ICR 110–150% (−3%)':'ICR 150–200% (−5%)'],
-    ['R&C Waiver',rncY?'Yes':'No'],['Add/Del',addelP?'Pro-Rata':'Short Period'],
-    ['Health Check-ups',hcuY?'Yes':'NA'],['Wellness & Preventive',wellnessY?'Included':'Not Covered'],
-    ['Tele Health',teleHY?'Yes':'Not Applicable'],
-    ['OPD Per Family',gv2('opdFam')>0?`₹${gv2('opdFam').toLocaleString('en-IN')}`:'Not Covered'],
-    ['Brokerage',brkPct+'%'],['Total Adjustment',(totalPct*100).toFixed(2)+'% on col12_AC'],
+    ['Client Name', document.getElementById('clientName').value||'—'],
+    ['Policy Start', fmtDate(sd)], ['Policy End', fmtDate(ed)],
+    ['Sum Insured', `₹${si.toLocaleString('en-IN')}`],
+    ['Total Lives', totalL], ['Employees', emps||'—'],
+    ['Policy Type', policyType==='fresh'?'Fresh (−10%)':'Market Rollover'],
+    ['ICR', icr>0?`${icr}%`:'Fresh/NA'],
+    ['Floater', floatN?'Non-Floater (+15%)':'Floater (Base)'],
+    ['Family Def', document.getElementById('famDef').selectedOptions[0].text.split('(')[0].trim()],
+    ['Maternity', matN?'Deleted (−15%)':'Covered'],
+    ['Mat Limit', matN?'N/A':(matLimLabels[matLim]||matLim)],
+    ['PED', pedN?'Waiting Period (−20%)':'Day 1 (Base)'],
+    ['Room Rent', rrLbl[rrV]], ['DSL', dslLbl[dslV]], ['Co-pay', cpLbl[copayV]],
+    ['Corporate Buffer', bufferAmt>0?`₹${bufferSI.toLocaleString('en-IN')} (${bufType==='all'?'All Illness':'CI Only'})`:'None'],
+    ['Brokerage', brkPct+'%'],
+    ['Total Adj %', `${(totalPct*100).toFixed(1)}% on base`],
   ];
   document.getElementById('condGrid').innerHTML = condData.map(([n,v])=>`<div class="ci"><div class="cn">${n}</div><div class="cv">${v}</div></div>`).join('');
 
-  // City info card
-  const riskArr = CITY_RISK[city]||CITY_RISK['OTHERS'];
-  document.getElementById('cityInfo').innerHTML = `
-    <div style="font-size:12px;color:var(--sub);line-height:1.9">
-      <strong style="color:var(--ink)">${city}</strong> · ${cityCat} · Category Disc: ${catDiscSign}${(catD*100).toFixed(0)}%<br>
-      Risk Loading by lives band:<br>
-      0–100: <strong>${(riskArr[0]*100).toFixed(2)}%</strong> &nbsp;|&nbsp;
-      101–200: <strong>${(riskArr[1]*100).toFixed(2)}%</strong> &nbsp;|&nbsp;
-      201–300: <strong>${(riskArr[2]*100).toFixed(2)}%</strong><br>
-      301–400: <strong>${(riskArr[3]*100).toFixed(2)}%</strong> &nbsp;|&nbsp;
-      401–500: <strong>${(riskArr[4]*100).toFixed(2)}%</strong><br>
-      <span style="color:var(--red);font-weight:700">Active: ${(cityRisk*100).toFixed(2)}% (${totalL} lives)</span>
-    </div>`;
-
-  // Band table
-  let bt = `<thead><tr><th>Age Band</th><th>Lives</th><th>Rack Rate (₹)</th><th>Band Premium</th><th>% of Base</th></tr></thead><tbody>`;
-  bandL.forEach((l,i)=>{
-    if(!l) return;
-    const bp = bandPrem[i];
-    bt += `<tr><td>${BANDS[i]}</td><td>${l}</td><td class="mono">₹${rates[i].toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td class="mono">₹${Math.round(bp).toLocaleString('en-IN')}</td><td>${(bp/base*100).toFixed(1)}%</td></tr>`;
+  // Band breakdown table
+  let bt = `<thead><tr><th>Age Band</th><th>Lives</th><th>Rate (₹/life)</th><th>Band Premium</th><th>% of Base</th></tr></thead><tbody>`;
+  bandL.forEach((l,i) => {
+    if (!l) return;
+    bt += `<tr><td>${BANDS[i]}</td><td>${l}</td><td style="font-family:'IBM Plex Mono',monospace">₹${rates[i].toLocaleString('en-IN')}</td><td style="font-family:'IBM Plex Mono',monospace">₹${Math.round(bandPrem[i]).toLocaleString('en-IN')}</td><td>${(bandPrem[i]/base*100).toFixed(1)}%</td></tr>`;
   });
-  bt += `<tr class="tot"><td><strong>TOTAL</strong></td><td><strong>${totalL}</strong></td><td>—</td><td class="mono"><strong>₹${Math.round(base).toLocaleString('en-IN')}</strong></td><td>100%</td></tr></tbody>`;
+  bt += `<tr class="tot"><td><strong>TOTAL</strong></td><td><strong>${totalL}</strong></td><td>—</td><td style="font-family:'IBM Plex Mono',monospace"><strong>₹${Math.round(base).toLocaleString('en-IN')}</strong></td><td>100%</td></tr></tbody>`;
   document.getElementById('bandTbl').innerHTML = bt;
 
   // Rate card
   let rt = `<thead><tr><th>Sum Insured</th>${BANDS.map(b=>`<th>${b}</th>`).join('')}</tr></thead><tbody>`;
-  SI_LIST.forEach(s=>{
-    const sel = s===si;
-    rt += `<tr${sel?' class="sel"':''}><td>₹${s.toLocaleString('en-IN')}</td>${RACK[s].map(v=>`<td>₹${Math.round(v).toLocaleString('en-IN')}</td>`).join('')}</tr>`;
+  SI_LIST.forEach((s,idx) => {
+    const sel = s === si;
+    rt += `<tr${sel?' class="sel"':''}><td>${SI_LABELS[idx]}</td>${RATES[s].map(v=>`<td>₹${v.toLocaleString('en-IN')}</td>`).join('')}</tr>`;
   });
   rt += '</tbody>';
   document.getElementById('rateTbl').innerHTML = rt;
 
-  document.getElementById('results').style.display='block';
+  document.getElementById('results').style.display = 'block';
   document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-function resetAll(){
-  document.getElementById('clientName').value='';
-  document.getElementById('imId').value='';
-  document.getElementById('industryType').value='';
-  document.getElementById('policyStartDate').value='';
-  document.getElementById('policyEndDate').value='';
-  document.getElementById('cityInput').value='';
-  document.getElementById('cityNote').textContent='Enter city to see category & loading';
-  document.getElementById('cityNote').style.color='';
-  document.getElementById('addLoad').value='-50';
-  document.getElementById('results').style.display='none';
+function resetAll() {
+  document.getElementById('clientName').value = '';
+  document.getElementById('policyStartDate').value = '';
+  document.getElementById('policyEndDate').value = '';
+  document.getElementById('icr').value = 0;
+  document.getElementById('bufferSI').value = 0;
+  document.getElementById('addLoad').value = 0;
+  document.getElementById('icrNote').textContent = '0% = Fresh business';
+  document.getElementById('icrNote').style.color = '#166534';
+  document.getElementById('bufferTypeRow').style.display = 'none';
+  document.getElementById('results').style.display = 'none';
   buildDemog();
   updateTotals();
 }
 
-// ═══════════════════════════════════════════
-// ADD/DEL CALCULATOR
-// ═══════════════════════════════════════════
-const ADDEL_RATES = {
-  50000:   [2148, 2681, 3129, 4358, 6770, 8471, 10151, 11981, 13805],
-  100000:  [2336, 3809, 4198, 6192, 9637, 12032, 14437, 17038, 19637],
-  150000:  [2526, 4261, 4701, 7124, 11376, 14572, 17286, 20403, 23511],
-  200000:  [2618, 4546, 5020, 7776, 12669, 16541, 19457, 22967, 26463],
-  250000:  [3134, 5165, 5701, 8820, 14376, 18779, 22086, 26070, 30040],
-  300000:  [3527, 5581, 6158, 9518, 15520, 20280, 23849, 28151, 32438],
-  350000:  [4325, 6217, 6855, 10603, 17289, 22555, 26543, 31332, 36103],
-  400000:  [4954, 6609, 7283, 11272, 18380, 23945, 28197, 33284, 38353],
-  450000:  [5781, 7264, 8005, 12392, 19716, 26294, 30977, 36568, 42135],
-  500000:  [6380, 7635, 8412, 13027, 20280, 27611, 32542, 38417, 44265],
-  600000:  [6891, 8245, 9085, 14069, 24335, 33133, 39051, 46101, 53118],
-  700000:  [8039, 9620, 10599, 16414, 28391, 38655, 45559, 53784, 61971],
-  800000:  [9188, 10994, 12114, 18759, 32447, 44178, 52068, 61468, 70824],
-  900000:  [10336, 12368, 13628, 21104, 36503, 49700, 58576, 69151, 79677],
-  1000000: [11485, 13742, 15142, 23449, 40559, 55222, 65085, 76834, 88530],
-};
-
-const AD_RELS = ['Employee', 'Spouse', 'Child', 'Parent / PIL'];
-const AD_BANDS = ['3M–18','19–35','36–45','46–55','56–60','61–65','66–70','71–75','76–80'];
-
-function buildAdLivesTable() {
-  const tbody = document.getElementById('adLivesTbody');
-  if (!tbody) return;
-  let h = '';
-  AD_RELS.forEach((rel, ri) => {
-    h += `<tr>`;
-    h += `<td style="padding:6px 10px;font-size:12px;font-weight:600;color:#334155;white-space:nowrap">${rel}</td>`;
-    for (let b = 0; b < 9; b++) {
-      h += `<td style="padding:4px"><input type="number" min="0" value="0" id="adl_${ri}_${b}" style="width:52px;text-align:center;border:1.5px solid #e2e8f0;border-radius:5px;padding:5px 4px;font-size:12px" oninput="adUpdateTotals()"></td>`;
-    }
-    h += `<td style="padding:6px 8px;font-weight:700;font-size:13px;color:var(--red);text-align:center" id="adRowTot_${ri}">0</td>`;
-    h += `</tr>`;
-  });
-  // Total row
-  h += `<tr style="background:#f0fdf4">`;
-  h += `<td style="padding:6px 10px;font-size:11px;font-weight:700;color:#166534">TOTAL LIVES</td>`;
-  for (let b = 0; b < 9; b++) {
-    h += `<td style="text-align:center;font-weight:700;font-size:12px;color:#166534" id="adColTot_${b}">0</td>`;
-  }
-  h += `<td style="text-align:center;font-weight:700;font-size:13px;color:#166534" id="adGrandTot">0</td>`;
-  h += `</tr>`;
-  tbody.innerHTML = h;
-}
-
-function adUpdateTotals() {
-  let grand = 0;
-  AD_RELS.forEach((_, ri) => {
-    let rowSum = 0;
-    for (let b = 0; b < 9; b++) {
-      rowSum += parseInt(document.getElementById(`adl_${ri}_${b}`)?.value) || 0;
-    }
-    document.getElementById(`adRowTot_${ri}`).textContent = rowSum;
-    grand += rowSum;
-  });
-  for (let b = 0; b < 9; b++) {
-    let colSum = 0;
-    AD_RELS.forEach((_, ri) => {
-      colSum += parseInt(document.getElementById(`adl_${ri}_${b}`)?.value) || 0;
-    });
-    document.getElementById(`adColTot_${b}`).textContent = colSum;
-  }
-  document.getElementById('adGrandTot').textContent = grand;
-}
-
-function adCalcDays() {
-  const addDate = document.getElementById('adAddDate').value;
-  const endDate = document.getElementById('adEndDate').value;
-  const note = document.getElementById('adDaysNote');
-  if (addDate && endDate) {
-    const d1 = new Date(addDate), d2 = new Date(endDate);
-    const days = Math.round((d2 - d1) / (1000 * 60 * 60 * 24)) + 1;
-    if (days <= 0) { note.textContent = '❌ Addition date must be before end date'; note.style.color='#dc2626'; return; }
-    note.textContent = `Remaining days: ${days} / 365`;
-    note.style.color = '#166534';
-  }
-}
-
-// Auto-populate end date from main calculator
-function adSyncDates() {
-  const mainEnd = document.getElementById('policyEndDate')?.value;
-  const adEnd = document.getElementById('adEndDate');
-  if (mainEnd && adEnd && !adEnd.value) adEnd.value = mainEnd;
-}
-
-function calcAddDel() {
-  const si = parseInt(document.getElementById('adSI').value);
-  const addDate = document.getElementById('adAddDate').value;
-  const endDate = document.getElementById('adEndDate').value;
-  const brkPct = parseFloat(document.getElementById('adBrk').value) || 0;
-  const result = document.getElementById('adResult');
-
-  if (!addDate || !endDate) { result.style.display='block'; result.innerHTML='<div style="color:#dc2626;padding:10px">⚠️ Please enter Addition Date and Policy End Date.</div>'; return; }
-
-  const d1 = new Date(addDate), d2 = new Date(endDate);
-  const remainDays = Math.round((d2 - d1) / (1000 * 60 * 60 * 24)) + 1;
-  if (remainDays <= 0) { result.innerHTML='<div style="color:#dc2626;padding:10px">❌ Invalid dates.</div>'; result.style.display='block'; return; }
-
-  const rates = ADDEL_RATES[si];
-  if (!rates) return;
-
-  // Get lives per band (sum across all relationships)
-  const bandLives = [];
-  for (let b = 0; b < 9; b++) {
-    let total = 0;
-    AD_RELS.forEach((_, ri) => { total += parseInt(document.getElementById(`adl_${ri}_${b}`)?.value) || 0; });
-    bandLives.push(total);
-  }
-  const totalLives = bandLives.reduce((a,b)=>a+b, 0);
-  if (totalLives === 0) { result.innerHTML='<div style="color:#dc2626;padding:10px">⚠️ Please enter at least one life.</div>'; result.style.display='block'; return; }
-
-  // Calculate base premium = Σ (lives × add/del rate × remaining/365)
-  let basePrem = 0;
-  const breakdown = [];
-  bandLives.forEach((lives, b) => {
-    if (lives === 0) return;
-    const rate = rates[b];
-    const prorataRate = rate * remainDays / 365;
-    const prem = lives * prorataRate;
-    basePrem += prem;
-    breakdown.push({ band: AD_BANDS[b], lives, rate, prorataRate, prem });
-  });
-
-  // Brokerage grossed up
-  const netPrem  = brkPct > 0 ? basePrem / (1 - brkPct/100) : basePrem;
-  const brkAmt   = netPrem - basePrem;
-  const gstAmt   = netPrem * 0.18;
-  const grossPrem = netPrem + gstAmt;
-  const perLife  = grossPrem / totalLives;
-
-  const fmt = v => '₹' + Math.round(v).toLocaleString('en-IN');
-
-  // Build breakdown table
-  let bRows = breakdown.map(d =>
-    `<tr><td style="padding:6px 10px">${d.band}</td><td style="padding:6px 10px;text-align:center">${d.lives}</td><td style="padding:6px 10px;text-align:right">${fmt(d.rate)}</td><td style="padding:6px 10px;text-align:right;color:#64748b">${fmt(d.prorataRate)}</td><td style="padding:6px 10px;text-align:right;font-weight:600">${fmt(d.prem)}</td></tr>`
-  ).join('');
-
-  result.style.display = 'block';
-  result.innerHTML = `
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px">
-      <div style="background:#1e293b;border-radius:8px;padding:14px 16px">
-        <div style="font-size:10px;color:#94a3b8;font-weight:700;text-transform:uppercase;margin-bottom:4px">Gross Premium (incl. GST)</div>
-        <div style="font-size:22px;font-weight:700;color:#f87171">${fmt(grossPrem)}</div>
-        <div style="font-size:10px;color:#64748b;margin-top:2px">Risk: ${fmt(basePrem)} · Brk: ${fmt(brkAmt)}</div>
-      </div>
-      <div style="background:#1e293b;border-radius:8px;padding:14px 16px">
-        <div style="font-size:10px;color:#94a3b8;font-weight:700;text-transform:uppercase;margin-bottom:4px">Net Premium (excl. GST)</div>
-        <div style="font-size:22px;font-weight:700;color:#e2e8f0">${fmt(netPrem)}</div>
-        <div style="font-size:10px;color:#64748b;margin-top:2px">GST (18%) = ${fmt(gstAmt)}</div>
-      </div>
-      <div style="background:#1e293b;border-radius:8px;padding:14px 16px">
-        <div style="font-size:10px;color:#94a3b8;font-weight:700;text-transform:uppercase;margin-bottom:4px">Per Life / Year</div>
-        <div style="font-size:22px;font-weight:700;color:#e2e8f0">${fmt(perLife)}</div>
-        <div style="font-size:10px;color:#64748b;margin-top:2px">Gross incl. GST</div>
-      </div>
-      <div style="background:#1e293b;border-radius:8px;padding:14px 16px">
-        <div style="font-size:10px;color:#94a3b8;font-weight:700;text-transform:uppercase;margin-bottom:4px">Pro-Rata Days</div>
-        <div style="font-size:22px;font-weight:700;color:#93c5fd">${remainDays} / 365</div>
-        <div style="font-size:10px;color:#64748b;margin-top:2px">Factor: ${(remainDays/365).toFixed(4)}</div>
-      </div>
-    </div>
-    <div style="font-size:11px;font-weight:700;color:#475569;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Band-wise Breakdown</div>
-    <div style="overflow-x:auto">
-    <table class="bt" style="font-size:12px">
-      <thead><tr>
-        <th style="text-align:left;padding:7px 10px;background:#f8fafc;color:#64748b">AGE BAND</th>
-        <th style="padding:7px 10px;background:#f8fafc;color:#64748b;text-align:center">LIVES</th>
-        <th style="padding:7px 10px;background:#f8fafc;color:#64748b;text-align:right">ADD/DEL RATE (ANN.)</th>
-        <th style="padding:7px 10px;background:#f8fafc;color:#64748b;text-align:right">PRO-RATA RATE</th>
-        <th style="padding:7px 10px;background:#f8fafc;color:#64748b;text-align:right">BASE PREMIUM</th>
-      </tr></thead>
-      <tbody>${bRows}</tbody>
-      <tfoot><tr style="background:#f0f9ff">
-        <td colspan="2" style="padding:7px 10px;font-weight:700;color:#1e40af">TOTAL (${totalLives} lives)</td>
-        <td colspan="2" style="padding:7px 10px"></td>
-        <td style="padding:7px 10px;text-align:right;font-weight:700;color:#1e40af">${fmt(basePrem)}</td>
-      </tr></tfoot>
-    </table>
-    </div>
-    <div style="margin-top:10px;font-size:11px;color:#64748b;padding:8px 12px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0">
-      <strong>Formula:</strong> Base = Σ(lives × add/del rate × ${remainDays}/365) · Brokerage grossed up = base/(1−${brkPct}%) · GST = net × 18% · <em>Rates excl. GST as per ICICI Lombard Add/Del table</em>
-    </div>
-  `;
-}
-
-// ── INIT ──
+// INIT
 buildDemog();
-buildAdLivesTable();
-setTimeout(adSyncDates, 500);
 </script>
 </body>
 </html>
