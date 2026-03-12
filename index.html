@@ -4,126 +4,172 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Healthysure Facility Calculator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --teal:#0d9488;--teal2:#0f766e;--teal3:#134e4a;--teall:#f0fdfa;
-  --ink:#0f172a;--sub:#334155;--muted:#64748b;--bdr:#e2e8f0;--bg:#f8fafc;
-  --red:#dc2626;--grn:#15803d;--amb:#b45309;--ambl:#fffbeb;
+  --teal:#0d9488;--teal2:#0f766e;--teal3:#134e4a;--teal4:#042f2e;
+  --teall:#f0fdfa;
+  --ink:#0f172a;--sub:#1e293b;--muted:#475569;--lite:#94a3b8;
+  --bdr:#e2e8f0;--bdr2:#cbd5e1;--bg:#f8fafc;--bg2:#f1f5f9;
+  --red:#dc2626;--redl:#fef2f2;--redb:#fecaca;
+  --grn:#16a34a;
+  --amb:#92400e;--ambl:#fffbeb;--ambb:#fde68a;
   --card:#ffffff;
 }
-body{font-family:'IBM Plex Sans',sans-serif;background:#f1f5f9;color:var(--ink);font-size:13px;min-height:100vh}
-nav{background:linear-gradient(135deg,var(--teal3),#1e3a5f);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+body{font-family:'Inter',sans-serif;background:#eef2f7;color:var(--ink);font-size:13px;min-height:100vh;line-height:1.5}
+nav{background:linear-gradient(to right,#042f2e,#0a3d38,#092c40);padding:0 28px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,.3)}
 .logo-wrap{display:flex;align-items:center;gap:12px}
-.logo{background:var(--teal);color:#fff;font-size:11px;font-weight:700;padding:5px 12px;border-radius:4px;letter-spacing:.6px;font-family:'IBM Plex Mono',monospace}
-.nav-title{color:#cbd5e1;font-size:13px;font-weight:500}
-.nav-badge{background:rgba(13,148,136,.25);color:#5eead4;font-size:10px;font-weight:600;padding:4px 12px;border-radius:20px;border:1px solid rgba(94,234,212,.2);letter-spacing:.4px}
-.wrap{max-width:1140px;margin:0 auto;padding:24px 16px}
-.section-label{font-size:9.5px;font-weight:700;color:var(--muted);letter-spacing:1.4px;text-transform:uppercase;margin:24px 0 10px;display:flex;align-items:center;gap:8px}
-.section-label::before{content:'';display:block;width:3px;height:14px;background:var(--teal);border-radius:2px}
-.card{background:var(--card);border:1px solid var(--bdr);border-radius:12px;margin-bottom:14px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.05)}
-.card-head{background:var(--bg);border-bottom:1px solid var(--bdr);padding:10px 18px;display:flex;align-items:center;gap:8px}
+.logo-img{height:36px;object-fit:contain}
+.logo-fallback{background:var(--teal);color:#fff;font-size:13px;font-weight:800;padding:6px 14px;border-radius:6px;letter-spacing:.5px}
+.nav-sep{width:1px;height:24px;background:rgba(255,255,255,.15);margin:0 4px}
+.nav-title{color:rgba(255,255,255,.5);font-size:12px;font-weight:500}
+.nav-badge{background:rgba(13,148,136,.2);color:#5eead4;font-size:10px;font-weight:700;padding:5px 12px;border-radius:20px;border:1px solid rgba(94,234,212,.25);letter-spacing:.3px}
+.wrap{max-width:1160px;margin:0 auto;padding:24px 16px 48px}
+.section-label{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1.6px;text-transform:uppercase;margin:26px 0 10px;display:flex;align-items:center;gap:8px}
+.section-label::before{content:'';display:block;width:3px;height:14px;background:var(--teal);border-radius:2px;flex-shrink:0}
+.warn-red{background:var(--redl);border:1px solid var(--redb);border-radius:8px;padding:11px 15px;font-size:12px;font-weight:500;color:#991b1b;margin-bottom:4px;line-height:1.6}
+.warn{background:var(--ambl);border:1px solid var(--ambb);border-radius:8px;padding:11px 15px;font-size:12px;font-weight:500;color:var(--amb);margin-bottom:12px;line-height:1.6}
+.err-box{background:var(--redl);border:1.5px solid var(--red);border-radius:8px;padding:12px 16px;font-size:13px;font-weight:600;color:var(--red);margin:10px 0;display:none}
+.card{background:var(--card);border:1px solid var(--bdr);border-radius:12px;margin-bottom:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.05),0 2px 8px rgba(0,0,0,.04)}
+.card-head{background:var(--bg2);border-bottom:1px solid var(--bdr);padding:10px 18px;display:flex;align-items:center;gap:8px}
 .ch-dot{width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0}
-.ch-title{font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px}
+.ch-title{font-size:10.5px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.6px}
 .card-body{padding:18px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .field{display:flex;flex-direction:column;gap:5px}
-.field label{font-size:9.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
-input[type=text],input[type=number],input[type=date],select{border:1.5px solid var(--bdr);border-radius:7px;padding:8px 11px;font-size:13px;color:var(--ink);background:#fff;outline:none;width:100%;font-family:'IBM Plex Sans',inherit;transition:border-color .15s}
-input:focus,select:focus{border-color:var(--teal)}
+.field label{font-size:10px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.6px}
+input[type=text],input[type=number],input[type=date],select{border:1.5px solid var(--bdr2);border-radius:7px;padding:8px 11px;font-size:13px;font-weight:500;color:var(--ink);background:#fff;outline:none;width:100%;font-family:'Inter',inherit;transition:border-color .15s,box-shadow .15s}
+input:focus,select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(13,148,136,.1)}
+input::placeholder{color:var(--lite);font-weight:400}
 select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2394a3b8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;-webkit-appearance:none;padding-right:28px}
-.hint{font-size:10px;color:var(--muted);margin-top:2px;line-height:1.4}
-.tog{display:flex;border:1.5px solid var(--bdr);border-radius:7px;overflow:hidden}
+.hint{font-size:10.5px;color:var(--muted);margin-top:1px;line-height:1.5}
+.tog{display:flex;border:1.5px solid var(--bdr2);border-radius:7px;overflow:hidden;background:#fff}
 .tog input[type=radio]{display:none}
-.tog label{flex:1;text-align:center;padding:7px 5px;font-size:11.5px;font-weight:600;color:var(--sub);cursor:pointer;transition:all .12s;line-height:1.3}
+.tog label{flex:1;text-align:center;padding:8px 5px;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .12s;line-height:1.3}
 .tog label:not(:last-child){border-right:1px solid var(--bdr)}
 .tog input:checked+label{background:var(--teal3);color:#fff}
 
-/* DEMOGRAPHY */
-.demog-scroll{overflow-x:auto}
+/* EMPLOYEE ONLY BOX */
+.emp-only-box{background:var(--teall);border:1.5px solid #99f6e4;border-radius:10px;padding:18px 22px;margin-bottom:10px}
+.emp-only-box h4{font-size:11.5px;font-weight:700;color:var(--teal2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px}
+.emp-only-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+
+/* DEMOGRAPHY TABLE */
+.demog-scroll{overflow-x:auto;border-radius:6px}
 table.dg{border-collapse:collapse;font-size:12px;white-space:nowrap;width:100%}
-table.dg th{padding:8px 8px;font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;background:var(--bg);border-bottom:2px solid var(--bdr);text-align:center}
-table.dg th:first-child{text-align:left;min-width:100px}
+table.dg th{padding:9px 8px;font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;background:var(--bg2);border-bottom:2px solid var(--bdr2);text-align:center}
+table.dg th:first-child{text-align:left;min-width:110px}
 table.dg td{border-bottom:1px solid #f1f5f9;padding:2px 3px;text-align:center;background:#fff}
-table.dg .si-cell{text-align:left;padding:5px 10px;font-size:12px;font-weight:600;color:var(--sub);background:var(--bg);font-family:'IBM Plex Mono',monospace}
-table.dg input[type=number]{border:1.5px solid transparent;width:52px;padding:5px 2px;text-align:center;font-size:13px;border-radius:4px;background:transparent;outline:none;font-family:inherit}
-table.dg input[type=number]:focus{border-color:var(--teal);background:#fff}
-table.dg .tc{background:var(--bg)!important;font-weight:700;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink)!important;padding:5px 8px}
-.dg tr.tot-row td{background:#f0fdfa;font-weight:700;color:var(--teal2);font-family:'IBM Plex Mono',monospace;font-size:12px;border-top:2px solid #99f6e4}
+table.dg .si-cell{text-align:left;padding:5px 10px;font-size:12px;font-weight:600;color:var(--sub);background:var(--bg);font-family:'JetBrains Mono',monospace}
+table.dg input[type=number]{border:1.5px solid transparent;width:54px;padding:5px 2px;text-align:center;font-size:12.5px;border-radius:4px;background:transparent;outline:none;font-family:inherit;font-weight:500}
+table.dg input[type=number]:focus{border-color:var(--teal);background:#fff;box-shadow:0 0 0 2px rgba(13,148,136,.1)}
+table.dg .tc{background:var(--bg)!important;font-weight:700;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink)!important;padding:5px 8px}
+.dg tr.tot-row td{background:#f0fdfa;font-weight:700;color:var(--teal2);font-family:'JetBrains Mono',monospace;font-size:12px;border-top:2px solid #99f6e4}
 .dg tr.sel-row .si-cell{color:var(--teal)!important;font-weight:700}
 .dg tr.sel-row td{background:#f0fdfa!important}
 
-.actions{display:flex;gap:10px;margin:16px 0}
-.btn{border:none;border-radius:8px;padding:12px 28px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;letter-spacing:.2px}
-.btn-calc{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#fff;box-shadow:0 3px 12px rgba(13,148,136,.35)}
-.btn-calc:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(13,148,136,.4)}
-.btn-reset{background:#fff;color:var(--sub);border:1.5px solid var(--bdr)}
-.btn-reset:hover{border-color:#888}
+/* ESCP parents validation */
+.escp-info{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:12px;font-weight:600;display:none}
+.escp-info.ok{background:#f0fdf4;border:1.5px solid #86efac;color:var(--grn)}
+.escp-info.err{background:var(--redl);border:1.5px solid var(--red);color:var(--red)}
 
-/* RESULTS */
+.actions{display:flex;gap:10px;margin:16px 0}
+.btn{border:none;border-radius:8px;padding:11px 26px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s}
+.btn-calc{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#fff;box-shadow:0 3px 12px rgba(13,148,136,.35)}
+.btn-calc:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(13,148,136,.45)}
+.btn-reset{background:#fff;color:var(--sub);border:1.5px solid var(--bdr2);font-size:12.5px}
+.btn-reset:hover{border-color:var(--teal2);color:var(--teal2)}
+.btn-pdf{background:linear-gradient(135deg,#1e40af,#1d4ed8);color:#fff;font-size:12.5px;padding:10px 20px;box-shadow:0 3px 12px rgba(30,64,175,.3)}
+.btn-pdf:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(30,64,175,.4)}
+
 #results{display:none}
-.result-banner{display:grid;grid-template-columns:1fr 1px 1fr 1px 1fr 1px 1fr;background:linear-gradient(135deg,var(--teal3),#0f2d4a);border-radius:12px;padding:24px 28px;margin-bottom:14px;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.result-banner{display:grid;grid-template-columns:1fr 1px 1fr 1px 1fr 1px 1fr;background:linear-gradient(135deg,#042f2e 0%,#0a3d38 50%,#0c2840 100%);border-radius:12px;padding:24px 28px;margin-bottom:14px;box-shadow:0 4px 20px rgba(0,0,0,.2)}
 .rb-div{background:rgba(255,255,255,.1);align-self:stretch}
-.rb-item{padding:0 20px}
+.rb-item{padding:0 22px}
 .rb-item:first-child{padding-left:0}
-.rb-lbl{font-size:9px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.7px;text-transform:uppercase;margin-bottom:5px}
-.rb-val{font-size:26px;font-weight:700;color:#fff;font-family:'IBM Plex Mono',monospace;line-height:1}
+.rb-lbl{font-size:9px;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.8px;text-transform:uppercase;margin-bottom:5px}
+.rb-val{font-size:26px;font-weight:700;color:#fff;font-family:'JetBrains Mono',monospace;line-height:1}
 .rb-val.hi{color:#5eead4}
-.rb-sub{font-size:11px;color:rgba(255,255,255,.35);margin-top:4px}
+.rb-sub{font-size:10.5px;color:rgba(255,255,255,.4);margin-top:4px}
 .two-col{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-bottom:14px}
+
 table.bup{width:100%;border-collapse:collapse;font-size:13px}
-table.bup td{padding:8px 14px;border-bottom:1px solid #f8fafc;color:var(--sub)}
-table.bup td:last-child{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;color:var(--ink)}
+table.bup td{padding:8px 14px;border-bottom:1px solid #f8fafc;color:var(--sub);font-weight:500}
+table.bup td:last-child{text-align:right;font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:600;color:var(--ink)}
 table.bup .disc td:last-child{color:var(--red)}
 table.bup .load td:last-child{color:var(--grn)}
-table.bup .sub td{background:var(--bg);font-weight:700;color:var(--ink);font-size:12.5px}
-table.bup .sep td{padding:1px;background:#f1f5f9;border:none}
+table.bup .sub td{background:var(--bg);font-weight:700;color:var(--ink)}
+table.bup .sep td{padding:2px;background:#f1f5f9;border:none}
 table.bup .grand td{background:var(--teal3);color:#fff;font-size:14px;font-weight:700}
-table.bup .grand td:last-child{color:#5eead4;font-size:15px}
-table.bup .gst-row td{background:var(--ambl);color:var(--amb)}
-table.bup .gst-row td:last-child{color:var(--amb)}
+table.bup .grand td:last-child{color:#5eead4;font-size:15px;font-family:'JetBrains Mono',monospace}
+table.bup .gst-row td{background:var(--ambl);color:var(--amb);font-weight:600}
+table.bup .gst-row td:last-child{color:var(--amb);font-family:'JetBrains Mono',monospace}
+
 .cond-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.ci{background:var(--bg);border:1px solid var(--bdr);border-radius:6px;padding:8px 11px}
-.cn{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px}
+.ci{background:var(--bg);border:1px solid var(--bdr);border-radius:7px;padding:8px 11px}
+.cn{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px}
 .cv{font-size:12px;font-weight:600;color:var(--ink)}
-.cv.ok{color:var(--grn)}.cv.na{color:var(--muted)}.cv.ld{color:var(--red)}
+
 table.bt{width:100%;border-collapse:collapse;font-size:12.5px}
-table.bt th{padding:8px 12px;font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;background:var(--bg);border-bottom:2px solid var(--bdr);text-align:center}
+table.bt th{padding:9px 12px;font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;background:var(--bg);border-bottom:2px solid var(--bdr2);text-align:center}
 table.bt th:first-child{text-align:left}
-table.bt td{padding:8px 12px;border-bottom:1px solid #f1f5f9;text-align:center;color:var(--sub)}
+table.bt td{padding:8px 12px;border-bottom:1px solid #f1f5f9;text-align:center;color:var(--sub);font-weight:500}
 table.bt td:first-child{text-align:left;font-weight:600;color:var(--ink)}
 table.bt .tot td{background:var(--teall);font-weight:700;color:var(--teal2);border-top:2px solid #99f6e4}
-table.rt{width:100%;border-collapse:collapse;font-size:11.5px}
-table.rt th{padding:7px 8px;font-size:8.5px;font-weight:700;color:var(--muted);text-transform:uppercase;background:var(--bg);border-bottom:2px solid var(--bdr);text-align:center;white-space:nowrap}
-table.rt th:first-child{text-align:left;min-width:100px}
-table.rt td{padding:6px 8px;border-bottom:1px solid #f1f5f9;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted)}
+
+/* RATE CARD */
+table.rt{width:100%;border-collapse:collapse;font-size:11px}
+table.rt th{padding:8px 8px;font-size:8.5px;font-weight:700;color:var(--muted);text-transform:uppercase;background:var(--bg);border-bottom:2px solid var(--bdr2);text-align:center;white-space:nowrap}
+table.rt th:first-child{text-align:left;min-width:130px}
+table.rt td{padding:6px 8px;border-bottom:1px solid #f1f5f9;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);font-weight:500}
 table.rt td:first-child{font-family:inherit;color:var(--ink);font-weight:600;font-size:12px;text-align:left}
 table.rt tr.sel td{background:var(--teall);color:var(--teal2);font-weight:700}
 table.rt tr.sel td:first-child{color:var(--teal2)}
-.warn{background:#fffbeb;border:1px solid #fde68a;border-radius:7px;padding:10px 14px;font-size:12px;color:#92400e;margin-bottom:12px}
-.warn-red{background:#fef2f2;border:1px solid #fecaca;border-radius:7px;padding:10px 14px;font-size:12px;color:#991b1b;margin-bottom:12px}
-.notice{font-size:11px;color:var(--muted);line-height:1.7;padding:12px 16px;background:var(--bg);border:1px solid var(--bdr);border-radius:7px;margin-top:12px}
+/* Markup row — amber, directly after selected SI row */
+table.rt tr.mu-row td{background:#fffbeb;color:var(--amb);font-weight:700;font-size:11px;border-bottom:2px solid var(--ambb)}
+table.rt tr.mu-row td:first-child{color:var(--amb);font-style:italic}
+
+.notice{font-size:11px;color:var(--muted);line-height:1.7;padding:12px 16px;background:var(--bg);border:1px solid var(--bdr);border-radius:8px;margin-top:12px}
 .divider{height:1px;background:var(--bdr);margin:14px 0}
+.pdf-bar{display:flex;gap:12px;align-items:center;margin-top:16px;padding:14px 18px;background:#fff;border:1px solid var(--bdr);border-radius:10px}
+
+/* PRINT — only results section */
+@media print{
+  nav,.section-label,#formSection,.actions,.warn-red,.pdf-bar,.notice,.err-box{display:none!important}
+  body{background:#fff;font-size:11px}
+  .wrap{max-width:100%;padding:0 8px}
+  .card{box-shadow:none;border:1px solid #ccc;page-break-inside:avoid;margin-bottom:8px}
+  .result-banner{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #results{display:block!important}
+  .two-col{grid-template-columns:1.4fr 1fr}
+  .section-label{display:none}
+}
 </style>
 </head>
 <body>
+
 <nav>
   <div class="logo-wrap">
-    <span class="logo">HEALTHYSURE</span>
-    <span class="nav-title">Facility Premium Calculator · ICICI Lombard GHI</span>
+    <img src="src/logo.webp" alt="Healthysure" class="logo-img"
+      onerror="this.style.display='none';document.getElementById('logoFallback').style.display='inline-block'">
+    <span id="logoFallback" class="logo-fallback" style="display:none">HEALTHYSURE</span>
+    <div class="nav-sep"></div>
+    <span class="nav-title">Facility Premium Calculator &nbsp;·&nbsp; ICICI Lombard GHI</span>
   </div>
   <span class="nav-badge">Facility Rates · Max 500 Lives · Fresh / Rollover Only</span>
 </nav>
 
 <div class="wrap">
 
-<!-- ELIGIBILITY NOTICE -->
-<div class="warn-red" style="margin-top:4px">
+<div class="warn-red" style="margin-top:6px">
   ⚠️ <strong>Facility Criteria:</strong> Fresh Business & Market Rollover with ICR &lt; 150% only · Max 500 lives · Min 10 employees / 25 lives · Cannot be used for ICICI own renewals (until April 2026)
 </div>
+
+<div id="formSection">
 
 <div class="section-label">Client & Policy Details</div>
 <div class="card">
@@ -133,9 +179,13 @@ table.rt tr.sel td:first-child{color:var(--teal2)}
       <div class="field"><label>Client Name</label><input type="text" id="clientName" placeholder="Company name"></div>
       <div class="field"><label>Policy Start Date</label><input type="date" id="policyStartDate"></div>
       <div class="field"><label>Policy End Date</label><input type="date" id="policyEndDate"></div>
-      <div class="field"><label>Brokerage (%)</label><input type="number" id="brokerage" value="15" min="0" max="25" step="0.5"><div class="hint">Grossed up on net premium</div></div>
+      <div class="field">
+        <label>Mark Up (₹) <span style="font-size:9px;font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0">— hidden in output</span></label>
+        <input type="number" id="markUp" value="0" min="0" step="500" placeholder="0">
+        <div class="hint">Added silently to base. Shown in rate card below selected SI row.</div>
+      </div>
     </div>
-    <div class="grid4" style="margin-top:12px">
+    <div class="grid4" style="margin-top:14px">
       <div class="field">
         <label>Policy Type</label>
         <select id="policyType">
@@ -146,7 +196,7 @@ table.rt tr.sel td:first-child{color:var(--teal2)}
       <div class="field">
         <label>ICR (Claim Ratio %)</label>
         <input type="number" id="icr" value="0" min="0" max="300" step="1" oninput="onICRChange()">
-        <div class="hint" id="icrNote">0% = Fresh business</div>
+        <div class="hint" id="icrNote" style="color:var(--grn);font-weight:600">0% = Fresh business</div>
       </div>
       <div class="field"><label>Previous Insurer</label><input type="text" id="prevInsurer" placeholder="e.g. Star Health / NA"></div>
       <div class="field"><label>Industry / Vertical</label><input type="text" id="industry" placeholder="e.g. IT, Manufacturing"></div>
@@ -181,7 +231,7 @@ table.rt tr.sel td:first-child{color:var(--teal2)}
       </div>
       <div class="field">
         <label>Family Definition</label>
-        <select id="famDef">
+        <select id="famDef" onchange="onFamDefChange()">
           <option value="ESC">Employee + Spouse + Children</option>
           <option value="ESCP">Emp + Spouse + Child + Parents/PIL</option>
           <option value="E">Employee Only</option>
@@ -199,8 +249,8 @@ table.rt tr.sel td:first-child{color:var(--teal2)}
         <div class="field">
           <label>Corporate Buffer Type</label>
           <div class="tog">
-            <input type="radio" name="bufType" id="btAll" value="all" checked><label for="btAll">All Illness (+15% of Buffer SI)</label>
-            <input type="radio" name="bufType" id="btCI" value="ci"><label for="btCI">CI Only (+8% of Buffer SI)</label>
+            <input type="radio" name="bufType" id="btAll" value="all" checked><label for="btAll">All Illness (+15%)</label>
+            <input type="radio" name="bufType" id="btCI" value="ci"><label for="btCI">CI Only (+8%)</label>
           </div>
         </div>
       </div>
@@ -253,9 +303,9 @@ table.rt tr.sel td:first-child{color:var(--teal2)}
         <select id="matLimit">
           <option value="nd35cs35">ND ₹35K / CS ₹35K (−5%)</option>
           <option value="nd35cs50">ND ₹35K / CS ₹50K (−3%)</option>
-          <option value="nd50cs50" selected>ND ₹50K / CS ₹50K (Base — default)</option>
+          <option value="nd50cs50" selected>ND ₹50K / CS ₹50K (Base)</option>
           <option value="nd50cs75">ND ₹50K / CS ₹75K (+5%)</option>
-          <option value="nd75cs75">ND ₹75K / CS ₹75K (No change noted)</option>
+          <option value="nd75cs75">ND ₹75K / CS ₹75K</option>
           <option value="nd1lcs1l">ND ₹1L / CS ₹1L (+12%)</option>
         </select>
       </div>
@@ -333,8 +383,8 @@ table.rt tr.sel td:first-child{color:var(--teal2)}
         <label>Co-pay</label>
         <select id="copay">
           <option value="none">Not Applicable (Base)</option>
-          <option value="10all">10% — E only / ESC / ESCP (−7%)</option>
-          <option value="20all">20% — E only / ESC / ESCP (−15%)</option>
+          <option value="10all">10% — E / ESC / ESCP (−7%)</option>
+          <option value="20all">20% — E / ESC / ESCP (−15%)</option>
           <option value="10escp_only">10% — ESCP plan only (−7%)</option>
           <option value="20escp_only">20% — ESCP plan only (−14%)</option>
           <option value="10par">10% — Parents only in ESCP (−3.5%)</option>
@@ -401,7 +451,6 @@ table.rt tr.sel td:first-child{color:var(--teal2)}
           <option value="diff">Diff. Ailment — once by org (+5%)</option>
           <option value="same">Same Ailment — twice by org (no loading)</option>
         </select>
-        <div class="hint">Diff. ailment = +5%. Same ailment = informational, no loading</div>
       </div>
       <div class="field">
         <label>Additional Loading/Discount (%)</label>
@@ -412,18 +461,81 @@ table.rt tr.sel td:first-child{color:var(--teal2)}
   </div>
 </div>
 
+<!-- DEMOGRAPHY -->
+<div id="demogSection">
 <div class="section-label">Demography (Lives by Sum Insured × Age Band)</div>
 <div class="card">
-  <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Enter lives per age band for selected SI</div></div>
+  <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Enter lives per age band · <span id="demogSubtitle">Selected SI row highlighted in teal</span></div></div>
   <div class="card-body">
-    <div class="warn">⚡ Enter lives in the <strong>selected SI row</strong> (highlighted in teal). Employee Count = for per-employee cost. <strong>Min 25 lives / Max 500 lives.</strong></div>
+    <div class="warn" id="demogWarn">
+      ⚡ Enter lives in the <strong>highlighted SI row</strong>. Other SI rows are for reference. 
+      <strong>Min 10 employees · Min 25 total lives · Max 500 total lives.</strong>
+      <span id="escpRule" style="display:none"> · <strong>ESCP: Parents/PIL must be ≥ Employees (min 1:1 ratio)</strong></span>
+    </div>
+
+    <!-- Employee Only quick entry -->
+    <div id="empOnlyBox" class="emp-only-box" style="display:none">
+      <h4>👤 Employee Only — Quick Entry</h4>
+      <div class="emp-only-grid">
+        <div class="field">
+          <label>Total Employees</label>
+          <input type="number" id="eoTotalLives" min="1" placeholder="e.g. 80" oninput="validateEO()">
+          <div class="hint" id="eoHint">Min 10 employees · Min 25 lives · Max 500</div>
+        </div>
+        <div class="field">
+          <label>Age Band</label>
+          <select id="eoAgeBand">
+            <option value="-1">— Use full table below —</option>
+            <option value="1" selected>19–35 yrs</option>
+            <option value="2">36–45 yrs</option>
+            <option value="3">46–55 yrs</option>
+            <option value="0">0–18 yrs</option>
+            <option value="4">56–60 yrs</option>
+            <option value="5">61–65 yrs</option>
+            <option value="6">66–70 yrs</option>
+            <option value="7">71–75 yrs</option>
+            <option value="8">76–80 yrs</option>
+          </select>
+        </div>
+        <div class="field" style="justify-content:flex-end">
+          <label style="opacity:0">.</label>
+          <div style="font-size:11px;color:var(--teal2);padding:8px 0;font-weight:500">Or fill the age band table below for mixed age groups</div>
+        </div>
+      </div>
+      <div id="eoErr" class="err-box" style="margin-top:8px"></div>
+    </div>
+
+    <!-- ESCP parents row -->
+    <div id="escpRow" style="display:none;margin-bottom:10px">
+      <div style="display:grid;grid-template-columns:200px 200px auto;gap:12px;align-items:end">
+        <div class="field">
+          <label>Total Employees (from table)</label>
+          <div id="escpEmpCount" style="font-size:14px;font-weight:700;color:var(--teal2);padding:8px 11px;background:var(--teall);border-radius:7px;border:1.5px solid #99f6e4">—</div>
+        </div>
+        <div class="field">
+          <label>Total Parents/PIL Lives</label>
+          <input type="number" id="escpParents" min="0" placeholder="e.g. 60" oninput="validateESCP()">
+          <div class="hint">Must be ≥ employees (min 1:1)</div>
+        </div>
+        <div id="escpMsg" class="escp-info"></div>
+      </div>
+    </div>
+
+    <!-- ESCP parents error -->
+    <div id="escpWarn" class="err-box"></div>
+
     <div class="demog-scroll"><table class="dg" id="demogTbl"></table></div>
   </div>
 </div>
+</div>
+
+</div><!-- /formSection -->
+
+<div id="mainErr" class="err-box"></div>
 
 <div class="actions">
-  <button class="btn btn-calc" onclick="calculate()">▶ Calculate Premium</button>
-  <button class="btn btn-reset" onclick="resetAll()">↺ Reset</button>
+  <button class="btn btn-calc" onclick="calculate()">▶ &nbsp;Calculate Premium</button>
+  <button class="btn btn-reset" onclick="resetAll()">↺ &nbsp;Reset</button>
 </div>
 
 <!-- RESULTS -->
@@ -462,7 +574,7 @@ table.rt tr.sel td:first-child{color:var(--teal2)}
       <div class="card-body" style="padding:0"><table class="bup" id="bupTbl"></table></div>
     </div>
     <div>
-      <div class="card" style="margin-bottom:14px">
+      <div class="card">
         <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Policy Conditions Summary</div></div>
         <div class="card-body"><div class="cond-grid" id="condGrid"></div></div>
       </div>
@@ -475,360 +587,469 @@ table.rt tr.sel td:first-child{color:var(--teal2)}
   </div>
 
   <div class="card">
-    <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Facility Rate Card (Per Life / Year, Excl. GST) — Selected SI Highlighted</div></div>
+    <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Facility Rate Card (Per Life / Year, Excl. GST)</div></div>
     <div class="card-body" style="padding:0;overflow-x:auto"><table class="rt" id="rateTbl"></table></div>
   </div>
 
+  <div class="pdf-bar">
+    <div style="flex:1">
+      <div style="font-size:13px;font-weight:700;color:var(--ink)">📄 Download Premium Summary as PDF</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:2px">Opens print dialog — save as PDF. Shows only calculated results, no form.</div>
+    </div>
+    <button class="btn btn-pdf" onclick="downloadPDF()">⬇ &nbsp;Download PDF</button>
+  </div>
+
   <div class="notice">
-    <strong>Formula:</strong> Base = Σ(lives × facility_rate) · All % adjustments applied on base simultaneously · Corporate Buffer = flat add-on · ICR discount applied on final · Brokerage grossed up = net/(1−brk%) · GST = net × 18% · <em>Rates from Healthysure Facility Rate Sheet (Excl. GST)</em>
+    <strong>Formula:</strong> Base = Σ(lives × facility_rate) · Markup added silently (visible only in rate card as row below selected SI) · All % adjustments applied to base · Buffer = flat add-on · Brokerage 10% grossed up · GST = net × 18% · <em>Source: Healthysure Facility Rate Sheet (Excl. GST)</em>
   </div>
 </div>
 
-</div>
+</div><!-- /wrap -->
 
 <script>
-// ══════════════════════════════════════════
-// DATA — Healthysure Facility Rates (Excl GST)
-// ══════════════════════════════════════════
-const SI_LIST = [100000,200000,300000,400000,500000,600000,700000,800000];
-const SI_LABELS = ['₹1,00,000','₹2,00,000','₹3,00,000','₹4,00,000','₹5,00,000','₹6,00,000','₹7,00,000','₹8,00,000'];
-const BANDS = ['0–18 yrs','19–35 yrs','36–45 yrs','46–55 yrs','56–60 yrs','61–65 yrs','66–70 yrs','71–75 yrs','76–80 yrs'];
-
-const RATES = {
-  100000: [1418, 2313, 2549, 3760, 5852, 7305, 8766, 10345, 11923],
-  200000: [1590, 2760, 3048, 4721, 7692, 10044, 11814, 13945, 16068],
-  300000: [2142, 3389, 3739, 5779, 9424, 12313, 14480, 17093, 19696],
-  400000: [3008, 4013, 4422, 6844, 11160, 14539, 17121, 20210, 23287],
-  500000: [3874, 4636, 5108, 7910, 12313, 16765, 19759, 23326, 26877],
-  600000: [4184, 5006, 5516, 8543, 14776, 20118, 23711, 27992, 32252],
-  700000: [4881, 5841, 6436, 9966, 17239, 23471, 27663, 32657, 37628],
-  800000: [5579, 6675, 7355, 11390, 19701, 26824, 31615, 37322, 43003],
+// ─── DATA ───────────────────────────────────────────────────────
+const SI_LIST=[100000,200000,300000,400000,500000,600000,700000,800000];
+const SI_LABELS=['₹1,00,000','₹2,00,000','₹3,00,000','₹4,00,000','₹5,00,000','₹6,00,000','₹7,00,000','₹8,00,000'];
+const BANDS=['0–18','19–35','36–45','46–55','56–60','61–65','66–70','71–75','76–80'];
+const BAND_FULL=['0–18 yrs','19–35 yrs','36–45 yrs','46–55 yrs','56–60 yrs','61–65 yrs','66–70 yrs','71–75 yrs','76–80 yrs'];
+const RATES={
+  100000:[1418,2313,2549,3760,5852,7305,8766,10345,11923],
+  200000:[1590,2760,3048,4721,7692,10044,11814,13945,16068],
+  300000:[2142,3389,3739,5779,9424,12313,14480,17093,19696],
+  400000:[3008,4013,4422,6844,11160,14539,17121,20210,23287],
+  500000:[3874,4636,5108,7910,12313,16765,19759,23326,26877],
+  600000:[4184,5006,5516,8543,14776,20118,23711,27992,32252],
+  700000:[4881,5841,6436,9966,17239,23471,27663,32657,37628],
+  800000:[5579,6675,7355,11390,19701,26824,31615,37322,43003],
 };
+const BRK_PCT=10;
 
-function onBufferChange() {
-  const buf = parseFloat(document.getElementById('bufferSI').value) || 0;
-  document.getElementById('bufferTypeRow').style.display = buf > 0 ? 'block' : 'none';
-}
-
-function onICRChange() {
-  const icr = parseFloat(document.getElementById('icr').value) || 0;
-  const note = document.getElementById('icrNote');
-  const pt = document.getElementById('policyType').value;
-  if (icr === 0) { note.textContent = '0% = Fresh business'; note.style.color = '#166534'; return; }
-  if (icr < 50) { note.innerHTML = '<span style="color:#166534">ICR &lt; 50% → −15% discount</span>'; }
-  else if (icr < 70) { note.innerHTML = '<span style="color:#166534">ICR 50–70% → −10% discount</span>'; }
-  else if (icr <= 115) { note.innerHTML = '<span style="color:#64748b">ICR 70–115% → Burning basis (0%)</span>'; }
-  else if (icr <= 140) { note.innerHTML = '<span style="color:#dc2626">⚠️ ICR 115–140% → Refer UW</span>'; }
-  else if (icr <= 175) { note.innerHTML = '<span style="color:#dc2626">⚠️ ICR 140–175% → Refer UW</span>'; }
-  else { note.innerHTML = '<span style="color:#dc2626">❌ ICR &gt; 175% → Refer UW (not applicable)</span>'; }
-}
-
-function getICRDiscount(icr) {
-  if (icr < 50) return -0.15;
-  if (icr < 70) return -0.10;
-  return 0; // 70–115 = burning (0), 115+ = refer UW but allow calculate
-}
-
-// ══════════════════════════════════════════
-// DEMOGRAPHY
-// ══════════════════════════════════════════
-function buildDemog() {
-  const si = parseInt(document.getElementById('si').value);
-  let h = `<thead><tr><th>Sum Insured</th>${BANDS.map(b=>`<th>${b}</th>`).join('')}<th>Total</th><th>Emp Count</th></tr></thead><tbody>`;
-  SI_LIST.forEach((s,idx) => {
-    const sel = s === si;
-    h += `<tr id="row_${s}" class="${sel?'sel-row':''}">`;
-    h += `<td class="si-cell">${SI_LABELS[idx]}</td>`;
-    BANDS.forEach((_,i) => h += `<td><input type="number" min="0" id="d_${s}_${i}" oninput="updateTotals()" placeholder="0"></td>`);
-    h += `<td class="tc" id="rt_${s}">0</td>`;
-    h += `<td><input type="number" min="0" id="ec_${s}" oninput="updateTotals()" placeholder="0"></td>`;
-    h += `</tr>`;
+// ─── BUILD DEMOGRAPHY TABLE ───────────────────────────────────────
+function buildDemog(){
+  const si=parseInt(document.getElementById('si').value);
+  let h=`<thead><tr><th>SI / Age Band</th>${BANDS.map(b=>`<th>${b}</th>`).join('')}<th>Row Total</th></tr></thead><tbody>`;
+  SI_LIST.forEach((s,idx)=>{
+    const sel=s===si;
+    h+=`<tr class="${sel?'sel-row':''}">`;
+    h+=`<td class="si-cell">${SI_LABELS[idx]}</td>`;
+    BANDS.forEach((_,bi)=>{
+      h+=`<td><input type="number" min="0" id="d_${s}_${bi}" placeholder="0" oninput="updateTotals()"></td>`;
+    });
+    h+=`<td class="tc" id="rt_${s}">0</td></tr>`;
   });
-  h += `<tr class="tot-row"><td class="si-cell">TOTAL</td>`;
-  BANDS.forEach((_,i) => h += `<td id="bt_${i}" class="tc">0</td>`);
-  h += `<td id="bt_all" class="tc">0</td><td id="bt_ec" class="tc">0</td></tr></tbody>`;
-  document.getElementById('demogTbl').innerHTML = h;
+  // Column totals row
+  h+=`<tr class="tot-row"><td class="si-cell">TOTAL LIVES</td>`;
+  BANDS.forEach((_,bi)=>{h+=`<td class="tc" id="ct_${bi}">0</td>`;});
+  h+=`<td class="tc" id="grandTotal">0</td></tr></tbody>`;
+  document.getElementById('demogTbl').innerHTML=h;
+  updateTotals();
 }
-
-function gv(id){const e=document.getElementById(id);return e?(parseInt(e.value)||0):0;}
-function gvf(id){const e=document.getElementById(id);return e?(parseFloat(e.value)||0):0;}
 
 function updateTotals(){
-  BANDS.forEach((_,i)=>{let t=0;SI_LIST.forEach(s=>t+=gv(`d_${s}_${i}`));const el=document.getElementById(`bt_${i}`);if(el)el.textContent=t||'0';});
-  let tot=0,ec=0;
-  SI_LIST.forEach(s=>{let t=0;BANDS.forEach((_,i)=>t+=gv(`d_${s}_${i}`));const el=document.getElementById(`rt_${s}`);if(el)el.textContent=t||'0';tot+=t;ec+=gv(`ec_${s}`);});
-  const ba=document.getElementById('bt_all'),be=document.getElementById('bt_ec');
-  if(ba)ba.textContent=tot||'0';if(be)be.textContent=ec||'0';
-}
-
-function onSIChange(){
   const si=parseInt(document.getElementById('si').value);
-  SI_LIST.forEach(s=>{const r=document.getElementById(`row_${s}`);if(r)r.className=s===si?'sel-row':'';});
+  let grand=0;
+  // Row totals
+  SI_LIST.forEach(s=>{
+    let rt=0;
+    BANDS.forEach((_,bi)=>{rt+=parseInt(document.getElementById(`d_${s}_${bi}`)?.value)||0;});
+    const el=document.getElementById(`rt_${s}`);
+    if(el)el.textContent=rt;
+    grand+=rt;
+  });
+  // Column totals
+  BANDS.forEach((_,bi)=>{
+    let ct=0;
+    SI_LIST.forEach(s=>{ct+=parseInt(document.getElementById(`d_${s}_${bi}`)?.value)||0;});
+    const el=document.getElementById(`ct_${bi}`);
+    if(el)el.textContent=ct;
+  });
+  document.getElementById('grandTotal').textContent=grand;
+
+  // Update ESCP emp count display
+  const fam=document.getElementById('famDef').value;
+  if(fam==='ESCP'){
+    // Employee count = total lives in table (non-parent rows)
+    let empLives=0;
+    SI_LIST.forEach(s=>{BANDS.forEach((_,bi)=>{empLives+=parseInt(document.getElementById(`d_${s}_${bi}`)?.value)||0;});});
+    const el=document.getElementById('escpEmpCount');
+    if(el)el.textContent=empLives>0?empLives:'—';
+    validateESCP();
+  }
+  clearErr();
 }
 
-// ══════════════════════════════════════════
-// MAIN CALCULATE
-// ══════════════════════════════════════════
-const fmt = n => '₹'+Math.round(Math.abs(n)).toLocaleString('en-IN');
-const fmtS = n => (n>=0?'+':'')+Math.round(n).toLocaleString('en-IN');
+// ─── FAMILY DEF CHANGE ────────────────────────────────────────────
+function onFamDefChange(){
+  const fam=document.getElementById('famDef').value;
+  // Employee only quick entry
+  document.getElementById('empOnlyBox').style.display=fam==='E'?'block':'none';
+  // ESCP parents row
+  document.getElementById('escpRow').style.display=fam==='ESCP'?'block':'none';
+  document.getElementById('escpRule').style.display=fam==='ESCP'?'inline':'none';
+  document.getElementById('escpWarn').style.display='none';
+  updateTotals();
+}
 
-function calculate() {
-  const si = parseInt(document.getElementById('si').value);
-  const rates = RATES[si];
-  const brkPct = gvf('brokerage');
-  const icr = gvf('icr');
-  const policyType = document.getElementById('policyType').value;
-  const floatN = document.querySelector('input[name=floater]:checked').value === 'N';
-  const pedN = document.querySelector('input[name=ped]:checked').value === 'N';
-  const w30N = document.querySelector('input[name=w30]:checked').value === 'N';
-  const w12N = document.querySelector('input[name=w12]:checked').value === 'N';
-  const matN = document.querySelector('input[name=mat]:checked').value === 'N';
-  const mat9mN = document.querySelector('input[name=mat9m]:checked').value === 'N';
-  const matLTN = document.querySelector('input[name=matLT]:checked').value === 'N';
-  const matLim = document.getElementById('matLimit').value;
-  const babyN = document.querySelector('input[name=baby]:checked').value === 'N';
-  const ppnatY = document.querySelector('input[name=ppnat]:checked').value === 'Y';
-  const nbvaxY = document.querySelector('input[name=nbvax]:checked').value === 'Y';
-  const wbY = document.querySelector('input[name=wellbaby]:checked').value === 'Y';
-  const rrV = document.getElementById('roomRent').value;
-  const dslV = document.getElementById('dsl').value;
-  const copayV = document.getElementById('copay').value;
-  const ppY = document.querySelector('input[name=prepost]:checked').value === 'Y';
-  const ambV = document.getElementById('ambulance').value;
-  const modY = document.querySelector('input[name=modern]:checked').value === 'Y';
-  const lasikY = document.querySelector('input[name=lasik]:checked').value === 'Y';
-  const ayushY = document.querySelector('input[name=ayush]:checked').value === 'Y';
-  const hdcY = document.querySelector('input[name=hdc]:checked').value === 'Y';
-  const riV = document.getElementById('reinstate').value;
-  const bufferSI = gvf('bufferSI');
-  const bufType = document.querySelector('input[name=bufType]:checked')?.value || 'all';
-  const addLoadPct = gvf('addLoad');
+// ─── EO VALIDATION ───────────────────────────────────────────────
+function validateEO(){
+  const v=parseInt(document.getElementById('eoTotalLives').value)||0;
+  const hintEl=document.getElementById('eoHint');
+  const errEl=document.getElementById('eoErr');
+  if(v===0){hintEl.textContent='Min 10 employees · Min 25 lives · Max 500';hintEl.style.color='var(--muted)';errEl.style.display='none';return;}
+  if(v<10){hintEl.textContent=`Min 10 employees — entered ${v}`;hintEl.style.color='var(--red)';errEl.style.display='block';errEl.textContent=`❌ Minimum 10 employees required. Entered: ${v}`;return;}
+  if(v<25){hintEl.textContent=`Min 25 lives — entered ${v}`;hintEl.style.color='var(--red)';errEl.style.display='block';errEl.textContent=`❌ Minimum 25 total lives required. Entered: ${v}`;return;}
+  if(v>500){hintEl.textContent=`Max 500 — entered ${v}`;hintEl.style.color='var(--red)';errEl.style.display='block';errEl.textContent=`❌ Maximum 500 lives. Entered: ${v}`;return;}
+  hintEl.textContent=`✓ ${v} employees — valid`;hintEl.style.color='var(--grn)';errEl.style.display='none';
+}
 
-  // Demography
-  const bandL = BANDS.map((_,i) => gv(`d_${si}_${i}`));
-  const totalL = bandL.reduce((a,b) => a+b, 0);
-  const emps = gv(`ec_${si}`);
+// ─── ESCP VALIDATION ─────────────────────────────────────────────
+function validateESCP(){
+  const fam=document.getElementById('famDef').value;
+  if(fam!=='ESCP')return true;
+  
+  // Total lives in table = employee lives
+  let empLives=0;
+  SI_LIST.forEach(s=>{BANDS.forEach((_,bi)=>{empLives+=parseInt(document.getElementById(`d_${s}_${bi}`)?.value)||0;});});
+  
+  const parentInput=document.getElementById('escpParents');
+  const parents=parseInt(parentInput?.value)||0;
+  const msgEl=document.getElementById('escpMsg');
+  
+  if(empLives===0||parents===0){
+    if(msgEl){msgEl.style.display='none';}
+    return true; // allow partial entry
+  }
+  
+  // RULE: parents must be >= employees (min 1:1)
+  if(parents < empLives){
+    if(msgEl){
+      msgEl.style.display='block';
+      msgEl.className='escp-info err';
+      msgEl.textContent=`❌ Parents/PIL (${parents}) must be ≥ Employees (${empLives}). Min 1:1 ratio required.`;
+    }
+    return false;
+  }
+  
+  if(msgEl){
+    msgEl.style.display='block';
+    msgEl.className='escp-info ok';
+    msgEl.textContent=`✓ Parents/PIL (${parents}) ≥ Employees (${empLives}) — valid`;
+  }
+  return true;
+}
 
-  if (!totalL) { alert('Please enter lives in the demography table.'); return; }
-  if (totalL < 25) { if(!confirm(`Total lives (${totalL}) is below minimum 25. Continue anyway?`)) return; }
-  if (totalL > 500) { alert('Maximum 500 lives allowed under facility.'); return; }
+// ─── SI CHANGE ────────────────────────────────────────────────────
+function onSIChange(){buildDemog();}
 
-  // UW warning check
-  const uwWarn = document.getElementById('uwWarn');
-  if (icr > 115) {
-    uwWarn.style.display = 'block';
-    uwWarn.innerHTML = `<div class="warn-red">⚠️ <strong>Refer to Underwriter:</strong> ICR of ${icr}% exceeds 115%. This case must be referred to UW before quoting. Premium shown is indicative only.</div>`;
-  } else { uwWarn.style.display = 'none'; }
+function onBufferChange(){
+  const buf=parseFloat(document.getElementById('bufferSI').value)||0;
+  document.getElementById('bufferTypeRow').style.display=buf>0?'block':'none';
+}
 
-  // STEP 1: Base premium = Σ(lives × rate)
-  const bandPrem = bandL.map((l,i) => rates[i] * l);
-  const base = bandPrem.reduce((a,b) => a+b, 0);
+function onICRChange(){
+  const icr=parseFloat(document.getElementById('icr').value)||0;
+  const note=document.getElementById('icrNote');
+  if(icr===0){note.textContent='0% = Fresh business';note.style.color='var(--grn)';return;}
+  if(icr<50)note.innerHTML='<span style="color:var(--grn);font-weight:700">ICR &lt;50% → −15% discount</span>';
+  else if(icr<70)note.innerHTML='<span style="color:var(--grn);font-weight:700">ICR 50–70% → −10% discount</span>';
+  else if(icr<=115)note.innerHTML='<span style="color:var(--muted);font-weight:600">ICR 70–115% → Burning basis</span>';
+  else note.innerHTML=`<span style="color:var(--red);font-weight:700">⚠️ ICR ${icr}% → Refer UW</span>`;
+}
 
-  // STEP 2: Build adjustment items (all % on base)
-  const items = [];
+function getICRDiscount(icr){
+  if(icr<50)return-0.15;
+  if(icr<70)return-0.10;
+  return 0;
+}
 
-  // Non-floater
-  if (floatN) items.push({label:'Non-Floater Loading', sub:'+15%', pct:0.15});
+// ─── ERRORS ──────────────────────────────────────────────────────
+function showErr(msg){const e=document.getElementById('mainErr');e.style.display='block';e.textContent=msg;e.scrollIntoView({behavior:'smooth',block:'center'});}
+function clearErr(){document.getElementById('mainErr').style.display='none';}
+const fmt=n=>'₹'+Math.round(Math.abs(n)).toLocaleString('en-IN');
+const fmtS=n=>(n>=0?'+':'')+Math.round(n).toLocaleString('en-IN');
 
-  // PED waiting
-  if (pedN) items.push({label:'PED Waiting Period Applied', sub:'−20%', pct:-0.20});
+// ─── CALCULATE ────────────────────────────────────────────────────
+function calculate(){
+  clearErr();
+  const fam=document.getElementById('famDef').value;
+  const si=parseInt(document.getElementById('si').value);
+  const rates=RATES[si];
+  const markUp=parseFloat(document.getElementById('markUp').value)||0;
+  const icr=parseFloat(document.getElementById('icr').value)||0;
+  const policyType=document.getElementById('policyType').value;
 
-  // 30-day waiting
-  if (w30N) items.push({label:'30-Day Waiting Period Applied', sub:'−5%', pct:-0.05});
+  // Collect lives from the full demography table (all SI rows, all bands)
+  // We use the SELECTED SI row for premium calc; other rows are display-only
+  let bandL=BANDS.map((_,bi)=>parseInt(document.getElementById(`d_${si}_${bi}`)?.value)||0);
+  
+  // For Employee Only: if quick-entry used, override
+  if(fam==='E'){
+    const eoV=parseInt(document.getElementById('eoTotalLives')?.value)||0;
+    const eoB=parseInt(document.getElementById('eoAgeBand')?.value);
+    if(eoV>0 && eoB>=0){
+      bandL=BANDS.map((_,i)=>i===eoB?eoV:0);
+    }
+  }
 
-  // 1/2 year waiting
-  if (w12N) items.push({label:'1/2 Year Waiting Period Applied', sub:'−15%', pct:-0.15});
+  const totalL=bandL.reduce((a,b)=>a+b,0);
+  
+  // Count employees: for E it's total lives; for others it's what's in the table
+  let emps=totalL; // base assumption
+  // For ESC/ES/ESCP the table lives include all dependents, so we read from row total
+  // Actually: employee lives are counted separately — user fills selected SI row with ALL lives (emp+dep)
+  // The "employee" count for per-emp calculation: grand total of table
+  const grandTotal=parseInt(document.getElementById('grandTotal')?.textContent)||0;
 
-  // Maternity
-  if (matN) {
-    items.push({label:'Maternity Cover Deleted', sub:'−15%', pct:-0.15});
+  // ── VALIDATIONS ──
+  if(fam==='E'){
+    const eoV=parseInt(document.getElementById('eoTotalLives')?.value)||0;
+    const eoB=parseInt(document.getElementById('eoAgeBand')?.value);
+    const livesForCheck=eoV>0&&eoB>=0?eoV:totalL;
+    if(livesForCheck===0){showErr('❌ Please enter employee lives in the demography table or quick entry box.');return;}
+    if(livesForCheck<10){showErr(`❌ Minimum 10 employees required. Current: ${livesForCheck}`);return;}
+    if(livesForCheck<25){showErr(`❌ Minimum 25 total lives required. Current: ${livesForCheck}`);return;}
+    if(livesForCheck>500){showErr(`❌ Maximum 500 lives allowed. Current: ${livesForCheck}`);return;}
   } else {
-    // Maternity limit adjustment
-    const matLimMap = {
-      'nd35cs35': -0.05, 'nd35cs50': -0.03, 'nd50cs50': 0,
-      'nd50cs75': 0.05, 'nd75cs75': 0, 'nd1lcs1l': 0.12
-    };
-    const matLimPct = matLimMap[matLim] || 0;
-    if (matLimPct !== 0) items.push({label:`Maternity Limit Adjustment`, sub:`${matLim} (${matLimPct>0?'+':''}${(matLimPct*100).toFixed(0)}%)`, pct:matLimPct});
+    // For ESC/ES/ESCP - grandTotal is all lives, totalL is selected SI row
+    const livesToCheck=totalL>0?totalL:grandTotal;
+    if(livesToCheck===0){showErr('❌ Please enter lives in the demography table (highlighted SI row).');return;}
+    
+    // Count only selected SI row lives for min/max check (primary lives)
+    const checkL=totalL>0?totalL:grandTotal;
+    if(checkL<25){showErr(`❌ Minimum 25 total lives required in the highlighted SI row. Current: ${checkL}`);return;}
+    if(checkL>500){showErr(`❌ Maximum 500 lives allowed. Current: ${checkL}`);return;}
 
-    if (mat9mN) items.push({label:'9-Month Mat. Waiting Applied', sub:'−5%', pct:-0.05});
-    if (matLTN) items.push({label:'Life-Threatening Mat. Excluded', sub:'−1%', pct:-0.01});
-    if (babyN) items.push({label:'Baby Day 1 Deleted', sub:'−0.5%', pct:-0.005});
-    if (ppnatY) items.push({label:'Pre/Post Natal ₹10K', sub:'+2%', pct:0.02});
-    if (nbvaxY) items.push({label:'Newborn Vaccination ₹5K', sub:'+3%', pct:0.03});
-    if (wbY) items.push({label:'Well Baby ₹10K', sub:'+2%', pct:0.02});
+    // Employee count — approximate from table total
+    // For min employees check: we treat selected SI row total as total lives
+    // Min employees: totalL should imply at least 10 employees
+    // (rough check: lives in table ÷ average family size ≥ 10)
+    // Simpler: just check totalL >= 10
+    if(checkL<10){showErr(`❌ Minimum 10 employees required.`);return;}
   }
 
-  // Room Rent
-  const rrMap = {'none':0,'1pct':-0.08,'2pct':-0.06};
-  const rrPct = rrMap[rrV]||0;
-  const rrLbl = {'none':'No Capping (Base)','1pct':'1%/2% SI Cap (−8%)','2pct':'2%/4% SI Cap (−6%)'};
-  if (rrPct) items.push({label:'Room Rent Cap', sub:rrLbl[rrV], pct:rrPct});
-
-  // DSL
-  const dslMap = {'none':0,'default':-0.05,'higher':-0.04,'lower':-0.06};
-  const dslLbl = {'none':'None','default':'Default (−5%)','higher':'Higher Limit (−4%)','lower':'Lower Limit (−6%)'};
-  if (dslMap[dslV]) items.push({label:'Disease Sub-Limits', sub:dslLbl[dslV], pct:dslMap[dslV]});
-
-  // Co-pay
-  const cpMap = {'none':0,'10all':-0.07,'20all':-0.15,'10escp_only':-0.07,'20escp_only':-0.14,'10par':-0.035,'20par':-0.07};
-  const cpLbl = {'none':'None','10all':'10% E/ESC/ESCP (−7%)','20all':'20% E/ESC/ESCP (−15%)','10escp_only':'10% ESCP only (−7%)','20escp_only':'20% ESCP only (−14%)','10par':'10% Parents ESCP (−3.5%)','20par':'20% Parents ESCP (−7%)'};
-  if (cpMap[copayV]) items.push({label:'Co-pay', sub:cpLbl[copayV], pct:cpMap[copayV]});
-
-  // Pre/Post Hosp
-  if (ppY) items.push({label:'Pre/Post Hosp 60+90 Days', sub:'+1.5%', pct:0.015});
-
-  // Ambulance
-  const ambMap = {'none':0,'1pct':0.02,'cardiac':0.03};
-  const ambLbl = {'none':'Standard','1pct':'1% SI (+2%)','cardiac':'Cardiac 2% SI (+3%)'};
-  if (ambMap[ambV]) items.push({label:'Road Ambulance', sub:ambLbl[ambV], pct:ambMap[ambV]});
-
-  // Modern Age
-  if (modY) items.push({label:'Modern Age Treatment 100% SI', sub:'+4%', pct:0.04});
-
-  // Lasik
-  if (lasikY) items.push({label:'Lasik Surgery ±5D', sub:'+1%', pct:0.01});
-
-  // AYUSH
-  if (ayushY) items.push({label:'AYUSH 100% SI', sub:'+1%', pct:0.01});
-
-  // Hospital Daily Cash
-  if (hdcY) items.push({label:'Hospital Daily Cash ₹1K/day', sub:'+1%', pct:0.01});
-
-  // Reinstatement
-  if (riV === 'diff') items.push({label:'Reinstatement — Diff. Ailment (once/org)', sub:'+5%', pct:0.05});
-  // riV === 'same' → no loading, informational only
-
-  // Additional Loading
-  if (addLoadPct !== 0) items.push({label:'Additional Loading/Discount', sub:`${addLoadPct>0?'+':''}${addLoadPct}%`, pct:addLoadPct/100});
-
-  // Subtotal after all adjustments
-  const totalPct = items.reduce((a,it) => a + it.pct, 0);
-  const adjustedBase = base * (1 + totalPct);
-
-  // Corporate Buffer — flat add-on on top
-  let bufferAmt = 0;
-  if (bufferSI > 0) {
-    bufferAmt = bufType === 'all' ? bufferSI * 0.15 : bufferSI * 0.08;
+  // ESCP validation
+  if(fam==='ESCP'){
+    let empLives=0;
+    SI_LIST.forEach(s=>{BANDS.forEach((_,bi)=>{empLives+=parseInt(document.getElementById(`d_${s}_${bi}`)?.value)||0;});});
+    const parents=parseInt(document.getElementById('escpParents')?.value)||0;
+    if(parents>0 && empLives>0 && parents<empLives){
+      showErr(`❌ ESCP: Parents/PIL (${parents}) must be ≥ Employees (${empLives}). Minimum 1:1 ratio required.`);
+      document.getElementById('escpWarn').style.display='block';
+      document.getElementById('escpWarn').textContent=`❌ Parents/PIL (${parents}) < Employees (${empLives}). Min 1:1 required.`;
+      return;
+    }
+    document.getElementById('escpWarn').style.display='none';
   }
 
-  // Fresh Business Discount — −10% on adjusted base (not on buffer)
-  const freshDisc = policyType === 'fresh' ? -0.10 : 0;
-  const freshDiscAmt = adjustedBase * freshDisc;
+  if(totalL===0){showErr('❌ Please enter lives in the demography table (highlighted SI row).');return;}
 
-  // ICR Discount on adjusted base (not on buffer)
-  const icrDisc = icr > 0 && icr <= 115 ? getICRDiscount(icr) : 0;
-  const icrDiscAmt = adjustedBase * icrDisc;
+  // BAND PREMIUMS (from selected SI row only)
+  const bandPrem=bandL.map((l,i)=>rates[i]*l);
+  const baseRaw=bandPrem.reduce((a,b)=>a+b,0);
+  // Markup silently added to base total
+  const base=baseRaw+markUp;
 
-  const riskPremium = adjustedBase + freshDiscAmt + icrDiscAmt + bufferAmt;
+  // ICR warning
+  const uwWarnEl=document.getElementById('uwWarn');
+  if(icr>115){
+    uwWarnEl.style.display='block';
+    uwWarnEl.innerHTML=`<div class="warn-red" style="margin-bottom:14px">⚠️ <strong>Refer to Underwriter:</strong> ICR of ${icr}% exceeds 115%. This case must be referred to UW before quoting. Premium shown is indicative only.</div>`;
+  } else{uwWarnEl.style.display='none';}
 
-  // Brokerage grossed up
-  const brkFrac = brkPct / 100;
-  const netPrem = brkFrac < 1 ? riskPremium / (1 - brkFrac) : riskPremium;
-  const brkAmt = netPrem - riskPremium;
+  // ── ADJUSTMENTS ──
+  const floatN=document.querySelector('input[name=floater]:checked').value==='N';
+  const pedN=document.querySelector('input[name=ped]:checked').value==='N';
+  const w30N=document.querySelector('input[name=w30]:checked').value==='N';
+  const w12N=document.querySelector('input[name=w12]:checked').value==='N';
+  const matN=document.querySelector('input[name=mat]:checked').value==='N';
+  const mat9mN=document.querySelector('input[name=mat9m]:checked').value==='N';
+  const matLTN=document.querySelector('input[name=matLT]:checked').value==='N';
+  const matLim=document.getElementById('matLimit').value;
+  const babyN=document.querySelector('input[name=baby]:checked').value==='N';
+  const ppnatY=document.querySelector('input[name=ppnat]:checked').value==='Y';
+  const nbvaxY=document.querySelector('input[name=nbvax]:checked').value==='Y';
+  const wbY=document.querySelector('input[name=wellbaby]:checked').value==='Y';
+  const rrV=document.getElementById('roomRent').value;
+  const dslV=document.getElementById('dsl').value;
+  const copayV=document.getElementById('copay').value;
+  const ppY=document.querySelector('input[name=prepost]:checked').value==='Y';
+  const ambV=document.getElementById('ambulance').value;
+  const modY=document.querySelector('input[name=modern]:checked').value==='Y';
+  const lasikY=document.querySelector('input[name=lasik]:checked').value==='Y';
+  const ayushY=document.querySelector('input[name=ayush]:checked').value==='Y';
+  const hdcY=document.querySelector('input[name=hdc]:checked').value==='Y';
+  const riV=document.getElementById('reinstate').value;
+  const bufferSI=parseFloat(document.getElementById('bufferSI').value)||0;
+  const bufType=document.querySelector('input[name=bufType]:checked')?.value||'all';
+  const addLoadPct=parseFloat(document.getElementById('addLoad').value)||0;
 
-  // GST 18%
-  const gstAmt = netPrem * 0.18;
-  const grossPrem = netPrem + gstAmt;
+  const items=[];
+  if(floatN)items.push({label:'Non-Floater Loading',sub:'+15%',pct:0.15});
+  if(pedN)items.push({label:'PED Waiting Period Applied',sub:'−20%',pct:-0.20});
+  if(w30N)items.push({label:'30-Day Waiting Period Applied',sub:'−5%',pct:-0.05});
+  if(w12N)items.push({label:'1/2 Year Waiting Period Applied',sub:'−15%',pct:-0.15});
+  if(matN){
+    items.push({label:'Maternity Cover Deleted',sub:'−15%',pct:-0.15});
+  }else{
+    const mlm={'nd35cs35':-0.05,'nd35cs50':-0.03,'nd50cs50':0,'nd50cs75':0.05,'nd75cs75':0,'nd1lcs1l':0.12};
+    const mlp=mlm[matLim]||0;
+    if(mlp!==0)items.push({label:'Maternity Limit Adjustment',sub:`${mlp>0?'+':''}${(mlp*100).toFixed(0)}%`,pct:mlp});
+    if(mat9mN)items.push({label:'9-Month Mat. Waiting Applied',sub:'−5%',pct:-0.05});
+    if(matLTN)items.push({label:'Life-Threatening Mat. Excluded',sub:'−1%',pct:-0.01});
+    if(babyN)items.push({label:'Baby Day 1 Deleted',sub:'−0.5%',pct:-0.005});
+    if(ppnatY)items.push({label:'Pre/Post Natal ₹10K',sub:'+2%',pct:0.02});
+    if(nbvaxY)items.push({label:'Newborn Vaccination ₹5K',sub:'+3%',pct:0.03});
+    if(wbY)items.push({label:'Well Baby ₹10K',sub:'+2%',pct:0.02});
+  }
+  const rrMap={'none':0,'1pct':-0.08,'2pct':-0.06};
+  const rrLbl={'none':'No Capping (Base)','1pct':'1%/2% Cap (−8%)','2pct':'2%/4% Cap (−6%)'};
+  if(rrMap[rrV])items.push({label:'Room Rent Cap',sub:rrLbl[rrV],pct:rrMap[rrV]});
+  const dslMap={'none':0,'default':-0.05,'higher':-0.04,'lower':-0.06};
+  const dslLbl={'none':'None','default':'Default (−5%)','higher':'Higher (−4%)','lower':'Lower (−6%)'};
+  if(dslMap[dslV])items.push({label:'Disease Sub-Limits',sub:dslLbl[dslV],pct:dslMap[dslV]});
+  const cpMap={'none':0,'10all':-0.07,'20all':-0.15,'10escp_only':-0.07,'20escp_only':-0.14,'10par':-0.035,'20par':-0.07};
+  const cpLbl={'none':'None','10all':'10% All (−7%)','20all':'20% All (−15%)','10escp_only':'10% ESCP (−7%)','20escp_only':'20% ESCP (−14%)','10par':'10% Parents (−3.5%)','20par':'20% Parents (−7%)'};
+  if(cpMap[copayV])items.push({label:'Co-pay',sub:cpLbl[copayV],pct:cpMap[copayV]});
+  if(ppY)items.push({label:'Pre/Post Hosp 60+90 Days',sub:'+1.5%',pct:0.015});
+  const ambMap={'none':0,'1pct':0.02,'cardiac':0.03};
+  const ambLbl={'none':'Standard','1pct':'1% SI (+2%)','cardiac':'Cardiac 2% (+3%)'};
+  if(ambMap[ambV])items.push({label:'Road Ambulance',sub:ambLbl[ambV],pct:ambMap[ambV]});
+  if(modY)items.push({label:'Modern Age Treatment 100% SI',sub:'+4%',pct:0.04});
+  if(lasikY)items.push({label:'Lasik Surgery ±5D',sub:'+1%',pct:0.01});
+  if(ayushY)items.push({label:'AYUSH 100% SI',sub:'+1%',pct:0.01});
+  if(hdcY)items.push({label:'Hospital Daily Cash ₹1K/day',sub:'+1%',pct:0.01});
+  if(riV==='diff')items.push({label:'Reinstatement — Diff. Ailment',sub:'+5%',pct:0.05});
+  if(addLoadPct!==0)items.push({label:'Additional Loading/Discount',sub:`${addLoadPct>0?'+':''}${addLoadPct}%`,pct:addLoadPct/100});
 
-  // ── DISPLAY ──
-  document.getElementById('rGross').textContent = fmt(grossPrem);
-  document.getElementById('rGrossS').textContent = `Risk: ${fmt(riskPremium)} · Brk: ${fmt(brkAmt)}`;
-  document.getElementById('rNet').textContent = fmt(netPrem);
-  document.getElementById('rGST').textContent = fmt(gstAmt);
-  document.getElementById('rEmp').textContent = emps > 0 ? fmt(grossPrem/emps) : '—';
-  document.getElementById('rLife').textContent = fmt(grossPrem/totalL);
+  const totalPct=items.reduce((a,it)=>a+it.pct,0);
+  const adjustedBase=base*(1+totalPct);
 
-  // Build-up table
-  let bh = `<tr><td>Base Premium (Σ lives × facility rates)</td><td>${fmt(base)}</td></tr>
+  let bufferAmt=0;
+  if(bufferSI>0)bufferAmt=bufType==='all'?bufferSI*0.15:bufferSI*0.08;
+
+  const freshDisc=policyType==='fresh'?-0.10:0;
+  const freshDiscAmt=adjustedBase*freshDisc;
+  const icrDisc=icr>0&&icr<=115?getICRDiscount(icr):0;
+  const icrDiscAmt=adjustedBase*icrDisc;
+  const riskPremium=adjustedBase+freshDiscAmt+icrDiscAmt+bufferAmt;
+
+  const netPrem=riskPremium/(1-BRK_PCT/100);
+  const brkAmt=netPrem-riskPremium;
+  const gstAmt=netPrem*0.18;
+  const grossPrem=netPrem+gstAmt;
+
+  // BANNER
+  document.getElementById('rGross').textContent=fmt(grossPrem);
+  document.getElementById('rGrossS').textContent=`Risk: ${fmt(riskPremium)} · Brk: ${fmt(brkAmt)}`;
+  document.getElementById('rNet').textContent=fmt(netPrem);
+  document.getElementById('rGST').textContent=fmt(gstAmt);
+  document.getElementById('rEmp').textContent=totalL>0?fmt(grossPrem/totalL):'—'; // per life used if can't determine emp
+  document.getElementById('rLife').textContent=fmt(grossPrem/totalL);
+
+  // BUILD-UP TABLE
+  let bh=`<tr><td>Base Premium (Σ lives × facility rates)</td><td>${fmt(baseRaw)}</td></tr>
     <tr class="sep"><td colspan="2"></td></tr>`;
-
-  items.forEach(it => {
-    if (it.pct === 0) return;
-    bh += `<tr class="${it.pct>0?'load':'disc'}"><td>${it.label} <span style="color:var(--muted);font-size:11px">${it.sub}</span></td><td>${it.pct>0?'+':''}${fmt(base*it.pct)}</td></tr>`;
+  items.forEach(it=>{
+    if(it.pct===0)return;
+    bh+=`<tr class="${it.pct>0?'load':'disc'}"><td>${it.label} <span style="color:var(--muted);font-size:11px">${it.sub}</span></td><td>${it.pct>0?'+':''}${fmt(base*it.pct)}</td></tr>`;
   });
-
-  bh += `<tr class="sep"><td colspan="2"></td></tr>
+  bh+=`<tr class="sep"><td colspan="2"></td></tr>
     <tr class="sub"><td>Adjusted Base Premium</td><td>${fmt(adjustedBase)}</td></tr>
     <tr class="sep"><td colspan="2"></td></tr>`;
-
-  if (freshDisc !== 0) bh += `<tr class="disc"><td>Fresh Business Discount <span style="color:var(--muted);font-size:11px">−10%</span></td><td>${fmtS(freshDiscAmt)}</td></tr>`;
-  if (icrDisc !== 0) bh += `<tr class="disc"><td>ICR Discount <span style="color:var(--muted);font-size:11px">ICR ${icr}% (${(icrDisc*100).toFixed(0)}%)</span></td><td>${fmtS(icrDiscAmt)}</td></tr>`;
-  if (bufferAmt > 0) bh += `<tr class="load"><td>Corporate Buffer <span style="color:var(--muted);font-size:11px">${bufType==='all'?'All Illness 15%':'CI Only 8%'} × ₹${bufferSI.toLocaleString('en-IN')}</span></td><td>+${fmt(bufferAmt)}</td></tr>`;
-
-  bh += `<tr class="sub"><td>Risk Premium</td><td>${fmt(riskPremium)}</td></tr>
+  if(freshDisc!==0)bh+=`<tr class="disc"><td>Fresh Business Discount <span style="color:var(--muted);font-size:11px">−10%</span></td><td>${fmtS(freshDiscAmt)}</td></tr>`;
+  if(icrDisc!==0)bh+=`<tr class="disc"><td>ICR Discount <span style="color:var(--muted);font-size:11px">ICR ${icr}% → ${(icrDisc*100).toFixed(0)}%</span></td><td>${fmtS(icrDiscAmt)}</td></tr>`;
+  if(bufferAmt>0)bh+=`<tr class="load"><td>Corporate Buffer <span style="color:var(--muted);font-size:11px">${bufType==='all'?'All Illness 15%':'CI Only 8%'} × ₹${bufferSI.toLocaleString('en-IN')}</span></td><td>+${fmt(bufferAmt)}</td></tr>`;
+  bh+=`<tr class="sub"><td>Risk Premium</td><td>${fmt(riskPremium)}</td></tr>
     <tr class="sep"><td colspan="2"></td></tr>
-    <tr><td>Brokerage (${brkPct}% grossed up)</td><td>+${fmt(brkAmt)}</td></tr>
+    <tr><td>Brokerage (${BRK_PCT}% grossed up)</td><td>+${fmt(brkAmt)}</td></tr>
     <tr class="sub"><td>Net Premium (excl. GST)</td><td>${fmt(netPrem)}</td></tr>
     <tr class="sep"><td colspan="2"></td></tr>
     <tr class="gst-row"><td>GST @ 18%</td><td>+${fmt(gstAmt)}</td></tr>
     <tr class="grand"><td>GROSS PREMIUM (incl. GST)</td><td>${fmt(grossPrem)}</td></tr>`;
-  document.getElementById('bupTbl').innerHTML = bh;
+  document.getElementById('bupTbl').innerHTML=bh;
 
-  // Conditions Summary
-  const sd = document.getElementById('policyStartDate').value;
-  const ed = document.getElementById('policyEndDate').value;
-  const fmtDate = d => { if(!d)return '—'; const [y,m,dy]=d.split('-'); return `${dy}-${'JanFebMarAprMayJunJulAugSepOctNovDec'.slice((parseInt(m)-1)*3,(parseInt(m)-1)*3+3)}-${y}`; };
-  const matLimLabels = {'nd35cs35':'ND₹35K/CS₹35K','nd35cs50':'ND₹35K/CS₹50K','nd50cs50':'ND₹50K/CS₹50K (Base)','nd50cs75':'ND₹50K/CS₹75K','nd75cs75':'ND₹75K/CS₹75K','nd1lcs1l':'ND₹1L/CS₹1L'};
-
-  const condData = [
-    ['Client Name', document.getElementById('clientName').value||'—'],
-    ['Policy Start', fmtDate(sd)], ['Policy End', fmtDate(ed)],
-    ['Sum Insured', `₹${si.toLocaleString('en-IN')}`],
-    ['Total Lives', totalL], ['Employees', emps||'—'],
-    ['Policy Type', policyType==='fresh'?'Fresh (−10%)':'Market Rollover'],
-    ['ICR', icr>0?`${icr}%`:'Fresh/NA'],
-    ['Floater', floatN?'Non-Floater (+15%)':'Floater (Base)'],
-    ['Family Def', document.getElementById('famDef').selectedOptions[0].text.split('(')[0].trim()],
-    ['Maternity', matN?'Deleted (−15%)':'Covered'],
-    ['Mat Limit', matN?'N/A':(matLimLabels[matLim]||matLim)],
-    ['PED', pedN?'Waiting Period (−20%)':'Day 1 (Base)'],
-    ['Room Rent', rrLbl[rrV]], ['DSL', dslLbl[dslV]], ['Co-pay', cpLbl[copayV]],
-    ['Corporate Buffer', bufferAmt>0?`₹${bufferSI.toLocaleString('en-IN')} (${bufType==='all'?'All Illness':'CI Only'})`:'None'],
-    ['Reinstatement', riV==='diff'?'Diff. Ailment (+5%)':riV==='same'?'Same Ailment (info)':'Not Covered'],
-    ['Brokerage', brkPct+'%'],
-    ['Total Adj %', `${(totalPct*100).toFixed(1)}% on base`],
+  // CONDITIONS SUMMARY
+  const sd=document.getElementById('policyStartDate').value;
+  const ed=document.getElementById('policyEndDate').value;
+  const fmtDate=d=>{if(!d)return'—';const[y,m,dy]=d.split('-');return`${dy}-${'JanFebMarAprMayJunJulAugSepOctNovDec'.slice((parseInt(m)-1)*3,(parseInt(m)-1)*3+3)}-${y}`;};
+  const mlLbl={'nd35cs35':'ND₹35K/CS₹35K','nd35cs50':'ND₹35K/CS₹50K','nd50cs50':'ND₹50K/CS₹50K','nd50cs75':'ND₹50K/CS₹75K','nd75cs75':'ND₹75K/CS₹75K','nd1lcs1l':'ND₹1L/CS₹1L'};
+  const condData=[
+    ['Client Name',document.getElementById('clientName').value||'—'],
+    ['Policy Start',fmtDate(sd)],['Policy End',fmtDate(ed)],
+    ['Sum Insured',`₹${si.toLocaleString('en-IN')}`],
+    ['Total Lives',totalL],
+    ['Policy Type',policyType==='fresh'?'Fresh (−10%)':'Market Rollover'],
+    ['ICR',icr>0?`${icr}%`:'Fresh/NA'],
+    ['Floater',floatN?'Non-Floater (+15%)':'Floater (Base)'],
+    ['Family Def',document.getElementById('famDef').selectedOptions[0].text.split('(')[0].trim()],
+    ['Maternity',matN?'Deleted (−15%)':'Covered'],
+    ['Mat Limit',matN?'N/A':(mlLbl[matLim]||matLim)],
+    ['PED',pedN?'Waiting Period (−20%)':'Day 1 (Base)'],
+    ['Room Rent',rrLbl[rrV]],['DSL',dslLbl[dslV]],['Co-pay',cpLbl[copayV]],
+    ['Buffer',bufferAmt>0?`₹${bufferSI.toLocaleString('en-IN')} (${bufType==='all'?'All':'CI'})`:'None'],
+    ['Reinstatement',riV==='diff'?'Diff. Ailment (+5%)':riV==='same'?'Same Ailment':'Not Covered'],
+    ['Brokerage','10% (fixed)'],
+    ['Total Adj %',`${(totalPct*100).toFixed(1)}%`],
   ];
-  document.getElementById('condGrid').innerHTML = condData.map(([n,v])=>`<div class="ci"><div class="cn">${n}</div><div class="cv">${v}</div></div>`).join('');
+  document.getElementById('condGrid').innerHTML=condData.map(([n,v])=>`<div class="ci"><div class="cn">${n}</div><div class="cv">${v}</div></div>`).join('');
 
-  // Band breakdown table
-  let bt = `<thead><tr><th>Age Band</th><th>Lives</th><th>Rate (₹/life)</th><th>Band Premium</th><th>% of Base</th></tr></thead><tbody>`;
-  bandL.forEach((l,i) => {
-    if (!l) return;
-    bt += `<tr><td>${BANDS[i]}</td><td>${l}</td><td style="font-family:'IBM Plex Mono',monospace">₹${rates[i].toLocaleString('en-IN')}</td><td style="font-family:'IBM Plex Mono',monospace">₹${Math.round(bandPrem[i]).toLocaleString('en-IN')}</td><td>${(bandPrem[i]/base*100).toFixed(1)}%</td></tr>`;
+  // BAND BREAKDOWN
+  let bt=`<thead><tr><th>Age Band</th><th>Lives</th><th>Rate (₹/life)</th><th>Band Premium</th><th>% of Base</th></tr></thead><tbody>`;
+  bandL.forEach((l,i)=>{
+    if(!l)return;
+    bt+=`<tr><td>${BAND_FULL[i]}</td><td>${l}</td><td style="font-family:'JetBrains Mono',monospace">₹${rates[i].toLocaleString('en-IN')}</td><td style="font-family:'JetBrains Mono',monospace">₹${Math.round(bandPrem[i]).toLocaleString('en-IN')}</td><td>${baseRaw>0?(bandPrem[i]/baseRaw*100).toFixed(1):0}%</td></tr>`;
   });
-  bt += `<tr class="tot"><td><strong>TOTAL</strong></td><td><strong>${totalL}</strong></td><td>—</td><td style="font-family:'IBM Plex Mono',monospace"><strong>₹${Math.round(base).toLocaleString('en-IN')}</strong></td><td>100%</td></tr></tbody>`;
-  document.getElementById('bandTbl').innerHTML = bt;
+  bt+=`<tr class="tot"><td><strong>TOTAL</strong></td><td><strong>${totalL}</strong></td><td>—</td><td style="font-family:'JetBrains Mono',monospace"><strong>${fmt(baseRaw)}</strong></td><td>100%</td></tr></tbody>`;
+  document.getElementById('bandTbl').innerHTML=bt;
 
-  // Rate card
-  let rt = `<thead><tr><th>Sum Insured</th>${BANDS.map(b=>`<th>${b}</th>`).join('')}</tr></thead><tbody>`;
-  SI_LIST.forEach((s,idx) => {
-    const sel = s === si;
-    rt += `<tr${sel?' class="sel"':''}><td>${SI_LABELS[idx]}</td>${RATES[s].map(v=>`<td>₹${v.toLocaleString('en-IN')}</td>`).join('')}</tr>`;
+  // ── RATE CARD ──
+  // Markup per life (based on total lives in selected SI row)
+  const muPerLife=totalL>0?Math.round(markUp/totalL):0;
+  let rt=`<thead><tr><th>Sum Insured</th>${BANDS.map(b=>`<th>${b}</th>`).join('')}</tr></thead><tbody>`;
+  SI_LIST.forEach((s,idx)=>{
+    const sel=s===si;
+    // Normal row
+    rt+=`<tr${sel?' class="sel"':''}><td>${SI_LABELS[idx]}</td>${RATES[s].map(v=>`<td>₹${v.toLocaleString('en-IN')}</td>`).join('')}</tr>`;
+    // Markup row — ONLY for selected SI, shown immediately below it
+    if(sel && markUp>0){
+      rt+=`<tr class="mu-row"><td>↳ + Markup (₹${muPerLife.toLocaleString('en-IN')}/life)</td>${RATES[s].map(v=>`<td>₹${(v+muPerLife).toLocaleString('en-IN')}</td>`).join('')}</tr>`;
+    }
   });
-  rt += '</tbody>';
-  document.getElementById('rateTbl').innerHTML = rt;
+  rt+='</tbody>';
+  document.getElementById('rateTbl').innerHTML=rt;
 
-  document.getElementById('results').style.display = 'block';
+  document.getElementById('results').style.display='block';
   document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-function resetAll() {
-  document.getElementById('clientName').value = '';
-  document.getElementById('policyStartDate').value = '';
-  document.getElementById('policyEndDate').value = '';
-  document.getElementById('icr').value = 0;
-  document.getElementById('bufferSI').value = 0;
-  document.getElementById('addLoad').value = 0;
-  document.getElementById('icrNote').textContent = '0% = Fresh business';
-  document.getElementById('icrNote').style.color = '#166534';
-  document.getElementById('bufferTypeRow').style.display = 'none';
-  document.getElementById('results').style.display = 'none';
-  buildDemog();
-  updateTotals();
+function downloadPDF(){
+  const client=document.getElementById('clientName').value||'Healthysure';
+  const orig=document.title;
+  document.title=`Premium Quote — ${client}`;
+  window.print();
+  setTimeout(()=>document.title=orig,1500);
 }
 
-// INIT
+function resetAll(){
+  ['clientName','prevInsurer','industry'].forEach(id=>document.getElementById(id).value='');
+  ['policyStartDate','policyEndDate'].forEach(id=>document.getElementById(id).value='');
+  ['icr','bufferSI','addLoad','markUp'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=0;});
+  const eo=document.getElementById('eoTotalLives');if(eo)eo.value='';
+  const ep=document.getElementById('escpParents');if(ep)ep.value='';
+  document.getElementById('icrNote').textContent='0% = Fresh business';
+  document.getElementById('icrNote').style.color='var(--grn)';
+  document.getElementById('bufferTypeRow').style.display='none';
+  document.getElementById('empOnlyBox').style.display='none';
+  document.getElementById('escpRow').style.display='none';
+  document.getElementById('escpRule').style.display='none';
+  document.getElementById('escpWarn').style.display='none';
+  const em=document.getElementById('escpMsg');if(em)em.style.display='none';
+  clearErr();
+  document.getElementById('results').style.display='none';
+  document.getElementById('famDef').value='ESC';
+  buildDemog();
+}
+
 buildDemog();
 </script>
 </body>
