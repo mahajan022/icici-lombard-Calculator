@@ -140,13 +140,26 @@ table.rt tr.mu-row td:first-child{color:var(--amb);font-style:italic}
 /* PRINT — only results section */
 @media print{
   nav,.section-label,#formSection,.actions,.warn-red,.pdf-bar,.notice,.err-box{display:none!important}
-  body{background:#fff;font-size:11px}
+  body{background:#fff;font-size:11px;font-family:'Inter',sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .wrap{max-width:100%;padding:0 8px}
   .card{box-shadow:none;border:1px solid #ccc;page-break-inside:avoid;margin-bottom:8px}
-  .result-banner{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .result-banner{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:16px 20px}
+  .rb-val{font-size:18px!important}
+  .rb-lbl{font-size:8px!important}
+  .rb-sub{font-size:9px!important}
   #results{display:block!important}
-  .two-col{grid-template-columns:1.4fr 1fr}
+  .two-col{grid-template-columns:1.4fr 1fr;gap:8px}
   .section-label{display:none}
+  table.bup td{padding:6px 12px;font-size:11px}
+  table.bup td:last-child{font-size:11px}
+  table.bt td,table.bt th{padding:5px 8px;font-size:10px}
+  table.rt td,table.rt th{padding:4px 6px;font-size:9.5px}
+  .cond-grid{grid-template-columns:1fr 1fr 1fr}
+  .ci{padding:6px 8px}
+  .cn{font-size:8px}
+  .cv{font-size:10.5px}
+  .card-head{padding:7px 14px}
+  .ch-title{font-size:9px}
 }
 </style>
 </head>
@@ -934,7 +947,7 @@ function calculate(){
 
   // BANNER
   document.getElementById('rGross').textContent=fmt(grossPrem);
-  document.getElementById('rGrossS').textContent=`Risk: ${fmt(riskPremium)} · Brk: ${fmt(brkAmt)}`;
+  document.getElementById('rGrossS').textContent='';
   document.getElementById('rNet').textContent=fmt(netPrem);
   document.getElementById('rGST').textContent=fmt(gstAmt);
   document.getElementById('rEmp').textContent=totalL>0?fmt(grossPrem/totalL):'—';
@@ -942,9 +955,7 @@ function calculate(){
 
   // ✅ CHANGE 4: BUILD-UP TABLE — show base, then markup line, then adjustments
   let bh=`<tr><td>Base Premium (Σ lives × facility rates)</td><td>${fmt(baseRaw)}</td></tr>`;
-  if(markUpPct>0){
-    bh+=`<tr class="load"><td>Markup <span style="color:var(--muted);font-size:11px">+${markUpPct}% on base rates</span></td><td>+${fmt(markupAmt)}</td></tr>`;
-  }
+  // Markup hidden from build-up (baked silently into base)
   bh+=`<tr class="sep"><td colspan="2"></td></tr>`;
   items.forEach(it=>{
     if(it.pct===0)return;
@@ -958,7 +969,6 @@ function calculate(){
   if(bufferAmt>0)bh+=`<tr class="load"><td>Corporate Buffer <span style="color:var(--muted);font-size:11px">${bufType==='all'?'All Illness 15%':'CI Only 8%'} × ₹${bufferSI.toLocaleString('en-IN')}</span></td><td>+${fmt(bufferAmt)}</td></tr>`;
   bh+=`<tr class="sub"><td>Risk Premium</td><td>${fmt(riskPremium)}</td></tr>
     <tr class="sep"><td colspan="2"></td></tr>
-    <tr><td>Brokerage (${BRK_PCT}% grossed up)</td><td>+${fmt(brkAmt)}</td></tr>
     <tr class="sub"><td>Net Premium (excl. GST)</td><td>${fmt(netPrem)}</td></tr>
     <tr class="sep"><td colspan="2"></td></tr>
     <tr class="gst-row"><td>GST @ 18%</td><td>+${fmt(gstAmt)}</td></tr>
@@ -985,8 +995,6 @@ function calculate(){
     ['Room Rent',rrLbl[rrV]],['DSL',dslLbl[dslV]],['Co-pay',cpLbl[copayV]],
     ['Buffer',bufferAmt>0?`₹${bufferSI.toLocaleString('en-IN')} (${bufType==='all'?'All':'CI'})`:'None'],
     ['Reinstatement',riV==='diff'?'Diff. Ailment (+5%)':riV==='same'?'Same Ailment':'Not Covered'],
-    ['Markup',markUpPct>0?`+${markUpPct}% on rates`:'None'],
-    ['Brokerage','10% (fixed)'],
     ['Total Adj %',`${(totalPct*100).toFixed(1)}%`],
   ];
   document.getElementById('condGrid').innerHTML=condData.map(([n,v])=>`<div class="ci"><div class="cn">${n}</div><div class="cv">${v}</div></div>`).join('');
@@ -1000,15 +1008,15 @@ function calculate(){
   bt+=`<tr class="tot"><td><strong>TOTAL</strong></td><td><strong>${totalL}</strong></td><td>—</td><td style="font-family:'JetBrains Mono',monospace"><strong>${fmt(base)}</strong></td><td>100%</td></tr></tbody>`;
   document.getElementById('bandTbl').innerHTML=bt;
 
-  // ✅ CHANGE 5: RATE CARD — markup row shows percentage-based rates
+  // Rate card — selected SI row shows marked-up rates directly (no separate row)
   let rt=`<thead><tr><th>Sum Insured</th>${BANDS.map(b=>`<th>${b}</th>`).join('')}</tr></thead><tbody>`;
   SI_LIST.forEach((s,idx)=>{
     const sel=s===si;
-    // Normal base rate row
-    rt+=`<tr${sel?' class="sel"':''}><td>${SI_LABELS[idx]}</td>${RATES[s].map(v=>`<td>₹${v.toLocaleString('en-IN')}</td>`).join('')}</tr>`;
-    // Markup row — ONLY for selected SI, shown immediately below it, only if markup > 0
     if(sel && markUpPct>0){
-      rt+=`<tr class="mu-row"><td>↳ + ${markUpPct}% Markup</td>${RATES[s].map(v=>`<td>₹${Math.round(v*markUpFactor).toLocaleString('en-IN')}</td>`).join('')}</tr>`;
+      // Selected row: show marked-up rates directly (markup baked in, no separate row)
+      rt+=`<tr class="sel"><td>${SI_LABELS[idx]}</td>${RATES[s].map(v=>`<td>₹${Math.round(v*markUpFactor).toLocaleString('en-IN')}</td>`).join('')}</tr>`;
+    } else {
+      rt+=`<tr${sel?' class="sel"':''}><td>${SI_LABELS[idx]}</td>${RATES[s].map(v=>`<td>₹${v.toLocaleString('en-IN')}</td>`).join('')}</tr>`;
     }
   });
   rt+='</tbody>';
