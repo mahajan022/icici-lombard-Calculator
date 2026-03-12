@@ -180,9 +180,10 @@ table.rt tr.mu-row td:first-child{color:var(--amb);font-style:italic}
       <div class="field"><label>Policy Start Date</label><input type="date" id="policyStartDate"></div>
       <div class="field"><label>Policy End Date</label><input type="date" id="policyEndDate"></div>
       <div class="field">
-        <label>Mark Up (₹) <span style="font-size:9px;font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0">— hidden in output</span></label>
-        <input type="number" id="markUp" value="0" min="0" step="500" placeholder="0">
-        <div class="hint">Added silently to base. Shown in rate card below selected SI row.</div>
+        <!-- ✅ CHANGE 1: Mark Up now in % instead of ₹ -->
+        <label>Mark Up (%) <span style="font-size:9px;font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0">— hidden in output</span></label>
+        <input type="number" id="markUp" value="0" min="0" max="100" step="0.5" placeholder="0">
+        <div class="hint">% markup on base rates. e.g. 10 = 10%. Shown in rate card below selected SI row.</div>
       </div>
     </div>
     <div class="grid4" style="margin-top:14px">
@@ -600,7 +601,7 @@ table.rt tr.mu-row td:first-child{color:var(--amb);font-style:italic}
   </div>
 
   <div class="notice">
-    <strong>Formula:</strong> Base = Σ(lives × facility_rate) · Markup added silently (visible only in rate card as row below selected SI) · All % adjustments applied to base · Buffer = flat add-on · Brokerage 10% grossed up · GST = net × 18% · <em>Source: Healthysure Facility Rate Sheet (Excl. GST)</em>
+    <strong>Formula:</strong> Base = Σ(lives × facility_rate) · Markup % applied on base rates (shown in rate card below selected SI) · All % adjustments applied to marked-up base · Buffer = flat add-on · Brokerage 10% grossed up · GST = net × 18% · <em>Source: Healthysure Facility Rate Sheet (Excl. GST)</em>
   </div>
 </div>
 
@@ -668,7 +669,6 @@ function updateTotals(){
   // Update ESCP emp count display
   const fam=document.getElementById('famDef').value;
   if(fam==='ESCP'){
-    // Employee count = total lives in table (non-parent rows)
     let empLives=0;
     SI_LIST.forEach(s=>{BANDS.forEach((_,bi)=>{empLives+=parseInt(document.getElementById(`d_${s}_${bi}`)?.value)||0;});});
     const el=document.getElementById('escpEmpCount');
@@ -774,7 +774,11 @@ function calculate(){
   const fam=document.getElementById('famDef').value;
   const si=parseInt(document.getElementById('si').value);
   const rates=RATES[si];
-  const markUp=parseFloat(document.getElementById('markUp').value)||0;
+
+  // ✅ CHANGE 2: markUp is now a PERCENTAGE (e.g. 10 = 10%)
+  const markUpPct=parseFloat(document.getElementById('markUp').value)||0;
+  const markUpFactor=1+(markUpPct/100);
+
   const icr=parseFloat(document.getElementById('icr').value)||0;
   const policyType=document.getElementById('policyType').value;
 
@@ -792,12 +796,6 @@ function calculate(){
   }
 
   const totalL=bandL.reduce((a,b)=>a+b,0);
-  
-  // Count employees: for E it's total lives; for others it's what's in the table
-  let emps=totalL; // base assumption
-  // For ESC/ES/ESCP the table lives include all dependents, so we read from row total
-  // Actually: employee lives are counted separately — user fills selected SI row with ALL lives (emp+dep)
-  // The "employee" count for per-emp calculation: grand total of table
   const grandTotal=parseInt(document.getElementById('grandTotal')?.textContent)||0;
 
   // ── VALIDATIONS ──
@@ -814,16 +812,9 @@ function calculate(){
     const livesToCheck=totalL>0?totalL:grandTotal;
     if(livesToCheck===0){showErr('❌ Please enter lives in the demography table (highlighted SI row).');return;}
     
-    // Count only selected SI row lives for min/max check (primary lives)
     const checkL=totalL>0?totalL:grandTotal;
     if(checkL<25){showErr(`❌ Minimum 25 total lives required in the highlighted SI row. Current: ${checkL}`);return;}
     if(checkL>500){showErr(`❌ Maximum 500 lives allowed. Current: ${checkL}`);return;}
-
-    // Employee count — approximate from table total
-    // For min employees check: we treat selected SI row total as total lives
-    // Min employees: totalL should imply at least 10 employees
-    // (rough check: lives in table ÷ average family size ≥ 10)
-    // Simpler: just check totalL >= 10
     if(checkL<10){showErr(`❌ Minimum 10 employees required.`);return;}
   }
 
@@ -843,11 +834,14 @@ function calculate(){
 
   if(totalL===0){showErr('❌ Please enter lives in the demography table (highlighted SI row).');return;}
 
-  // BAND PREMIUMS (from selected SI row only)
-  const bandPrem=bandL.map((l,i)=>rates[i]*l);
-  const baseRaw=bandPrem.reduce((a,b)=>a+b,0);
-  // Markup silently added to base total
-  const base=baseRaw+markUp;
+  // ✅ CHANGE 3: Apply markup % on base rates, then calculate premiums
+  // markedUpRates = base rates × (1 + markUpPct/100)
+  const markedUpRates=rates.map(r=>r*markUpFactor);
+  const bandPremBase=bandL.map((l,i)=>rates[i]*l);        // base rates (for display)
+  const bandPrem=bandL.map((l,i)=>markedUpRates[i]*l);    // marked-up rates (for calc)
+  const baseRaw=bandPremBase.reduce((a,b)=>a+b,0);        // base without markup
+  const base=bandPrem.reduce((a,b)=>a+b,0);               // base WITH markup
+  const markupAmt=base-baseRaw;
 
   // ICR warning
   const uwWarnEl=document.getElementById('uwWarn');
@@ -943,12 +937,15 @@ function calculate(){
   document.getElementById('rGrossS').textContent=`Risk: ${fmt(riskPremium)} · Brk: ${fmt(brkAmt)}`;
   document.getElementById('rNet').textContent=fmt(netPrem);
   document.getElementById('rGST').textContent=fmt(gstAmt);
-  document.getElementById('rEmp').textContent=totalL>0?fmt(grossPrem/totalL):'—'; // per life used if can't determine emp
+  document.getElementById('rEmp').textContent=totalL>0?fmt(grossPrem/totalL):'—';
   document.getElementById('rLife').textContent=fmt(grossPrem/totalL);
 
-  // BUILD-UP TABLE
-  let bh=`<tr><td>Base Premium (Σ lives × facility rates)</td><td>${fmt(baseRaw)}</td></tr>
-    <tr class="sep"><td colspan="2"></td></tr>`;
+  // ✅ CHANGE 4: BUILD-UP TABLE — show base, then markup line, then adjustments
+  let bh=`<tr><td>Base Premium (Σ lives × facility rates)</td><td>${fmt(baseRaw)}</td></tr>`;
+  if(markUpPct>0){
+    bh+=`<tr class="load"><td>Markup <span style="color:var(--muted);font-size:11px">+${markUpPct}% on base rates</span></td><td>+${fmt(markupAmt)}</td></tr>`;
+  }
+  bh+=`<tr class="sep"><td colspan="2"></td></tr>`;
   items.forEach(it=>{
     if(it.pct===0)return;
     bh+=`<tr class="${it.pct>0?'load':'disc'}"><td>${it.label} <span style="color:var(--muted);font-size:11px">${it.sub}</span></td><td>${it.pct>0?'+':''}${fmt(base*it.pct)}</td></tr>`;
@@ -988,6 +985,7 @@ function calculate(){
     ['Room Rent',rrLbl[rrV]],['DSL',dslLbl[dslV]],['Co-pay',cpLbl[copayV]],
     ['Buffer',bufferAmt>0?`₹${bufferSI.toLocaleString('en-IN')} (${bufType==='all'?'All':'CI'})`:'None'],
     ['Reinstatement',riV==='diff'?'Diff. Ailment (+5%)':riV==='same'?'Same Ailment':'Not Covered'],
+    ['Markup',markUpPct>0?`+${markUpPct}% on rates`:'None'],
     ['Brokerage','10% (fixed)'],
     ['Total Adj %',`${(totalPct*100).toFixed(1)}%`],
   ];
@@ -997,22 +995,20 @@ function calculate(){
   let bt=`<thead><tr><th>Age Band</th><th>Lives</th><th>Rate (₹/life)</th><th>Band Premium</th><th>% of Base</th></tr></thead><tbody>`;
   bandL.forEach((l,i)=>{
     if(!l)return;
-    bt+=`<tr><td>${BAND_FULL[i]}</td><td>${l}</td><td style="font-family:'JetBrains Mono',monospace">₹${rates[i].toLocaleString('en-IN')}</td><td style="font-family:'JetBrains Mono',monospace">₹${Math.round(bandPrem[i]).toLocaleString('en-IN')}</td><td>${baseRaw>0?(bandPrem[i]/baseRaw*100).toFixed(1):0}%</td></tr>`;
+    bt+=`<tr><td>${BAND_FULL[i]}</td><td>${l}</td><td style="font-family:'JetBrains Mono',monospace">₹${rates[i].toLocaleString('en-IN')}</td><td style="font-family:'JetBrains Mono',monospace">₹${Math.round(bandPrem[i]).toLocaleString('en-IN')}</td><td>${baseRaw>0?(bandPremBase[i]/baseRaw*100).toFixed(1):0}%</td></tr>`;
   });
-  bt+=`<tr class="tot"><td><strong>TOTAL</strong></td><td><strong>${totalL}</strong></td><td>—</td><td style="font-family:'JetBrains Mono',monospace"><strong>${fmt(baseRaw)}</strong></td><td>100%</td></tr></tbody>`;
+  bt+=`<tr class="tot"><td><strong>TOTAL</strong></td><td><strong>${totalL}</strong></td><td>—</td><td style="font-family:'JetBrains Mono',monospace"><strong>${fmt(base)}</strong></td><td>100%</td></tr></tbody>`;
   document.getElementById('bandTbl').innerHTML=bt;
 
-  // ── RATE CARD ──
-  // Markup per life (based on total lives in selected SI row)
-  const muPerLife=totalL>0?Math.round(markUp/totalL):0;
+  // ✅ CHANGE 5: RATE CARD — markup row shows percentage-based rates
   let rt=`<thead><tr><th>Sum Insured</th>${BANDS.map(b=>`<th>${b}</th>`).join('')}</tr></thead><tbody>`;
   SI_LIST.forEach((s,idx)=>{
     const sel=s===si;
-    // Normal row
+    // Normal base rate row
     rt+=`<tr${sel?' class="sel"':''}><td>${SI_LABELS[idx]}</td>${RATES[s].map(v=>`<td>₹${v.toLocaleString('en-IN')}</td>`).join('')}</tr>`;
-    // Markup row — ONLY for selected SI, shown immediately below it
-    if(sel && markUp>0){
-      rt+=`<tr class="mu-row"><td>↳ + Markup (₹${muPerLife.toLocaleString('en-IN')}/life)</td>${RATES[s].map(v=>`<td>₹${(v+muPerLife).toLocaleString('en-IN')}</td>`).join('')}</tr>`;
+    // Markup row — ONLY for selected SI, shown immediately below it, only if markup > 0
+    if(sel && markUpPct>0){
+      rt+=`<tr class="mu-row"><td>↳ + ${markUpPct}% Markup</td>${RATES[s].map(v=>`<td>₹${Math.round(v*markUpFactor).toLocaleString('en-IN')}</td>`).join('')}</tr>`;
     }
   });
   rt+='</tbody>';
