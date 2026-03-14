@@ -53,12 +53,52 @@ select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='htt
 .tog label:not(:last-child){border-right:1px solid var(--bdr)}
 .tog input:checked+label{background:var(--teal3);color:#fff}
 
-/* EMPLOYEE ONLY BOX */
-.emp-only-box{background:var(--teall);border:1.5px solid #99f6e4;border-radius:10px;padding:18px 22px;margin-bottom:10px}
-.emp-only-box h4{font-size:11.5px;font-weight:700;color:var(--teal2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px}
-.emp-only-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+/* ================================================================
+   POLICY TYPE SELECTOR BOXES
+   ================================================================ */
+.step-label{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.step-label span{background:var(--teal);color:#fff;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;flex-shrink:0}
+.policy-type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.pt-box{border:2px solid var(--bdr2);border-radius:10px;padding:16px 12px;cursor:pointer;text-align:center;transition:all .15s;background:#fff;user-select:none;position:relative}
+.pt-box:hover{border-color:var(--teal);background:var(--teall)}
+.pt-box.selected{border-color:var(--teal);background:var(--teall);box-shadow:0 0 0 3px rgba(13,148,136,.12)}
+.pt-box .pt-icon{font-size:22px;margin-bottom:7px}
+.pt-box .pt-title{font-size:12px;font-weight:700;color:var(--sub)}
+.pt-box .pt-sub{font-size:10px;color:var(--muted);margin-top:3px;font-weight:600;font-family:'JetBrains Mono',monospace;letter-spacing:.5px}
+.pt-box.selected .pt-title{color:var(--teal2)}
+.pt-box.selected .pt-sub{color:var(--teal)}
+.pt-check{position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;background:var(--teal);display:none;align-items:center;justify-content:center}
+.pt-check::after{content:'✓';color:#fff;font-size:10px;font-weight:800}
+.pt-box.selected .pt-check{display:flex}
 
-/* DEMOGRAPHY TABLE */
+/* ================================================================
+   LIVES COUNT BOXES
+   ================================================================ */
+.lives-count-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px}
+.lc-box{border:1.5px solid var(--bdr2);border-radius:10px;padding:14px 12px;background:#fff;transition:all .15s;position:relative}
+.lc-box.frozen{background:var(--bg2);opacity:.5;pointer-events:none}
+.lc-box.total-box{background:linear-gradient(135deg,#0f4c3a,var(--teal2));border-color:var(--teal2);pointer-events:none}
+.lc-box label{font-size:9.5px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.6px;display:block;margin-bottom:8px}
+.lc-box.total-box label{color:rgba(255,255,255,.65)}
+.lc-box input[type=number]{border:1.5px solid var(--bdr2);border-radius:7px;padding:8px 10px;font-size:20px;font-weight:700;color:var(--ink);background:#fff;width:100%;outline:none;font-family:'JetBrains Mono',monospace;text-align:center;transition:border-color .15s,box-shadow .15s}
+.lc-box input[type=number]:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(13,148,136,.1)}
+.lc-box.frozen input{background:transparent;border-color:transparent;color:var(--lite);cursor:not-allowed}
+.lc-total-val{font-size:32px;font-weight:800;color:#fff;font-family:'JetBrains Mono',monospace;text-align:center;padding:2px 0;letter-spacing:-1px;line-height:1.1}
+.lc-hint{font-size:10px;color:var(--muted);margin-top:6px;line-height:1.4}
+.lc-box.total-box .lc-hint{color:rgba(255,255,255,.45)}
+.lc-err{font-size:10.5px;color:var(--red);margin-top:4px;font-weight:600;display:none;line-height:1.3}
+
+/* validation banner */
+.lives-val-banner{border-radius:8px;padding:11px 16px;font-size:12.5px;font-weight:600;margin-bottom:12px;display:none;line-height:1.6}
+.lives-val-banner.ok{background:#f0fdf4;border:1.5px solid #86efac;color:var(--grn)}
+.lives-val-banner.err{background:var(--redl);border:1.5px solid var(--red);color:var(--red)}
+
+/* frozen field */
+.field-frozen{opacity:.5;pointer-events:none}
+.field-frozen input{background:var(--bg2)!important;cursor:not-allowed}
+.frozen-tag{font-size:10px;color:#92400e;background:#fffbeb;border:1px solid #fde68a;border-radius:4px;padding:3px 8px;display:inline-block;margin-top:3px;font-weight:600}
+
+/* demography table */
 .demog-scroll{overflow-x:auto;border-radius:6px}
 table.dg{border-collapse:collapse;font-size:12px;white-space:nowrap;width:100%}
 table.dg th{padding:9px 8px;font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;background:var(--bg2);border-bottom:2px solid var(--bdr2);text-align:center}
@@ -71,11 +111,6 @@ table.dg .tc{background:var(--bg)!important;font-weight:700;font-family:'JetBrai
 .dg tr.tot-row td{background:#f0fdfa;font-weight:700;color:var(--teal2);font-family:'JetBrains Mono',monospace;font-size:12px;border-top:2px solid #99f6e4}
 .dg tr.sel-row .si-cell{color:var(--teal)!important;font-weight:700}
 .dg tr.sel-row td{background:#f0fdfa!important}
-
-/* ESCP parents validation */
-.escp-info{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:12px;font-weight:600;display:none}
-.escp-info.ok{background:#f0fdf4;border:1.5px solid #86efac;color:var(--grn)}
-.escp-info.err{background:var(--redl);border:1.5px solid var(--red);color:var(--red)}
 
 .actions{display:flex;gap:10px;margin:16px 0}
 .btn{border:none;border-radius:8px;padding:11px 26px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s}
@@ -96,7 +131,6 @@ table.dg .tc{background:var(--bg)!important;font-weight:700;font-family:'JetBrai
 .rb-val.hi{color:#5eead4}
 .rb-sub{font-size:10.5px;color:rgba(255,255,255,.4);margin-top:4px}
 .two-col{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-bottom:14px}
-
 table.bup{width:100%;border-collapse:collapse;font-size:13px}
 table.bup td{padding:8px 14px;border-bottom:1px solid #f8fafc;color:var(--sub);font-weight:500}
 table.bup td:last-child{text-align:right;font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:600;color:var(--ink)}
@@ -108,20 +142,16 @@ table.bup .grand td{background:var(--teal3);color:#fff;font-size:14px;font-weigh
 table.bup .grand td:last-child{color:#5eead4;font-size:15px;font-family:'JetBrains Mono',monospace}
 table.bup .gst-row td{background:var(--ambl);color:var(--amb);font-weight:600}
 table.bup .gst-row td:last-child{color:var(--amb);font-family:'JetBrains Mono',monospace}
-
 .cond-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .ci{background:var(--bg);border:1px solid var(--bdr);border-radius:7px;padding:8px 11px}
 .cn{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px}
 .cv{font-size:12px;font-weight:600;color:var(--ink)}
-
 table.bt{width:100%;border-collapse:collapse;font-size:12.5px}
 table.bt th{padding:9px 12px;font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;background:var(--bg);border-bottom:2px solid var(--bdr2);text-align:center}
 table.bt th:first-child{text-align:left}
 table.bt td{padding:8px 12px;border-bottom:1px solid #f1f5f9;text-align:center;color:var(--sub);font-weight:500}
 table.bt td:first-child{text-align:left;font-weight:600;color:var(--ink)}
 table.bt .tot td{background:var(--teall);font-weight:700;color:var(--teal2);border-top:2px solid #99f6e4}
-
-/* RATE CARD */
 table.rt{width:100%;border-collapse:collapse;font-size:11px}
 table.rt th{padding:8px 8px;font-size:8.5px;font-weight:700;color:var(--muted);text-transform:uppercase;background:var(--bg);border-bottom:2px solid var(--bdr2);text-align:center;white-space:nowrap}
 table.rt th:first-child{text-align:left;min-width:130px}
@@ -129,37 +159,17 @@ table.rt td{padding:6px 8px;border-bottom:1px solid #f1f5f9;text-align:center;fo
 table.rt td:first-child{font-family:inherit;color:var(--ink);font-weight:600;font-size:12px;text-align:left}
 table.rt tr.sel td{background:var(--teall);color:var(--teal2);font-weight:700}
 table.rt tr.sel td:first-child{color:var(--teal2)}
-/* Markup row — amber, directly after selected SI row */
-table.rt tr.mu-row td{background:#fffbeb;color:var(--amb);font-weight:700;font-size:11px;border-bottom:2px solid var(--ambb)}
-table.rt tr.mu-row td:first-child{color:var(--amb);font-style:italic}
-
 .notice{font-size:11px;color:var(--muted);line-height:1.7;padding:12px 16px;background:var(--bg);border:1px solid var(--bdr);border-radius:8px;margin-top:12px}
 .divider{height:1px;background:var(--bdr);margin:14px 0}
 .pdf-bar{display:flex;gap:12px;align-items:center;margin-top:16px;padding:14px 18px;background:#fff;border:1px solid var(--bdr);border-radius:10px}
 
-/* PRINT — only results section */
 @media print{
   nav,.section-label,#formSection,.actions,.warn-red,.pdf-bar,.notice,.err-box{display:none!important}
-  body{background:#fff;font-size:11px;font-family:'Inter',sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .wrap{max-width:100%;padding:0 8px}
   .card{box-shadow:none;border:1px solid #ccc;page-break-inside:avoid;margin-bottom:8px}
-  .result-banner{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:16px 20px}
-  .rb-val{font-size:18px!important}
-  .rb-lbl{font-size:8px!important}
-  .rb-sub{font-size:9px!important}
   #results{display:block!important}
   .two-col{grid-template-columns:1.4fr 1fr;gap:8px}
-  .section-label{display:none}
-  table.bup td{padding:6px 12px;font-size:11px}
-  table.bup td:last-child{font-size:11px}
-  table.bt td,table.bt th{padding:5px 8px;font-size:10px}
-  table.rt td,table.rt th{padding:4px 6px;font-size:9.5px}
-  .cond-grid{grid-template-columns:1fr 1fr 1fr}
-  .ci{padding:6px 8px}
-  .cn{font-size:8px}
-  .cv{font-size:10.5px}
-  .card-head{padding:7px 14px}
-  .ch-title{font-size:9px}
 }
 </style>
 </head>
@@ -184,25 +194,25 @@ table.rt tr.mu-row td:first-child{color:var(--amb);font-style:italic}
 
 <div id="formSection">
 
+<!-- CLIENT & POLICY DETAILS -->
 <div class="section-label">Client & Policy Details</div>
 <div class="card">
   <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Proposer Information</div></div>
   <div class="card-body">
     <div class="grid4">
       <div class="field"><label>Client Name</label><input type="text" id="clientName" placeholder="Company name"></div>
-      <div class="field"><label>Policy Start Date</label><input type="date" id="policyStartDate"></div>
-      <div class="field"><label>Policy End Date</label><input type="date" id="policyEndDate"></div>
+      <div class="field"><label>Policy Start Date</label><input type="date" id="policyStartDate" oninput="autoEndDate()"></div>
+      <div class="field"><label>Policy End Date</label><input type="date" id="policyEndDate"><div class="hint" id="endDateHint" style="display:none;color:var(--teal2);font-weight:600">Auto-set: +365 days</div></div>
       <div class="field">
-        <!-- ✅ CHANGE 1: Mark Up now in % instead of ₹ -->
         <label>Mark Up (%) <span style="font-size:9px;font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0">— hidden in output</span></label>
         <input type="number" id="markUp" value="0" min="0" max="100" step="0.5" placeholder="0">
-        <div class="hint">% markup on base rates. e.g. 10 = 10%. Shown in rate card below selected SI row.</div>
+        <div class="hint">% markup on base rates. e.g. 10 = 10%</div>
       </div>
     </div>
     <div class="grid4" style="margin-top:14px">
       <div class="field">
         <label>Policy Type</label>
-        <select id="policyType">
+        <select id="policyType" onchange="onPolicyTypeChange()">
           <option value="fresh">Fresh Business (−10% discount)</option>
           <option value="rollover">Market Rollover</option>
         </select>
@@ -218,9 +228,10 @@ table.rt tr.mu-row td:first-child{color:var(--amb);font-style:italic}
   </div>
 </div>
 
+<!-- POLICY STRUCTURE -->
 <div class="section-label">Policy Structure</div>
 <div class="card">
-  <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Sum Insured, Floater & Family</div></div>
+  <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Sum Insured, Floater & Buffer</div></div>
   <div class="card-body">
     <div class="grid4">
       <div class="field">
@@ -244,34 +255,22 @@ table.rt tr.mu-row td:first-child{color:var(--amb);font-style:italic}
         </div>
       </div>
       <div class="field">
-        <label>Family Definition</label>
-        <select id="famDef" onchange="onFamDefChange()">
-          <option value="ESC">Employee + Spouse + Children</option>
-          <option value="ESCP">Emp + Spouse + Child + Parents/PIL</option>
-          <option value="E">Employee Only</option>
-          <option value="ES">Employee + Spouse</option>
-        </select>
-      </div>
-      <div class="field">
         <label>Corporate Buffer SI (₹)</label>
         <input type="number" id="bufferSI" value="0" min="0" step="100000" oninput="onBufferChange()">
         <div class="hint">0 = No buffer</div>
       </div>
-    </div>
-    <div id="bufferTypeRow" style="display:none;margin-top:12px">
-      <div class="grid4">
-        <div class="field">
-          <label>Corporate Buffer Type</label>
-          <div class="tog">
-            <input type="radio" name="bufType" id="btAll" value="all" checked><label for="btAll">All Illness (+15%)</label>
-            <input type="radio" name="bufType" id="btCI" value="ci"><label for="btCI">CI Only (+8%)</label>
-          </div>
+      <div class="field" id="bufferTypeField" style="display:none">
+        <label>Buffer Type</label>
+        <div class="tog">
+          <input type="radio" name="bufType" id="btAll" value="all" checked><label for="btAll">All Illness (+15%)</label>
+          <input type="radio" name="bufType" id="btCI" value="ci"><label for="btCI">CI Only (+8%)</label>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<!-- WAITING PERIODS -->
 <div class="card">
   <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Waiting Periods</div></div>
   <div class="card-body">
@@ -301,6 +300,7 @@ table.rt tr.mu-row td:first-child{color:var(--amb);font-style:italic}
   </div>
 </div>
 
+<!-- MATERNITY -->
 <div class="card">
   <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Maternity & Related Benefits</div></div>
   <div class="card-body">
@@ -372,6 +372,7 @@ table.rt tr.mu-row td:first-child{color:var(--amb);font-style:italic}
   </div>
 </div>
 
+<!-- ROOM RENT DSL COPAY -->
 <div class="card">
   <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Room Rent, DSL & Co-pay</div></div>
   <div class="card-body">
@@ -409,6 +410,7 @@ table.rt tr.mu-row td:first-child{color:var(--amb);font-style:italic}
   </div>
 </div>
 
+<!-- ADDITIONAL BENEFITS -->
 <div class="card">
   <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Additional Benefits & Loadings</div></div>
   <div class="card-body">
@@ -466,79 +468,100 @@ table.rt tr.mu-row td:first-child{color:var(--amb);font-style:italic}
           <option value="same">Same Ailment — twice by org (no loading)</option>
         </select>
       </div>
-      <div class="field">
-        <label>Additional Loading/Discount (%)</label>
+      <!-- ADDITIONAL DISCOUNT — frozen on fresh -->
+      <div class="field" id="addLoadField">
+        <label>Additional Loading / Discount (%)</label>
         <input type="number" id="addLoad" value="0" min="-100" max="200" step="0.5">
-        <div class="hint">Negative = discount. e.g. −10 = 10% off</div>
+        <div class="hint" id="addLoadHint">Negative = discount. e.g. −10 = 10% off</div>
+        <span class="frozen-tag" id="addLoadFrozenTag" style="display:none">🔒 Available for Rollover only</span>
       </div>
     </div>
   </div>
 </div>
 
-<!-- DEMOGRAPHY -->
+<!-- ================================================================
+     DEMOGRAPHY — with policy type boxes + lives count
+     ================================================================ -->
 <div id="demogSection">
 <div class="section-label">Demography (Lives by Sum Insured × Age Band)</div>
 <div class="card">
-  <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Enter lives per age band · <span id="demogSubtitle">Selected SI row highlighted in teal</span></div></div>
+  <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Select policy type · Enter member counts · Fill age band table</div></div>
   <div class="card-body">
-    <div class="warn" id="demogWarn">
-      ⚡ Enter lives in the <strong>highlighted SI row</strong>. Other SI rows are for reference. 
-      <strong>Min 10 employees · Min 25 total lives · Max 500 total lives.</strong>
-      <span id="escpRule" style="display:none"> · <strong>ESCP: Parents/PIL must be ≥ Employees (min 1:1 ratio)</strong></span>
-    </div>
 
-    <!-- Employee Only quick entry -->
-    <div id="empOnlyBox" class="emp-only-box" style="display:none">
-      <h4>👤 Employee Only — Quick Entry</h4>
-      <div class="emp-only-grid">
-        <div class="field">
-          <label>Total Employees</label>
-          <input type="number" id="eoTotalLives" min="1" placeholder="e.g. 80" oninput="validateEO()">
-          <div class="hint" id="eoHint">Min 10 employees · Min 25 lives · Max 500</div>
-        </div>
-        <div class="field">
-          <label>Age Band</label>
-          <select id="eoAgeBand">
-            <option value="-1">— Use full table below —</option>
-            <option value="1" selected>19–35 yrs</option>
-            <option value="2">36–45 yrs</option>
-            <option value="3">46–55 yrs</option>
-            <option value="0">0–18 yrs</option>
-            <option value="4">56–60 yrs</option>
-            <option value="5">61–65 yrs</option>
-            <option value="6">66–70 yrs</option>
-            <option value="7">71–75 yrs</option>
-            <option value="8">76–80 yrs</option>
-          </select>
-        </div>
-        <div class="field" style="justify-content:flex-end">
-          <label style="opacity:0">.</label>
-          <div style="font-size:11px;color:var(--teal2);padding:8px 0;font-weight:500">Or fill the age band table below for mixed age groups</div>
-        </div>
+    <!-- STEP 1: POLICY TYPE -->
+    <div class="step-label"><span>1</span> Select Policy / Family Type</div>
+    <div class="policy-type-grid">
+      <div class="pt-box" id="ptb-E" onclick="selectPT('E')">
+        <div class="pt-check"></div>
+        <div class="pt-icon">👤</div>
+        <div class="pt-title">Employee Only</div>
+        <div class="pt-sub">E</div>
       </div>
-      <div id="eoErr" class="err-box" style="margin-top:8px"></div>
-    </div>
-
-    <!-- ESCP parents row -->
-    <div id="escpRow" style="display:none;margin-bottom:10px">
-      <div style="display:grid;grid-template-columns:200px 200px auto;gap:12px;align-items:end">
-        <div class="field">
-          <label>Total Employees (from table)</label>
-          <div id="escpEmpCount" style="font-size:14px;font-weight:700;color:var(--teal2);padding:8px 11px;background:var(--teall);border-radius:7px;border:1.5px solid #99f6e4">—</div>
-        </div>
-        <div class="field">
-          <label>Total Parents/PIL Lives</label>
-          <input type="number" id="escpParents" min="0" placeholder="e.g. 60" oninput="validateESCP()">
-          <div class="hint">Must be ≥ employees (min 1:1)</div>
-        </div>
-        <div id="escpMsg" class="escp-info"></div>
+      <div class="pt-box" id="ptb-ES" onclick="selectPT('ES')">
+        <div class="pt-check"></div>
+        <div class="pt-icon">👫</div>
+        <div class="pt-title">Employee + Spouse</div>
+        <div class="pt-sub">E + S</div>
+      </div>
+      <div class="pt-box" id="ptb-ESC" onclick="selectPT('ESC')">
+        <div class="pt-check"></div>
+        <div class="pt-icon">👨‍👩‍👦</div>
+        <div class="pt-title">E + Spouse + Children</div>
+        <div class="pt-sub">E + S + C</div>
+      </div>
+      <div class="pt-box" id="ptb-ESCP" onclick="selectPT('ESCP')">
+        <div class="pt-check"></div>
+        <div class="pt-icon">👨‍👩‍👧‍👦</div>
+        <div class="pt-title">E + S + C + Parents</div>
+        <div class="pt-sub">E + S + C + P/PIL</div>
       </div>
     </div>
 
-    <!-- ESCP parents error -->
-    <div id="escpWarn" class="err-box"></div>
+    <!-- STEP 2: LIVES COUNT -->
+    <div class="step-label"><span>2</span> Enter Member Counts <span id="escpRule" style="display:none;font-size:10px;color:var(--red);background:none;width:auto;height:auto;border-radius:0;font-weight:600;letter-spacing:0;margin-left:4px">· Parents/PIL must be ≥ Employees (1:1)</span></div>
+    <div class="lives-count-grid">
+      <div class="lc-box frozen" id="lcb-emp">
+        <label>👤 Employees</label>
+        <input type="number" id="lc-emp" min="0" placeholder="0" oninput="onLivesChange()" disabled>
+        <div class="lc-hint">Min 10 required</div>
+        <div class="lc-err" id="lce-emp"></div>
+      </div>
+      <div class="lc-box frozen" id="lcb-spo">
+        <label>💑 Spouse</label>
+        <input type="number" id="lc-spo" min="0" placeholder="—" oninput="onLivesChange()" disabled>
+        <div class="lc-hint">≤ Employees</div>
+      </div>
+      <div class="lc-box frozen" id="lcb-chi">
+        <label>👦 Children</label>
+        <input type="number" id="lc-chi" min="0" placeholder="—" oninput="onLivesChange()" disabled>
+        <div class="lc-hint">All dependent children</div>
+      </div>
+      <div class="lc-box frozen" id="lcb-par">
+        <label>👴 Parents / PIL</label>
+        <input type="number" id="lc-par" min="0" placeholder="—" oninput="onLivesChange()" disabled>
+        <div class="lc-hint">Must be ≥ Employees</div>
+        <div class="lc-err" id="lce-par"></div>
+      </div>
+      <div class="lc-box total-box">
+        <label>Total Lives</label>
+        <div class="lc-total-val" id="lc-total">0</div>
+        <div class="lc-hint">Min 25 · Max 500</div>
+      </div>
+    </div>
+
+    <!-- VALIDATION BANNER -->
+    <div class="lives-val-banner" id="livesValBanner"></div>
+
+    <!-- STEP 3 -->
+    <div class="step-label" style="margin-top:4px"><span>3</span> Fill Age Band Demography Table (selected SI row highlighted)</div>
+    <div class="warn" id="demogWarn" style="margin-bottom:10px">
+      ⚡ Enter lives in the <strong>highlighted SI row</strong>. Other SI rows are for reference.
+      The <strong>table total must equal the member count total</strong> above before calculating.
+    </div>
 
     <div class="demog-scroll"><table class="dg" id="demogTbl"></table></div>
+    <div id="tableMismatchWarn" class="err-box" style="margin-top:8px"></div>
+
   </div>
 </div>
 </div>
@@ -558,7 +581,6 @@ table.rt tr.mu-row td:first-child{color:var(--amb);font-style:italic}
     <div class="rb-item">
       <div class="rb-lbl">Gross Premium (incl. GST)</div>
       <div class="rb-val hi" id="rGross">—</div>
-      <div class="rb-sub" id="rGrossS"></div>
     </div>
     <div class="rb-div"></div>
     <div class="rb-item">
@@ -608,20 +630,20 @@ table.rt tr.mu-row td:first-child{color:var(--amb);font-style:italic}
   <div class="pdf-bar">
     <div style="flex:1">
       <div style="font-size:13px;font-weight:700;color:var(--ink)">📄 Download Premium Summary as PDF</div>
-      <div style="font-size:11px;color:var(--muted);margin-top:2px">Opens print dialog — save as PDF. Shows only calculated results, no form.</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:2px">Opens print dialog — save as PDF.</div>
     </div>
     <button class="btn btn-pdf" onclick="downloadPDF()">⬇ &nbsp;Download PDF</button>
   </div>
 
   <div class="notice">
-    <strong>Formula:</strong> Base = Σ(lives × facility_rate) · Markup % applied on base rates (shown in rate card below selected SI) · All % adjustments applied to marked-up base · Buffer = flat add-on · Brokerage 10% grossed up · GST = net × 18% · <em>Source: Healthysure Facility Rate Sheet (Excl. GST)</em>
+    <strong>Formula:</strong> Base = Σ(lives × facility_rate) · Markup % applied on base rates · All % adjustments applied to marked-up base · Buffer = flat add-on · Brokerage 10% grossed up · GST = net × 18% · <em>Source: Healthysure Facility Rate Sheet (Excl. GST)</em>
   </div>
 </div>
 
 </div><!-- /wrap -->
 
 <script>
-// ─── DATA ───────────────────────────────────────────────────────
+// ─── DATA ────────────────────────────────────────────────────────
 const SI_LIST=[100000,200000,300000,400000,500000,600000,700000,800000];
 const SI_LABELS=['₹1,00,000','₹2,00,000','₹3,00,000','₹4,00,000','₹5,00,000','₹6,00,000','₹7,00,000','₹8,00,000'];
 const BANDS=['0–18','19–35','36–45','46–55','56–60','61–65','66–70','71–75','76–80'];
@@ -637,8 +659,87 @@ const RATES={
   800000:[5579,6675,7355,11390,19701,26824,31615,37322,43003],
 };
 const BRK_PCT=10;
+let currentPT=null;
 
-// ─── BUILD DEMOGRAPHY TABLE ───────────────────────────────────────
+// ─── POLICY TYPE SELECTOR ─────────────────────────────────────────
+function selectPT(pt){
+  currentPT=pt;
+  ['E','ES','ESC','ESCP'].forEach(t=>document.getElementById('ptb-'+t).classList.toggle('selected',t===pt));
+
+  // Define which boxes are active per type
+  const cfg={
+    'E':  {emp:true, spo:false, chi:false, par:false},
+    'ES': {emp:true, spo:true,  chi:false, par:false},
+    'ESC':{emp:true, spo:true,  chi:true,  par:false},
+    'ESCP':{emp:true,spo:true,  chi:true,  par:true},
+  };
+  const c=cfg[pt];
+  setLCBox('emp',c.emp);
+  setLCBox('spo',c.spo);
+  setLCBox('chi',c.chi);
+  setLCBox('par',c.par);
+
+  // Clear disabled fields
+  if(!c.spo)document.getElementById('lc-spo').value='';
+  if(!c.chi)document.getElementById('lc-chi').value='';
+  if(!c.par)document.getElementById('lc-par').value='';
+
+  // ESCP rule note
+  document.getElementById('escpRule').style.display=pt==='ESCP'?'inline':'none';
+
+  onLivesChange();
+}
+
+function setLCBox(key,active){
+  const box=document.getElementById('lcb-'+key);
+  const inp=document.getElementById('lc-'+key);
+  box.classList.toggle('frozen',!active);
+  if(active){inp.removeAttribute('disabled');}
+  else{inp.setAttribute('disabled','');}
+}
+
+// ─── LIVES COUNT BOXES ────────────────────────────────────────────
+function onLivesChange(){
+  const emp=parseInt(document.getElementById('lc-emp').value)||0;
+  const spo=parseInt(document.getElementById('lc-spo').value)||0;
+  const chi=parseInt(document.getElementById('lc-chi').value)||0;
+  const par=parseInt(document.getElementById('lc-par').value)||0;
+  const total=emp+spo+chi+par;
+
+  document.getElementById('lc-total').textContent=total;
+
+  const banner=document.getElementById('livesValBanner');
+  document.getElementById('lce-emp').style.display='none';
+  document.getElementById('lce-par').style.display='none';
+  banner.style.display='none';
+
+  const errs=[];
+  if(emp>0&&emp<10){
+    errs.push(`Min 10 employees required (entered: ${emp})`);
+    document.getElementById('lce-emp').textContent='⚠ Min 10 employees required';
+    document.getElementById('lce-emp').style.display='block';
+  }
+  if(total>0&&total<25)errs.push(`Min 25 total lives required (current: ${total})`);
+  if(total>500)errs.push(`Max 500 total lives allowed (current: ${total})`);
+  if(currentPT==='ESCP'&&par>0&&emp>0&&par<emp){
+    errs.push(`Parents/PIL (${par}) must be ≥ Employees (${emp})`);
+    document.getElementById('lce-par').textContent=`⚠ Parents (${par}) must be ≥ Employees (${emp})`;
+    document.getElementById('lce-par').style.display='block';
+  }
+
+  if(errs.length>0){
+    banner.className='lives-val-banner err';
+    banner.innerHTML='❌ '+errs.join(' &nbsp;·&nbsp; ');
+    banner.style.display='block';
+  } else if(emp>=10&&total>=25&&total<=500){
+    banner.className='lives-val-banner ok';
+    banner.innerHTML=`✓ ${emp} employees · ${total} total lives (E:${emp} S:${spo} C:${chi} P:${par}) — valid`;
+    banner.style.display='block';
+  }
+  clearErr();
+}
+
+// ─── DEMOGRAPHY TABLE ─────────────────────────────────────────────
 function buildDemog(){
   const si=parseInt(document.getElementById('si').value);
   let h=`<thead><tr><th>SI / Age Band</th>${BANDS.map(b=>`<th>${b}</th>`).join('')}<th>Row Total</th></tr></thead><tbody>`;
@@ -646,119 +747,68 @@ function buildDemog(){
     const sel=s===si;
     h+=`<tr class="${sel?'sel-row':''}">`;
     h+=`<td class="si-cell">${SI_LABELS[idx]}</td>`;
-    BANDS.forEach((_,bi)=>{
-      h+=`<td><input type="number" min="0" id="d_${s}_${bi}" placeholder="0" oninput="updateTotals()"></td>`;
-    });
+    BANDS.forEach((_,bi)=>{h+=`<td><input type="number" min="0" id="d_${s}_${bi}" placeholder="0" oninput="updateTableTotals()"></td>`;});
     h+=`<td class="tc" id="rt_${s}">0</td></tr>`;
   });
-  // Column totals row
   h+=`<tr class="tot-row"><td class="si-cell">TOTAL LIVES</td>`;
   BANDS.forEach((_,bi)=>{h+=`<td class="tc" id="ct_${bi}">0</td>`;});
   h+=`<td class="tc" id="grandTotal">0</td></tr></tbody>`;
   document.getElementById('demogTbl').innerHTML=h;
-  updateTotals();
+  updateTableTotals();
 }
 
-function updateTotals(){
-  const si=parseInt(document.getElementById('si').value);
+function updateTableTotals(){
   let grand=0;
-  // Row totals
   SI_LIST.forEach(s=>{
     let rt=0;
     BANDS.forEach((_,bi)=>{rt+=parseInt(document.getElementById(`d_${s}_${bi}`)?.value)||0;});
-    const el=document.getElementById(`rt_${s}`);
-    if(el)el.textContent=rt;
+    const el=document.getElementById(`rt_${s}`);if(el)el.textContent=rt;
     grand+=rt;
   });
-  // Column totals
   BANDS.forEach((_,bi)=>{
     let ct=0;
     SI_LIST.forEach(s=>{ct+=parseInt(document.getElementById(`d_${s}_${bi}`)?.value)||0;});
-    const el=document.getElementById(`ct_${bi}`);
-    if(el)el.textContent=ct;
+    const el=document.getElementById(`ct_${bi}`);if(el)el.textContent=ct;
   });
   document.getElementById('grandTotal').textContent=grand;
 
-  // Update ESCP emp count display
-  const fam=document.getElementById('famDef').value;
-  if(fam==='ESCP'){
-    let empLives=0;
-    SI_LIST.forEach(s=>{BANDS.forEach((_,bi)=>{empLives+=parseInt(document.getElementById(`d_${s}_${bi}`)?.value)||0;});});
-    const el=document.getElementById('escpEmpCount');
-    if(el)el.textContent=empLives>0?empLives:'—';
-    validateESCP();
-  }
+  // Compare table total vs box total
+  const emp=parseInt(document.getElementById('lc-emp').value)||0;
+  const spo=parseInt(document.getElementById('lc-spo').value)||0;
+  const chi=parseInt(document.getElementById('lc-chi').value)||0;
+  const par=parseInt(document.getElementById('lc-par').value)||0;
+  const boxTotal=emp+spo+chi+par;
+  const mw=document.getElementById('tableMismatchWarn');
+  if(grand>0&&boxTotal>0&&grand!==boxTotal){
+    mw.style.display='block';
+    mw.textContent=`⚠ Table total (${grand}) ≠ Member count total (${boxTotal}). Please ensure they match.`;
+  } else {mw.style.display='none';}
   clearErr();
 }
 
-// ─── FAMILY DEF CHANGE ────────────────────────────────────────────
-function onFamDefChange(){
-  const fam=document.getElementById('famDef').value;
-  // Employee only quick entry
-  document.getElementById('empOnlyBox').style.display=fam==='E'?'block':'none';
-  // ESCP parents row
-  document.getElementById('escpRow').style.display=fam==='ESCP'?'block':'none';
-  document.getElementById('escpRule').style.display=fam==='ESCP'?'inline':'none';
-  document.getElementById('escpWarn').style.display='none';
-  updateTotals();
+// ─── FRESH / ROLLOVER → freeze addLoad ───────────────────────────
+function onPolicyTypeChange(){
+  const pt=document.getElementById('policyType').value;
+  const inp=document.getElementById('addLoad');
+  const hint=document.getElementById('addLoadHint');
+  const tag=document.getElementById('addLoadFrozenTag');
+  const field=document.getElementById('addLoadField');
+  if(pt==='fresh'){
+    inp.value=0;inp.setAttribute('disabled','');
+    field.style.opacity='.45';field.style.pointerEvents='none';
+    hint.style.display='none';tag.style.display='inline-block';
+  } else {
+    inp.removeAttribute('disabled');
+    field.style.opacity='1';field.style.pointerEvents='auto';
+    hint.style.display='block';tag.style.display='none';
+  }
 }
 
-// ─── EO VALIDATION ───────────────────────────────────────────────
-function validateEO(){
-  const v=parseInt(document.getElementById('eoTotalLives').value)||0;
-  const hintEl=document.getElementById('eoHint');
-  const errEl=document.getElementById('eoErr');
-  if(v===0){hintEl.textContent='Min 10 employees · Min 25 lives · Max 500';hintEl.style.color='var(--muted)';errEl.style.display='none';return;}
-  if(v<10){hintEl.textContent=`Min 10 employees — entered ${v}`;hintEl.style.color='var(--red)';errEl.style.display='block';errEl.textContent=`❌ Minimum 10 employees required. Entered: ${v}`;return;}
-  if(v<25){hintEl.textContent=`Min 25 lives — entered ${v}`;hintEl.style.color='var(--red)';errEl.style.display='block';errEl.textContent=`❌ Minimum 25 total lives required. Entered: ${v}`;return;}
-  if(v>500){hintEl.textContent=`Max 500 — entered ${v}`;hintEl.style.color='var(--red)';errEl.style.display='block';errEl.textContent=`❌ Maximum 500 lives. Entered: ${v}`;return;}
-  hintEl.textContent=`✓ ${v} employees — valid`;hintEl.style.color='var(--grn)';errEl.style.display='none';
-}
-
-// ─── ESCP VALIDATION ─────────────────────────────────────────────
-function validateESCP(){
-  const fam=document.getElementById('famDef').value;
-  if(fam!=='ESCP')return true;
-  
-  // Total lives in table = employee lives
-  let empLives=0;
-  SI_LIST.forEach(s=>{BANDS.forEach((_,bi)=>{empLives+=parseInt(document.getElementById(`d_${s}_${bi}`)?.value)||0;});});
-  
-  const parentInput=document.getElementById('escpParents');
-  const parents=parseInt(parentInput?.value)||0;
-  const msgEl=document.getElementById('escpMsg');
-  
-  if(empLives===0||parents===0){
-    if(msgEl){msgEl.style.display='none';}
-    return true; // allow partial entry
-  }
-  
-  // RULE: parents must be >= employees (min 1:1)
-  if(parents < empLives){
-    if(msgEl){
-      msgEl.style.display='block';
-      msgEl.className='escp-info err';
-      msgEl.textContent=`❌ Parents/PIL (${parents}) must be ≥ Employees (${empLives}). Min 1:1 ratio required.`;
-    }
-    return false;
-  }
-  
-  if(msgEl){
-    msgEl.style.display='block';
-    msgEl.className='escp-info ok';
-    msgEl.textContent=`✓ Parents/PIL (${parents}) ≥ Employees (${empLives}) — valid`;
-  }
-  return true;
-}
-
-// ─── SI CHANGE ────────────────────────────────────────────────────
 function onSIChange(){buildDemog();}
-
 function onBufferChange(){
   const buf=parseFloat(document.getElementById('bufferSI').value)||0;
-  document.getElementById('bufferTypeRow').style.display=buf>0?'block':'none';
+  document.getElementById('bufferTypeField').style.display=buf>0?'flex':'none';
 }
-
 function onICRChange(){
   const icr=parseFloat(document.getElementById('icr').value)||0;
   const note=document.getElementById('icrNote');
@@ -768,14 +818,7 @@ function onICRChange(){
   else if(icr<=115)note.innerHTML='<span style="color:var(--muted);font-weight:600">ICR 70–115% → Burning basis</span>';
   else note.innerHTML=`<span style="color:var(--red);font-weight:700">⚠️ ICR ${icr}% → Refer UW</span>`;
 }
-
-function getICRDiscount(icr){
-  if(icr<50)return-0.15;
-  if(icr<70)return-0.10;
-  return 0;
-}
-
-// ─── ERRORS ──────────────────────────────────────────────────────
+function getICRDiscount(icr){if(icr<50)return-0.15;if(icr<70)return-0.10;return 0;}
 function showErr(msg){const e=document.getElementById('mainErr');e.style.display='block';e.textContent=msg;e.scrollIntoView({behavior:'smooth',block:'center'});}
 function clearErr(){document.getElementById('mainErr').style.display='none';}
 const fmt=n=>'₹'+Math.round(Math.abs(n)).toLocaleString('en-IN');
@@ -784,86 +827,50 @@ const fmtS=n=>(n>=0?'+':'')+Math.round(n).toLocaleString('en-IN');
 // ─── CALCULATE ────────────────────────────────────────────────────
 function calculate(){
   clearErr();
-  const fam=document.getElementById('famDef').value;
+  if(!currentPT){showErr('❌ Please select a policy type (Step 1) first.');return;}
+
   const si=parseInt(document.getElementById('si').value);
   const rates=RATES[si];
-
-  // ✅ CHANGE 2: markUp is now a PERCENTAGE (e.g. 10 = 10%)
   const markUpPct=parseFloat(document.getElementById('markUp').value)||0;
   const markUpFactor=1+(markUpPct/100);
-
   const icr=parseFloat(document.getElementById('icr').value)||0;
   const policyType=document.getElementById('policyType').value;
 
-  // Collect lives from the full demography table (all SI rows, all bands)
-  // We use the SELECTED SI row for premium calc; other rows are display-only
-  let bandL=BANDS.map((_,bi)=>parseInt(document.getElementById(`d_${si}_${bi}`)?.value)||0);
-  
-  // For Employee Only: if quick-entry used, override
-  if(fam==='E'){
-    const eoV=parseInt(document.getElementById('eoTotalLives')?.value)||0;
-    const eoB=parseInt(document.getElementById('eoAgeBand')?.value);
-    if(eoV>0 && eoB>=0){
-      bandL=BANDS.map((_,i)=>i===eoB?eoV:0);
-    }
+  // Lives from count boxes
+  const empCount=parseInt(document.getElementById('lc-emp').value)||0;
+  const spoCount=parseInt(document.getElementById('lc-spo').value)||0;
+  const chiCount=parseInt(document.getElementById('lc-chi').value)||0;
+  const parCount=parseInt(document.getElementById('lc-par').value)||0;
+  const totalLivesBox=empCount+spoCount+chiCount+parCount;
+
+  // Validate
+  if(empCount===0){showErr('❌ Please enter number of employees (Step 2).');return;}
+  if(empCount<10){showErr(`❌ Minimum 10 employees required. Current: ${empCount}`);return;}
+  if(totalLivesBox<25){showErr(`❌ Minimum 25 total lives required. Current: ${totalLivesBox}`);return;}
+  if(totalLivesBox>500){showErr(`❌ Maximum 500 lives allowed. Current: ${totalLivesBox}`);return;}
+  if(currentPT==='ESCP'&&parCount>0&&parCount<empCount){
+    showErr(`❌ Parents/PIL (${parCount}) must be ≥ Employees (${empCount}). Min 1:1 ratio required.`);return;
   }
 
+  // Lives from demography table (selected SI row)
+  const bandL=BANDS.map((_,bi)=>parseInt(document.getElementById(`d_${si}_${bi}`)?.value)||0);
   const totalL=bandL.reduce((a,b)=>a+b,0);
-  const grandTotal=parseInt(document.getElementById('grandTotal')?.textContent)||0;
 
-  // ── VALIDATIONS ──
-  if(fam==='E'){
-    const eoV=parseInt(document.getElementById('eoTotalLives')?.value)||0;
-    const eoB=parseInt(document.getElementById('eoAgeBand')?.value);
-    const livesForCheck=eoV>0&&eoB>=0?eoV:totalL;
-    if(livesForCheck===0){showErr('❌ Please enter employee lives in the demography table or quick entry box.');return;}
-    if(livesForCheck<10){showErr(`❌ Minimum 10 employees required. Current: ${livesForCheck}`);return;}
-    if(livesForCheck<25){showErr(`❌ Minimum 25 total lives required. Current: ${livesForCheck}`);return;}
-    if(livesForCheck>500){showErr(`❌ Maximum 500 lives allowed. Current: ${livesForCheck}`);return;}
-  } else {
-    // For ESC/ES/ESCP - grandTotal is all lives, totalL is selected SI row
-    const livesToCheck=totalL>0?totalL:grandTotal;
-    if(livesToCheck===0){showErr('❌ Please enter lives in the demography table (highlighted SI row).');return;}
-    
-    const checkL=totalL>0?totalL:grandTotal;
-    if(checkL<25){showErr(`❌ Minimum 25 total lives required in the highlighted SI row. Current: ${checkL}`);return;}
-    if(checkL>500){showErr(`❌ Maximum 500 lives allowed. Current: ${checkL}`);return;}
-    if(checkL<10){showErr(`❌ Minimum 10 employees required.`);return;}
+  if(totalL===0){showErr('❌ Please fill in lives in the demography table (Step 3, highlighted SI row).');return;}
+  if(totalL!==totalLivesBox){
+    showErr(`❌ Table total (${totalL}) does not match member count total (${totalLivesBox}). Please ensure they match.`);return;
   }
 
-  // ESCP validation
-  if(fam==='ESCP'){
-    let empLives=0;
-    SI_LIST.forEach(s=>{BANDS.forEach((_,bi)=>{empLives+=parseInt(document.getElementById(`d_${s}_${bi}`)?.value)||0;});});
-    const parents=parseInt(document.getElementById('escpParents')?.value)||0;
-    if(parents>0 && empLives>0 && parents<empLives){
-      showErr(`❌ ESCP: Parents/PIL (${parents}) must be ≥ Employees (${empLives}). Minimum 1:1 ratio required.`);
-      document.getElementById('escpWarn').style.display='block';
-      document.getElementById('escpWarn').textContent=`❌ Parents/PIL (${parents}) < Employees (${empLives}). Min 1:1 required.`;
-      return;
-    }
-    document.getElementById('escpWarn').style.display='none';
-  }
-
-  if(totalL===0){showErr('❌ Please enter lives in the demography table (highlighted SI row).');return;}
-
-  // ✅ CHANGE 3: Apply markup % on base rates, then calculate premiums
-  // markedUpRates = base rates × (1 + markUpPct/100)
   const markedUpRates=rates.map(r=>r*markUpFactor);
-  const bandPremBase=bandL.map((l,i)=>rates[i]*l);        // base rates (for display)
-  const bandPrem=bandL.map((l,i)=>markedUpRates[i]*l);    // marked-up rates (for calc)
-  const baseRaw=bandPremBase.reduce((a,b)=>a+b,0);        // base without markup
-  const base=bandPrem.reduce((a,b)=>a+b,0);               // base WITH markup
-  const markupAmt=base-baseRaw;
+  const bandPremBase=bandL.map((l,i)=>rates[i]*l);
+  const bandPrem=bandL.map((l,i)=>markedUpRates[i]*l);
+  const baseRaw=bandPremBase.reduce((a,b)=>a+b,0);
+  const base=bandPrem.reduce((a,b)=>a+b,0);
 
-  // ICR warning
   const uwWarnEl=document.getElementById('uwWarn');
-  if(icr>115){
-    uwWarnEl.style.display='block';
-    uwWarnEl.innerHTML=`<div class="warn-red" style="margin-bottom:14px">⚠️ <strong>Refer to Underwriter:</strong> ICR of ${icr}% exceeds 115%. This case must be referred to UW before quoting. Premium shown is indicative only.</div>`;
-  } else{uwWarnEl.style.display='none';}
+  if(icr>115){uwWarnEl.style.display='block';uwWarnEl.innerHTML=`<div class="warn-red" style="margin-bottom:14px">⚠️ <strong>Refer to Underwriter:</strong> ICR ${icr}% exceeds 115%. This case must be referred to UW before quoting.</div>`;}
+  else{uwWarnEl.style.display='none';}
 
-  // ── ADJUSTMENTS ──
   const floatN=document.querySelector('input[name=floater]:checked').value==='N';
   const pedN=document.querySelector('input[name=ped]:checked').value==='N';
   const w30N=document.querySelector('input[name=w30]:checked').value==='N';
@@ -895,9 +902,8 @@ function calculate(){
   if(pedN)items.push({label:'PED Waiting Period Applied',sub:'−20%',pct:-0.20});
   if(w30N)items.push({label:'30-Day Waiting Period Applied',sub:'−5%',pct:-0.05});
   if(w12N)items.push({label:'1/2 Year Waiting Period Applied',sub:'−15%',pct:-0.15});
-  if(matN){
-    items.push({label:'Maternity Cover Deleted',sub:'−15%',pct:-0.15});
-  }else{
+  if(matN){items.push({label:'Maternity Cover Deleted',sub:'−15%',pct:-0.15});}
+  else{
     const mlm={'nd35cs35':-0.05,'nd35cs50':-0.03,'nd50cs50':0,'nd50cs75':0.05,'nd75cs75':0,'nd1lcs1l':0.12};
     const mlp=mlm[matLim]||0;
     if(mlp!==0)items.push({label:'Maternity Limit Adjustment',sub:`${mlp>0?'+':''}${(mlp*100).toFixed(0)}%`,pct:mlp});
@@ -930,65 +936,46 @@ function calculate(){
 
   const totalPct=items.reduce((a,it)=>a+it.pct,0);
   const adjustedBase=base*(1+totalPct);
-
   let bufferAmt=0;
   if(bufferSI>0)bufferAmt=bufType==='all'?bufferSI*0.15:bufferSI*0.08;
-
   const freshDisc=policyType==='fresh'?-0.10:0;
   const freshDiscAmt=adjustedBase*freshDisc;
   const icrDisc=icr>0&&icr<=115?getICRDiscount(icr):0;
   const icrDiscAmt=adjustedBase*icrDisc;
   const riskPremium=adjustedBase+freshDiscAmt+icrDiscAmt+bufferAmt;
-
   const netPrem=riskPremium/(1-BRK_PCT/100);
-  const brkAmt=netPrem-riskPremium;
   const gstAmt=netPrem*0.18;
   const grossPrem=netPrem+gstAmt;
 
-  // BANNER
   document.getElementById('rGross').textContent=fmt(grossPrem);
-  document.getElementById('rGrossS').textContent='';
   document.getElementById('rNet').textContent=fmt(netPrem);
   document.getElementById('rGST').textContent=fmt(gstAmt);
-  document.getElementById('rEmp').textContent=totalL>0?fmt(grossPrem/totalL):'—';
-  document.getElementById('rLife').textContent=fmt(grossPrem/totalL);
+  document.getElementById('rEmp').textContent=empCount>0?fmt(grossPrem/empCount):'—';
+  document.getElementById('rLife').textContent=fmt(grossPrem/totalLivesBox);
 
-  // ✅ CHANGE 4: BUILD-UP TABLE — show base, then markup line, then adjustments
-  let bh=`<tr><td>Base Premium (Σ lives × facility rates)</td><td>${fmt(baseRaw)}</td></tr>`;
-  // Markup hidden from build-up (baked silently into base)
-  bh+=`<tr class="sep"><td colspan="2"></td></tr>`;
-  items.forEach(it=>{
-    if(it.pct===0)return;
-    bh+=`<tr class="${it.pct>0?'load':'disc'}"><td>${it.label} <span style="color:var(--muted);font-size:11px">${it.sub}</span></td><td>${it.pct>0?'+':''}${fmt(base*it.pct)}</td></tr>`;
-  });
-  bh+=`<tr class="sep"><td colspan="2"></td></tr>
-    <tr class="sub"><td>Adjusted Base Premium</td><td>${fmt(adjustedBase)}</td></tr>
-    <tr class="sep"><td colspan="2"></td></tr>`;
+  let bh=`<tr><td>Base Premium (Σ lives × facility rates)</td><td>${fmt(baseRaw)}</td></tr><tr class="sep"><td colspan="2"></td></tr>`;
+  items.forEach(it=>{if(it.pct===0)return;bh+=`<tr class="${it.pct>0?'load':'disc'}"><td>${it.label} <span style="color:var(--muted);font-size:11px">${it.sub}</span></td><td>${it.pct>0?'+':''}${fmt(base*it.pct)}</td></tr>`;});
+  bh+=`<tr class="sep"><td colspan="2"></td></tr><tr class="sub"><td>Adjusted Base Premium</td><td>${fmt(adjustedBase)}</td></tr><tr class="sep"><td colspan="2"></td></tr>`;
   if(freshDisc!==0)bh+=`<tr class="disc"><td>Fresh Business Discount <span style="color:var(--muted);font-size:11px">−10%</span></td><td>${fmtS(freshDiscAmt)}</td></tr>`;
   if(icrDisc!==0)bh+=`<tr class="disc"><td>ICR Discount <span style="color:var(--muted);font-size:11px">ICR ${icr}% → ${(icrDisc*100).toFixed(0)}%</span></td><td>${fmtS(icrDiscAmt)}</td></tr>`;
   if(bufferAmt>0)bh+=`<tr class="load"><td>Corporate Buffer <span style="color:var(--muted);font-size:11px">${bufType==='all'?'All Illness 15%':'CI Only 8%'} × ₹${bufferSI.toLocaleString('en-IN')}</span></td><td>+${fmt(bufferAmt)}</td></tr>`;
-  bh+=`<tr class="sub"><td>Risk Premium</td><td>${fmt(riskPremium)}</td></tr>
-    <tr class="sep"><td colspan="2"></td></tr>
-    <tr class="sub"><td>Net Premium (excl. GST)</td><td>${fmt(netPrem)}</td></tr>
-    <tr class="sep"><td colspan="2"></td></tr>
-    <tr class="gst-row"><td>GST @ 18%</td><td>+${fmt(gstAmt)}</td></tr>
-    <tr class="grand"><td>GROSS PREMIUM (incl. GST)</td><td>${fmt(grossPrem)}</td></tr>`;
+  bh+=`<tr class="sub"><td>Risk Premium</td><td>${fmt(riskPremium)}</td></tr><tr class="sep"><td colspan="2"></td></tr><tr class="sub"><td>Net Premium (excl. GST)</td><td>${fmt(netPrem)}</td></tr><tr class="sep"><td colspan="2"></td></tr><tr class="gst-row"><td>GST @ 18%</td><td>+${fmt(gstAmt)}</td></tr><tr class="grand"><td>GROSS PREMIUM (incl. GST)</td><td>${fmt(grossPrem)}</td></tr>`;
   document.getElementById('bupTbl').innerHTML=bh;
 
-  // CONDITIONS SUMMARY
   const sd=document.getElementById('policyStartDate').value;
   const ed=document.getElementById('policyEndDate').value;
   const fmtDate=d=>{if(!d)return'—';const[y,m,dy]=d.split('-');return`${dy}-${'JanFebMarAprMayJunJulAugSepOctNovDec'.slice((parseInt(m)-1)*3,(parseInt(m)-1)*3+3)}-${y}`;};
   const mlLbl={'nd35cs35':'ND₹35K/CS₹35K','nd35cs50':'ND₹35K/CS₹50K','nd50cs50':'ND₹50K/CS₹50K','nd50cs75':'ND₹50K/CS₹75K','nd75cs75':'ND₹75K/CS₹75K','nd1lcs1l':'ND₹1L/CS₹1L'};
+  const ptLabel={'E':'Employee Only','ES':'E + Spouse','ESC':'E + S + Children','ESCP':'E + S + C + Parents/PIL'};
   const condData=[
     ['Client Name',document.getElementById('clientName').value||'—'],
     ['Policy Start',fmtDate(sd)],['Policy End',fmtDate(ed)],
     ['Sum Insured',`₹${si.toLocaleString('en-IN')}`],
-    ['Total Lives',totalL],
+    ['Employees',empCount],['Total Lives',totalLivesBox],
     ['Policy Type',policyType==='fresh'?'Fresh (−10%)':'Market Rollover'],
     ['ICR',icr>0?`${icr}%`:'Fresh/NA'],
     ['Floater',floatN?'Non-Floater (+15%)':'Floater (Base)'],
-    ['Family Def',document.getElementById('famDef').selectedOptions[0].text.split('(')[0].trim()],
+    ['Family Def',ptLabel[currentPT]||currentPT],
     ['Maternity',matN?'Deleted (−15%)':'Covered'],
     ['Mat Limit',matN?'N/A':(mlLbl[matLim]||matLim)],
     ['PED',pedN?'Waiting Period (−20%)':'Day 1 (Base)'],
@@ -999,25 +986,15 @@ function calculate(){
   ];
   document.getElementById('condGrid').innerHTML=condData.map(([n,v])=>`<div class="ci"><div class="cn">${n}</div><div class="cv">${v}</div></div>`).join('');
 
-  // BAND BREAKDOWN
   let bt=`<thead><tr><th>Age Band</th><th>Lives</th><th>Rate (₹/life)</th><th>Band Premium</th><th>% of Base</th></tr></thead><tbody>`;
-  bandL.forEach((l,i)=>{
-    if(!l)return;
-    bt+=`<tr><td>${BAND_FULL[i]}</td><td>${l}</td><td style="font-family:'JetBrains Mono',monospace">₹${rates[i].toLocaleString('en-IN')}</td><td style="font-family:'JetBrains Mono',monospace">₹${Math.round(bandPrem[i]).toLocaleString('en-IN')}</td><td>${baseRaw>0?(bandPremBase[i]/baseRaw*100).toFixed(1):0}%</td></tr>`;
-  });
+  bandL.forEach((l,i)=>{if(!l)return;bt+=`<tr><td>${BAND_FULL[i]}</td><td>${l}</td><td style="font-family:'JetBrains Mono',monospace">₹${rates[i].toLocaleString('en-IN')}</td><td style="font-family:'JetBrains Mono',monospace">₹${Math.round(bandPrem[i]).toLocaleString('en-IN')}</td><td>${baseRaw>0?(bandPremBase[i]/baseRaw*100).toFixed(1):0}%</td></tr>`;});
   bt+=`<tr class="tot"><td><strong>TOTAL</strong></td><td><strong>${totalL}</strong></td><td>—</td><td style="font-family:'JetBrains Mono',monospace"><strong>${fmt(base)}</strong></td><td>100%</td></tr></tbody>`;
   document.getElementById('bandTbl').innerHTML=bt;
 
-  // Rate card — selected SI row shows marked-up rates directly (no separate row)
   let rt=`<thead><tr><th>Sum Insured</th>${BANDS.map(b=>`<th>${b}</th>`).join('')}</tr></thead><tbody>`;
   SI_LIST.forEach((s,idx)=>{
     const sel=s===si;
-    if(sel && markUpPct>0){
-      // Selected row: show marked-up rates directly (markup baked in, no separate row)
-      rt+=`<tr class="sel"><td>${SI_LABELS[idx]}</td>${RATES[s].map(v=>`<td>₹${Math.round(v*markUpFactor).toLocaleString('en-IN')}</td>`).join('')}</tr>`;
-    } else {
-      rt+=`<tr${sel?' class="sel"':''}><td>${SI_LABELS[idx]}</td>${RATES[s].map(v=>`<td>₹${v.toLocaleString('en-IN')}</td>`).join('')}</tr>`;
-    }
+    rt+=`<tr${sel?' class="sel"':''}><td>${SI_LABELS[idx]}</td>${RATES[s].map(v=>`<td>₹${Math.round(v*(sel&&markUpPct>0?markUpFactor:1)).toLocaleString('en-IN')}</td>`).join('')}</tr>`;
   });
   rt+='</tbody>';
   document.getElementById('rateTbl').innerHTML=rt;
@@ -1037,23 +1014,41 @@ function downloadPDF(){
 function resetAll(){
   ['clientName','prevInsurer','industry'].forEach(id=>document.getElementById(id).value='');
   ['policyStartDate','policyEndDate'].forEach(id=>document.getElementById(id).value='');
-  ['icr','bufferSI','addLoad','markUp'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=0;});
-  const eo=document.getElementById('eoTotalLives');if(eo)eo.value='';
-  const ep=document.getElementById('escpParents');if(ep)ep.value='';
+  ['icr','bufferSI','markUp'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=0;});
+  ['lc-emp','lc-spo','lc-chi','lc-par'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  document.getElementById('lc-total').textContent='0';
+  document.getElementById('addLoad').value=0;
   document.getElementById('icrNote').textContent='0% = Fresh business';
   document.getElementById('icrNote').style.color='var(--grn)';
-  document.getElementById('bufferTypeRow').style.display='none';
-  document.getElementById('empOnlyBox').style.display='none';
-  document.getElementById('escpRow').style.display='none';
+  document.getElementById('bufferTypeField').style.display='none';
   document.getElementById('escpRule').style.display='none';
-  document.getElementById('escpWarn').style.display='none';
-  const em=document.getElementById('escpMsg');if(em)em.style.display='none';
+  document.getElementById('livesValBanner').style.display='none';
+  document.getElementById('tableMismatchWarn').style.display='none';
+  document.getElementById('lce-emp').style.display='none';
+  document.getElementById('lce-par').style.display='none';
+  ['E','ES','ESC','ESCP'].forEach(t=>document.getElementById('ptb-'+t).classList.remove('selected'));
+  ['emp','spo','chi','par'].forEach(k=>setLCBox(k,false));
+  currentPT=null;
   clearErr();
   document.getElementById('results').style.display='none';
-  document.getElementById('famDef').value='ESC';
+  onPolicyTypeChange();
   buildDemog();
 }
 
+function autoEndDate(){
+  const sd=document.getElementById('policyStartDate').value;
+  if(!sd)return;
+  const d=new Date(sd);
+  d.setDate(d.getDate()+365);
+  const y=d.getFullYear();
+  const m=String(d.getMonth()+1).padStart(2,'0');
+  const day=String(d.getDate()).padStart(2,'0');
+  document.getElementById('policyEndDate').value=`${y}-${m}-${day}`;
+  document.getElementById('endDateHint').style.display='block';
+}
+
+// INIT
+onPolicyTypeChange();
 buildDemog();
 </script>
 </body>
