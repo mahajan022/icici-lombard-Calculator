@@ -17,6 +17,7 @@
   --grn:#16a34a;
   --amb:#92400e;--ambl:#fffbeb;--ambb:#fde68a;
   --card:#ffffff;
+  --purp:#7c3aed;--purpl:#f5f3ff;--purpb:#ddd6fe;
 }
 body{font-family:'Inter',sans-serif;background:#eef2f7;color:var(--ink);font-size:13px;min-height:100vh;line-height:1.5}
 nav{background:linear-gradient(to right,#042f2e,#0a3d38,#092c40);padding:0 28px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,.3)}
@@ -52,6 +53,11 @@ select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='htt
 .tog label{flex:1;text-align:center;padding:8px 5px;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .12s;line-height:1.3}
 .tog label:not(:last-child){border-right:1px solid var(--bdr)}
 .tog input:checked+label{background:var(--teal3);color:#fff}
+
+/* GRADED TOGGLE — special purple theme */
+.tog.graded-tog input:checked+label{background:linear-gradient(135deg,#5b21b6,var(--purp));color:#fff}
+.graded-badge{display:inline-flex;align-items:center;gap:5px;background:var(--purpl);border:1.5px solid var(--purpb);border-radius:20px;padding:4px 12px;font-size:10.5px;font-weight:700;color:var(--purp);margin-left:10px;letter-spacing:.3px}
+.graded-info-bar{background:var(--purpl);border:1.5px solid var(--purpb);border-radius:8px;padding:10px 15px;font-size:12px;font-weight:500;color:#5b21b6;margin-bottom:12px;display:none;line-height:1.6}
 
 /* ================================================================
    POLICY TYPE SELECTOR BOXES
@@ -163,6 +169,10 @@ table.rt tr.sel td:first-child{color:var(--teal2)}
 .divider{height:1px;background:var(--bdr);margin:14px 0}
 .pdf-bar{display:flex;gap:12px;align-items:center;margin-top:16px;padding:14px 18px;background:#fff;border:1px solid var(--bdr);border-radius:10px}
 
+/* Graded SI rows highlight in purple */
+table.dg tr.graded-sel-row .si-cell{color:var(--purp)!important;font-weight:700}
+table.dg tr.graded-sel-row td{background:var(--purpl)!important}
+
 @media print{
   nav,.section-label,#formSection,.actions,.warn-red,.pdf-bar,.notice,.err-box{display:none!important}
   body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -189,7 +199,7 @@ table.rt tr.sel td:first-child{color:var(--teal2)}
 <div class="wrap">
 
 <div class="warn-red" style="margin-top:6px">
-  ⚠️ <strong>Facility Criteria:</strong> Fresh Business & Market Rollover with ICR &lt; 150% only · Max 500 lives · Min 10 employees / 25 lives · Cannot be used for ICICI own renewals (until April 2026)
+  ⚠️ <strong>Facility Criteria:</strong> Fresh Business & Market Rollover with ICR &lt; 150% only · Max 500 lives · Min 10 employees / 25 lives (Non-Graded) · Cannot be used for ICICI own renewals (until April 2026)
 </div>
 
 <div id="formSection">
@@ -480,13 +490,35 @@ table.rt tr.sel td:first-child{color:var(--teal2)}
 </div>
 
 <!-- ================================================================
-     DEMOGRAPHY — with policy type boxes + lives count
+     DEMOGRAPHY — with graded toggle + policy type boxes + lives count
      ================================================================ -->
 <div id="demogSection">
 <div class="section-label">Demography (Lives by Sum Insured × Age Band)</div>
 <div class="card">
-  <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Select policy type · Enter member counts · Fill age band table</div></div>
+  <div class="card-head"><div class="ch-dot"></div><div class="ch-title">Select grading · Select policy type · Enter member counts · Fill age band table</div></div>
   <div class="card-body">
+
+    <!-- STEP 0: GRADED / NON-GRADED -->
+    <div class="step-label" style="margin-bottom:8px">
+      <span>0</span>
+      Policy Grading
+      <span id="gradedBadge" class="graded-badge" style="display:none">✦ Graded — multiple SI slabs active</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+      <div class="tog graded-tog" style="width:280px">
+        <input type="radio" name="grading" id="gradNon" value="non" checked onchange="onGradingChange()">
+        <label for="gradNon">Non-Graded (Single SI)</label>
+        <input type="radio" name="grading" id="gradYes" value="graded" onchange="onGradingChange()">
+        <label for="gradYes">✦ Graded (Multi-SI)</label>
+      </div>
+      <div style="font-size:11px;color:var(--muted);line-height:1.5;flex:1">
+        <strong style="color:var(--sub)">Non-Graded:</strong> Single SI slab · Min 10 employees · Min 25 lives &nbsp;&nbsp;
+        <strong style="color:var(--purp)">Graded:</strong> Multiple SI slabs allowed · Enter lives across all SI rows · Min employee count per slab can be &lt;10
+      </div>
+    </div>
+    <div class="graded-info-bar" id="gradedInfoBar">
+      ✦ <strong>Graded Mode Active:</strong> You can enter lives across multiple SI rows. 10-employee minimum per slab does not apply. <strong>E / ES plans:</strong> no minimum lives restriction. <strong>ESC / ESCP plans:</strong> min 25 total lives still required. Max 500 lives.
+    </div>
 
     <!-- STEP 1: POLICY TYPE -->
     <div class="step-label"><span>1</span> Select Policy / Family Type</div>
@@ -518,12 +550,12 @@ table.rt tr.sel td:first-child{color:var(--teal2)}
     </div>
 
     <!-- STEP 2: LIVES COUNT -->
-    <div class="step-label"><span>2</span> Enter Member Counts <span id="escpRule" style="display:none;font-size:10px;color:var(--red);background:none;width:auto;height:auto;border-radius:0;font-weight:600;letter-spacing:0;margin-left:4px">· Parents/PIL must be ≥ Employees (1:1)</span></div>
+    <div class="step-label" style="flex-wrap:wrap;row-gap:4px"><span>2</span> Enter Member Counts <span id="escpRule" style="display:none;font-size:10px;color:var(--red);background:none;width:auto;height:auto;border-radius:0;font-weight:600;letter-spacing:0;margin-left:4px;white-space:nowrap">· Parents/PIL must be ≥ Employees (1:1)</span></div>
     <div class="lives-count-grid">
       <div class="lc-box frozen" id="lcb-emp">
         <label>👤 Employees</label>
         <input type="number" id="lc-emp" min="0" placeholder="0" oninput="onLivesChange()" disabled>
-        <div class="lc-hint">Min 10 required</div>
+        <div class="lc-hint" id="empMinHint">Min 10 required</div>
         <div class="lc-err" id="lce-emp"></div>
       </div>
       <div class="lc-box frozen" id="lcb-spo">
@@ -553,10 +585,13 @@ table.rt tr.sel td:first-child{color:var(--teal2)}
     <div class="lives-val-banner" id="livesValBanner"></div>
 
     <!-- STEP 3 -->
-    <div class="step-label" style="margin-top:4px"><span>3</span> Fill Age Band Demography Table (selected SI row highlighted)</div>
+    <div style="margin-top:4px;margin-bottom:10px"><div class="step-label"><span>3</span> Fill Age Band Demography Table</div><div id="demogStep3Hint" style="font-size:10.5px;color:var(--muted);font-weight:500;margin-top:3px;margin-left:26px">(selected SI row highlighted)</div></div>
     <div class="warn" id="demogWarn" style="margin-bottom:10px">
       ⚡ Enter lives in the <strong>highlighted SI row</strong>. Other SI rows are for reference.
       The <strong>table total must equal the member count total</strong> above before calculating.
+    </div>
+    <div class="graded-info-bar" id="demogGradedWarn" style="margin-bottom:10px">
+      ✦ <strong>Graded Mode:</strong> Enter lives across <strong>any/all SI rows</strong>. The table grand total must equal the member count total above.
     </div>
 
     <div class="demog-scroll"><table class="dg" id="demogTbl"></table></div>
@@ -661,12 +696,38 @@ const RATES={
 const BRK_PCT=10;
 let currentPT=null;
 
+// ─── GRADED / NON-GRADED ──────────────────────────────────────────
+function isGraded(){
+  return document.querySelector('input[name=grading]:checked').value==='graded';
+}
+
+function onGradingChange(){
+  const graded=isGraded();
+  // badge next to step 0
+  document.getElementById('gradedBadge').style.display=graded?'inline-flex':'none';
+  // info bars
+  document.getElementById('gradedInfoBar').style.display=graded?'block':'none';
+  document.getElementById('demogGradedWarn').style.display=graded?'block':'none';
+  document.getElementById('demogWarn').style.display=graded?'none':'block';
+  // hint text
+  document.getElementById('demogStep3Hint').textContent=graded
+    ? '— enter lives across any/all SI rows'
+    : '(selected SI row highlighted)';
+  // emp min hint
+  document.getElementById('empMinHint').textContent=graded
+    ? 'No per-slab minimum in Graded'
+    : 'Min 10 required';
+  // rebuild table to update row highlighting
+  buildDemog();
+  // revalidate
+  onLivesChange();
+}
+
 // ─── POLICY TYPE SELECTOR ─────────────────────────────────────────
 function selectPT(pt){
   currentPT=pt;
   ['E','ES','ESC','ESCP'].forEach(t=>document.getElementById('ptb-'+t).classList.toggle('selected',t===pt));
 
-  // Define which boxes are active per type
   const cfg={
     'E':  {emp:true, spo:false, chi:false, par:false},
     'ES': {emp:true, spo:true,  chi:false, par:false},
@@ -679,12 +740,10 @@ function selectPT(pt){
   setLCBox('chi',c.chi);
   setLCBox('par',c.par);
 
-  // Clear disabled fields
   if(!c.spo)document.getElementById('lc-spo').value='';
   if(!c.chi)document.getElementById('lc-chi').value='';
   if(!c.par)document.getElementById('lc-par').value='';
 
-  // ESCP rule note
   document.getElementById('escpRule').style.display=pt==='ESCP'?'inline':'none';
 
   onLivesChange();
@@ -705,6 +764,7 @@ function onLivesChange(){
   const chi=parseInt(document.getElementById('lc-chi').value)||0;
   const par=parseInt(document.getElementById('lc-par').value)||0;
   const total=emp+spo+chi+par;
+  const graded=isGraded();
 
   document.getElementById('lc-total').textContent=total;
 
@@ -714,12 +774,19 @@ function onLivesChange(){
   banner.style.display='none';
 
   const errs=[];
-  if(emp>0&&emp<10){
+
+  // Rules:
+  // Non-Graded: min 10 emp, min 25 total lives always
+  // Graded E / ES: no emp minimum, no total lives minimum (just max 500)
+  // Graded ESC / ESCP: no emp minimum, but min 25 total lives still required
+  const needMin25 = !graded || (currentPT==='ESC' || currentPT==='ESCP');
+
+  if(!graded && emp>0 && emp<10){
     errs.push(`Min 10 employees required (entered: ${emp})`);
     document.getElementById('lce-emp').textContent='⚠ Min 10 employees required';
     document.getElementById('lce-emp').style.display='block';
   }
-  if(total>0&&total<25)errs.push(`Min 25 total lives required (current: ${total})`);
+  if(needMin25 && total>0 && total<25) errs.push(`Min 25 total lives required (current: ${total})`);
   if(total>500)errs.push(`Max 500 total lives allowed (current: ${total})`);
   if(currentPT==='ESCP'&&par>0&&emp>0&&par<emp){
     errs.push(`Parents/PIL (${par}) must be ≥ Employees (${emp})`);
@@ -727,13 +794,15 @@ function onLivesChange(){
     document.getElementById('lce-par').style.display='block';
   }
 
+  const minOk = needMin25 ? (emp>=1 && total>=25 && total<=500) : (emp>=1 && total>=1 && total<=500);
+
   if(errs.length>0){
     banner.className='lives-val-banner err';
     banner.innerHTML='❌ '+errs.join(' &nbsp;·&nbsp; ');
     banner.style.display='block';
-  } else if(emp>=10&&total>=25&&total<=500){
+  } else if(minOk){
     banner.className='lives-val-banner ok';
-    banner.innerHTML=`✓ ${emp} employees · ${total} total lives (E:${emp} S:${spo} C:${chi} P:${par}) — valid`;
+    banner.innerHTML=`✓ ${emp} employees · ${total} total lives (E:${emp} S:${spo} C:${chi} P:${par}) — valid${graded?' · <strong style="color:var(--purp)">Graded mode</strong>':''}`;
     banner.style.display='block';
   }
   clearErr();
@@ -741,11 +810,16 @@ function onLivesChange(){
 
 // ─── DEMOGRAPHY TABLE ─────────────────────────────────────────────
 function buildDemog(){
-  const si=parseInt(document.getElementById('si').value);
+  const selectedSI=parseInt(document.getElementById('si').value);
+  const graded=isGraded();
+
   let h=`<thead><tr><th>SI / Age Band</th>${BANDS.map(b=>`<th>${b}</th>`).join('')}<th>Row Total</th></tr></thead><tbody>`;
   SI_LIST.forEach((s,idx)=>{
-    const sel=s===si;
-    h+=`<tr class="${sel?'sel-row':''}">`;
+    // In non-graded: only selected SI row is highlighted
+    // In graded: all rows are active (no greying), highlight with purple if any data
+    const isSelected=s===selectedSI&&!graded;
+    const rowClass=isSelected?'sel-row':'';
+    h+=`<tr class="${rowClass}" id="drow_${s}">`;
     h+=`<td class="si-cell">${SI_LABELS[idx]}</td>`;
     BANDS.forEach((_,bi)=>{h+=`<td><input type="number" min="0" id="d_${s}_${bi}" placeholder="0" oninput="updateTableTotals()"></td>`;});
     h+=`<td class="tc" id="rt_${s}">0</td></tr>`;
@@ -758,12 +832,20 @@ function buildDemog(){
 }
 
 function updateTableTotals(){
+  const graded=isGraded();
   let grand=0;
   SI_LIST.forEach(s=>{
     let rt=0;
     BANDS.forEach((_,bi)=>{rt+=parseInt(document.getElementById(`d_${s}_${bi}`)?.value)||0;});
     const el=document.getElementById(`rt_${s}`);if(el)el.textContent=rt;
     grand+=rt;
+    // In graded mode: highlight rows that have data
+    if(graded){
+      const row=document.getElementById(`drow_${s}`);
+      if(row){
+        row.classList.toggle('graded-sel-row',rt>0);
+      }
+    }
   });
   BANDS.forEach((_,bi)=>{
     let ct=0;
@@ -772,7 +854,6 @@ function updateTableTotals(){
   });
   document.getElementById('grandTotal').textContent=grand;
 
-  // Compare table total vs box total
   const emp=parseInt(document.getElementById('lc-emp').value)||0;
   const spo=parseInt(document.getElementById('lc-spo').value)||0;
   const chi=parseInt(document.getElementById('lc-chi').value)||0;
@@ -829,14 +910,12 @@ function calculate(){
   clearErr();
   if(!currentPT){showErr('❌ Please select a policy type (Step 1) first.');return;}
 
-  const si=parseInt(document.getElementById('si').value);
-  const rates=RATES[si];
+  const graded=isGraded();
   const markUpPct=parseFloat(document.getElementById('markUp').value)||0;
   const markUpFactor=1+(markUpPct/100);
   const icr=parseFloat(document.getElementById('icr').value)||0;
   const policyType=document.getElementById('policyType').value;
 
-  // Lives from count boxes
   const empCount=parseInt(document.getElementById('lc-emp').value)||0;
   const spoCount=parseInt(document.getElementById('lc-spo').value)||0;
   const chiCount=parseInt(document.getElementById('lc-chi').value)||0;
@@ -845,27 +924,70 @@ function calculate(){
 
   // Validate
   if(empCount===0){showErr('❌ Please enter number of employees (Step 2).');return;}
-  if(empCount<10){showErr(`❌ Minimum 10 employees required. Current: ${empCount}`);return;}
-  if(totalLivesBox<25){showErr(`❌ Minimum 25 total lives required. Current: ${totalLivesBox}`);return;}
+  if(!graded && empCount<10){showErr(`❌ Minimum 10 employees required for Non-Graded. Current: ${empCount}. Switch to Graded if this is a graded policy.`);return;}
+  const needMin25Calc=!graded||(currentPT==='ESC'||currentPT==='ESCP');
+  if(needMin25Calc && totalLivesBox<25){showErr(`❌ Minimum 25 total lives required for ${currentPT} plan. Current: ${totalLivesBox}`);return;}
   if(totalLivesBox>500){showErr(`❌ Maximum 500 lives allowed. Current: ${totalLivesBox}`);return;}
   if(currentPT==='ESCP'&&parCount>0&&parCount<empCount){
     showErr(`❌ Parents/PIL (${parCount}) must be ≥ Employees (${empCount}). Min 1:1 ratio required.`);return;
   }
 
-  // Lives from demography table (selected SI row)
-  const bandL=BANDS.map((_,bi)=>parseInt(document.getElementById(`d_${si}_${bi}`)?.value)||0);
-  const totalL=bandL.reduce((a,b)=>a+b,0);
+  // For graded: collect lives from ALL SI rows; for non-graded: only selected SI row
+  const selectedSI=parseInt(document.getElementById('si').value);
 
-  if(totalL===0){showErr('❌ Please fill in lives in the demography table (Step 3, highlighted SI row).');return;}
-  if(totalL!==totalLivesBox){
-    showErr(`❌ Table total (${totalL}) does not match member count total (${totalLivesBox}). Please ensure they match.`);return;
+  let totalTableLives=0;
+  // Sum all cells to check against box total
+  SI_LIST.forEach(s=>{
+    BANDS.forEach((_,bi)=>{totalTableLives+=parseInt(document.getElementById(`d_${s}_${bi}`)?.value)||0;});
+  });
+
+  if(totalTableLives===0){showErr('❌ Please fill in lives in the demography table (Step 3).');return;}
+  if(totalTableLives!==totalLivesBox){
+    showErr(`❌ Table total (${totalTableLives}) does not match member count total (${totalLivesBox}). Please ensure they match.`);return;
   }
 
-  const markedUpRates=rates.map(r=>r*markUpFactor);
-  const bandPremBase=bandL.map((l,i)=>rates[i]*l);
-  const bandPrem=bandL.map((l,i)=>markedUpRates[i]*l);
-  const baseRaw=bandPremBase.reduce((a,b)=>a+b,0);
-  const base=bandPrem.reduce((a,b)=>a+b,0);
+  // Build per-SI band arrays
+  // For non-graded: only selectedSI row matters for premium
+  // For graded: all rows contribute
+  let baseRaw=0, base=0;
+  const bandPremBase=new Array(BANDS.length).fill(0);
+  const bandPrem=new Array(BANDS.length).fill(0);
+  const bandLivesForTable=new Array(BANDS.length).fill(0); // for display
+  const siUsed=[]; // for graded breakdown
+
+  if(graded){
+    SI_LIST.forEach(s=>{
+      const rates=RATES[s];
+      const markedUp=rates.map(r=>r*markUpFactor);
+      let siLivesTotal=0;
+      const siLives=BANDS.map((_,bi)=>parseInt(document.getElementById(`d_${s}_${bi}`)?.value)||0);
+      siLives.forEach((l,bi)=>{
+        if(l){
+          bandPremBase[bi]+=rates[bi]*l;
+          bandPrem[bi]+=markedUp[bi]*l;
+          bandLivesForTable[bi]+=l;
+          siLivesTotal+=l;
+        }
+      });
+      if(siLivesTotal>0){
+        siUsed.push({si:s,lives:siLives,total:siLivesTotal});
+        baseRaw+=siLives.reduce((a,l,bi)=>a+rates[bi]*l,0);
+        base+=siLives.reduce((a,l,bi)=>a+markedUp[bi]*l,0);
+      }
+    });
+  } else {
+    const rates=RATES[selectedSI];
+    const markedUpRates=rates.map(r=>r*markUpFactor);
+    const bandL=BANDS.map((_,bi)=>parseInt(document.getElementById(`d_${selectedSI}_${bi}`)?.value)||0);
+    bandL.forEach((l,i)=>{
+      bandPremBase[i]=rates[i]*l;
+      bandPrem[i]=markedUpRates[i]*l;
+      bandLivesForTable[i]=l;
+    });
+    baseRaw=bandPremBase.reduce((a,b)=>a+b,0);
+    base=bandPrem.reduce((a,b)=>a+b,0);
+    siUsed.push({si:selectedSI,lives:bandL,total:bandL.reduce((a,b)=>a+b,0)});
+  }
 
   const uwWarnEl=document.getElementById('uwWarn');
   if(icr>115){uwWarnEl.style.display='block';uwWarnEl.innerHTML=`<div class="warn-red" style="margin-bottom:14px">⚠️ <strong>Refer to Underwriter:</strong> ICR ${icr}% exceeds 115%. This case must be referred to UW before quoting.</div>`;}
@@ -953,7 +1075,12 @@ function calculate(){
   document.getElementById('rEmp').textContent=empCount>0?fmt(grossPrem/empCount):'—';
   document.getElementById('rLife').textContent=fmt(grossPrem/totalLivesBox);
 
-  let bh=`<tr><td>Base Premium (Σ lives × facility rates)</td><td>${fmt(baseRaw)}</td></tr><tr class="sep"><td colspan="2"></td></tr>`;
+  // Graded SI slab note in buildup
+  const gradedNote=graded&&siUsed.length>1
+    ? `<tr><td colspan="2" style="padding:6px 14px;font-size:11px;color:var(--purp);background:var(--purpl);font-weight:600">✦ Graded policy — ${siUsed.length} SI slabs: ${siUsed.map(x=>`₹${(x.si/100000).toFixed(0)}L (${x.total} lives)`).join(', ')}</td></tr>`
+    : '';
+
+  let bh=gradedNote+`<tr><td>Base Premium (Σ lives × facility rates)</td><td>${fmt(baseRaw)}</td></tr><tr class="sep"><td colspan="2"></td></tr>`;
   items.forEach(it=>{if(it.pct===0)return;bh+=`<tr class="${it.pct>0?'load':'disc'}"><td>${it.label} <span style="color:var(--muted);font-size:11px">${it.sub}</span></td><td>${it.pct>0?'+':''}${fmt(base*it.pct)}</td></tr>`;});
   bh+=`<tr class="sep"><td colspan="2"></td></tr><tr class="sub"><td>Adjusted Base Premium</td><td>${fmt(adjustedBase)}</td></tr><tr class="sep"><td colspan="2"></td></tr>`;
   if(freshDisc!==0)bh+=`<tr class="disc"><td>Fresh Business Discount <span style="color:var(--muted);font-size:11px">−10%</span></td><td>${fmtS(freshDiscAmt)}</td></tr>`;
@@ -970,7 +1097,8 @@ function calculate(){
   const condData=[
     ['Client Name',document.getElementById('clientName').value||'—'],
     ['Policy Start',fmtDate(sd)],['Policy End',fmtDate(ed)],
-    ['Sum Insured',`₹${si.toLocaleString('en-IN')}`],
+    ['Grading',graded?'✦ Graded (Multi-SI)':'Non-Graded (Single SI)'],
+    ['Sum Insured',graded&&siUsed.length>1?siUsed.map(x=>`₹${(x.si/100000).toFixed(0)}L`).join(', '):`₹${selectedSI.toLocaleString('en-IN')}`],
     ['Employees',empCount],['Total Lives',totalLivesBox],
     ['Policy Type',policyType==='fresh'?'Fresh (−10%)':'Market Rollover'],
     ['ICR',icr>0?`${icr}%`:'Fresh/NA'],
@@ -986,15 +1114,21 @@ function calculate(){
   ];
   document.getElementById('condGrid').innerHTML=condData.map(([n,v])=>`<div class="ci"><div class="cn">${n}</div><div class="cv">${v}</div></div>`).join('');
 
-  let bt=`<thead><tr><th>Age Band</th><th>Lives</th><th>Rate (₹/life)</th><th>Band Premium</th><th>% of Base</th></tr></thead><tbody>`;
-  bandL.forEach((l,i)=>{if(!l)return;bt+=`<tr><td>${BAND_FULL[i]}</td><td>${l}</td><td style="font-family:'JetBrains Mono',monospace">₹${rates[i].toLocaleString('en-IN')}</td><td style="font-family:'JetBrains Mono',monospace">₹${Math.round(bandPrem[i]).toLocaleString('en-IN')}</td><td>${baseRaw>0?(bandPremBase[i]/baseRaw*100).toFixed(1):0}%</td></tr>`;});
-  bt+=`<tr class="tot"><td><strong>TOTAL</strong></td><td><strong>${totalL}</strong></td><td>—</td><td style="font-family:'JetBrains Mono',monospace"><strong>${fmt(base)}</strong></td><td>100%</td></tr></tbody>`;
+  // Band breakdown table — use aggregated bandLivesForTable
+  const displayRates=graded?null:RATES[selectedSI];
+  let bt=`<thead><tr><th>Age Band</th><th>Lives</th><th>${graded?'Wtd. Rate (₹/life)':'Rate (₹/life)'}</th><th>Band Premium</th><th>% of Base</th></tr></thead><tbody>`;
+  bandLivesForTable.forEach((l,i)=>{
+    if(!l)return;
+    const avgRate=l>0?Math.round(bandPrem[i]/l):0;
+    bt+=`<tr><td>${BAND_FULL[i]}</td><td>${l}</td><td style="font-family:'JetBrains Mono',monospace">₹${avgRate.toLocaleString('en-IN')}</td><td style="font-family:'JetBrains Mono',monospace">₹${Math.round(bandPrem[i]).toLocaleString('en-IN')}</td><td>${baseRaw>0?(bandPremBase[i]/baseRaw*100).toFixed(1):0}%</td></tr>`;
+  });
+  bt+=`<tr class="tot"><td><strong>TOTAL</strong></td><td><strong>${totalTableLives}</strong></td><td>—</td><td style="font-family:'JetBrains Mono',monospace"><strong>${fmt(base)}</strong></td><td>100%</td></tr></tbody>`;
   document.getElementById('bandTbl').innerHTML=bt;
 
   let rt=`<thead><tr><th>Sum Insured</th>${BANDS.map(b=>`<th>${b}</th>`).join('')}</tr></thead><tbody>`;
   SI_LIST.forEach((s,idx)=>{
-    const sel=s===si;
-    rt+=`<tr${sel?' class="sel"':''}><td>${SI_LABELS[idx]}</td>${RATES[s].map(v=>`<td>₹${Math.round(v*(sel&&markUpPct>0?markUpFactor:1)).toLocaleString('en-IN')}</td>`).join('')}</tr>`;
+    const sel=(!graded&&s===selectedSI)||(graded&&siUsed.some(x=>x.si===s));
+    rt+=`<tr${sel?' class="sel"':''}><td>${SI_LABELS[idx]}${graded&&siUsed.some(x=>x.si===s)?' ✦':''}</td>${RATES[s].map(v=>`<td>₹${Math.round(v*(sel&&markUpPct>0?markUpFactor:1)).toLocaleString('en-IN')}</td>`).join('')}</tr>`;
   });
   rt+='</tbody>';
   document.getElementById('rateTbl').innerHTML=rt;
@@ -1029,6 +1163,9 @@ function resetAll(){
   ['E','ES','ESC','ESCP'].forEach(t=>document.getElementById('ptb-'+t).classList.remove('selected'));
   ['emp','spo','chi','par'].forEach(k=>setLCBox(k,false));
   currentPT=null;
+  // Reset grading to non-graded
+  document.getElementById('gradNon').checked=true;
+  onGradingChange();
   clearErr();
   document.getElementById('results').style.display='none';
   onPolicyTypeChange();
@@ -1049,6 +1186,7 @@ function autoEndDate(){
 
 // INIT
 onPolicyTypeChange();
+onGradingChange();
 buildDemog();
 </script>
 </body>
