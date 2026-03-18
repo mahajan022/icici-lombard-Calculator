@@ -555,7 +555,7 @@ table.dg tr.graded-sel-row td{background:var(--purpl)!important}
       <div class="lc-box frozen" id="lcb-emp">
         <label>👤 Employees</label>
         <input type="number" id="lc-emp" min="0" placeholder="0" oninput="onLivesChange()" disabled>
-        <div class="lc-hint" id="empMinHint">Min 10 required</div>
+        <div class="lc-hint" id="empMinHint">Min 10 required (E/ES) · Any count (ESC/ESCP)</div>
         <div class="lc-err" id="lce-emp"></div>
       </div>
       <div class="lc-box frozen" id="lcb-spo">
@@ -716,7 +716,7 @@ function onGradingChange(){
   // emp min hint
   document.getElementById('empMinHint').textContent=graded
     ? 'No per-slab minimum in Graded'
-    : 'Min 10 required';
+    : 'Min 10 required (E/ES) · Any count (ESC/ESCP)';
   // rebuild table to update row highlighting
   buildDemog();
   // revalidate
@@ -776,25 +776,41 @@ function onLivesChange(){
   const errs=[];
 
   // Rules:
-  // Non-Graded: min 10 emp, min 25 total lives always
+  // Non-Graded: min 10 emp OR total >= 25 (if total >= 25, emp < 10 is allowed)
   // Graded E / ES: no emp minimum, no total lives minimum (just max 500)
   // Graded ESC / ESCP: no emp minimum, but min 25 total lives still required
   const needMin25 = !graded || (currentPT==='ESC' || currentPT==='ESCP');
 
-  if(!graded && emp>0 && emp<10){
-    errs.push(`Min 10 employees required (entered: ${emp})`);
-    document.getElementById('lce-emp').textContent='⚠ Min 10 employees required';
+  // VALIDATION LOGIC:
+  // E/ES non-graded: min 10 employees + min 25 total lives
+  // ESC/ESCP non-graded: emp can be < 10, only total >= 25 required
+  // Graded: no emp minimum, ESC/ESCP still need total 25+
+  const isEscOrEscp = (currentPT==='ESC' || currentPT==='ESCP');
+
+  // Employee minimum — only enforced for E/ES in non-graded mode
+  if(!graded && !isEscOrEscp && emp>0 && emp<10){
+    errs.push(`Min 10 employees required for ${currentPT} plan (entered: ${emp})`);
+    document.getElementById('lce-emp').textContent='\u26a0 Min 10 employees required';
     document.getElementById('lce-emp').style.display='block';
   }
-  if(needMin25 && total>0 && total<25) errs.push(`Min 25 total lives required (current: ${total})`);
+
+  // Min 25 total lives — ESC/ESCP always, E/ES only in non-graded
+  if(needMin25 && total>0 && total<25){
+    errs.push(`Min 25 total lives required (current: ${total})`);
+  }
+
   if(total>500)errs.push(`Max 500 total lives allowed (current: ${total})`);
   if(currentPT==='ESCP'&&par>0&&emp>0&&par<emp){
-    errs.push(`Parents/PIL (${par}) must be ≥ Employees (${emp})`);
-    document.getElementById('lce-par').textContent=`⚠ Parents (${par}) must be ≥ Employees (${emp})`;
+    errs.push(`Parents/PIL (${par}) must be \u2265 Employees (${emp})`);
+    document.getElementById('lce-par').textContent=`\u26a0 Parents (${par}) must be \u2265 Employees (${emp})`;
     document.getElementById('lce-par').style.display='block';
   }
 
-  const minOk = needMin25 ? (emp>=1 && total>=25 && total<=500) : (emp>=1 && total>=1 && total<=500);
+  // minOk
+  const empOk = graded ? emp>=1 : (isEscOrEscp ? emp>=1 : emp>=10);
+  const minOk = needMin25
+    ? (empOk && total>=25 && total<=500)
+    : (empOk && total>=1 && total<=500);
 
   if(errs.length>0){
     banner.className='lives-val-banner err';
@@ -922,9 +938,15 @@ function calculate(){
   const parCount=parseInt(document.getElementById('lc-par').value)||0;
   const totalLivesBox=empCount+spoCount+chiCount+parCount;
 
-  // Validate
+  // Validate employees
   if(empCount===0){showErr('❌ Please enter number of employees (Step 2).');return;}
-  if(!graded && empCount<10){showErr(`❌ Minimum 10 employees required for Non-Graded. Current: ${empCount}. Switch to Graded if this is a graded policy.`);return;}
+
+  // E/ES non-graded: need min 10 emp. ESC/ESCP non-graded: emp can be <10, only total 25+ needed
+  const isEscOrEscpCalc = (currentPT==='ESC'||currentPT==='ESCP');
+  if(!graded && !isEscOrEscpCalc && empCount<10){
+    showErr(`❌ Minimum 10 employees required for ${currentPT} plan. Current: ${empCount}`);return;
+  }
+
   const needMin25Calc=!graded||(currentPT==='ESC'||currentPT==='ESCP');
   if(needMin25Calc && totalLivesBox<25){showErr(`❌ Minimum 25 total lives required for ${currentPT} plan. Current: ${totalLivesBox}`);return;}
   if(totalLivesBox>500){showErr(`❌ Maximum 500 lives allowed. Current: ${totalLivesBox}`);return;}
